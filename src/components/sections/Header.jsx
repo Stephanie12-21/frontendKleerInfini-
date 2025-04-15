@@ -89,7 +89,7 @@ export default function Header() {
           {/* Navbar items (centré au milieu du header) */}
           <nav className="absolute left-1/2 transform -translate-x-1/2 flex items-center space-x-10">
             <Link
-              href="/accueil"
+              href="/"
               className=" text-white hover:text-[#C80036] font-medium text-base uppercase"
             >
               ACCUEIL
@@ -101,10 +101,16 @@ export default function Header() {
               A PROPOS
             </Link>
             <Link
-              href="/nos-services"
+              href="/services"
               className=" text-white hover:text-[#C80036] font-medium text-base uppercase"
             >
               NOS SERVICES
+            </Link>
+            <Link
+              href="/blog"
+              className=" text-white hover:text-[#C80036] font-medium text-base uppercase"
+            >
+              BLOG
             </Link>
             <Link
               href="/contact"
@@ -114,7 +120,6 @@ export default function Header() {
             </Link>
           </nav>
 
-          {/* Menu button (à droite) */}
           <div className="ml-auto">
             <Button className="flex items-center bg-[#C80036] text-white rounded-md h-9 px-4 py-2  text-base hover:bg-[#C80036]">
               <MenuIcon className="w-5 h-5 mr-2" />
