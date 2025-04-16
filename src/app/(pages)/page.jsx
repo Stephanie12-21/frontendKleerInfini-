@@ -61,6 +61,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+
       <section className="w-full mt-3 mb-20">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           {isMobile ? (
@@ -388,6 +389,7 @@ export default function Home() {
           </TabsContent>
         </Tabs>
       </section>
+
       <section
         className="w-full flex items-center justify-center  h-screen text-center px-10 bg-cover bg-center relative"
         style={{
@@ -441,6 +443,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+
       <section className="flex flex-col justify-center items-center">
         <h1 className="text-5xl text-[#C80036] mt-10 font-bold">
           NOS PARTENARIATS
@@ -492,6 +495,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      
       <section className="text-white bg-[#0C1844] mt-20 mb-16 p-6 w-full flex items-center justify-center">
         <div className="flex flex-col md:flex-row items-stretch justify-center w-full max-w-7xl gap-8">
           {/* IMAGE */}
