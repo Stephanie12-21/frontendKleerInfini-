@@ -36,9 +36,7 @@ export default function Header() {
       }}
     >
       <div className="relative">
-        {/* Top header */}
         <div className="flex justify-between items-center pl-8 pr-4 py-2">
-          {/* Logo */}
           <Link href="/" className="flex items-start">
             <Image
               src="/logo.png"
@@ -49,9 +47,7 @@ export default function Header() {
             />
           </Link>
 
-          {/* Langue + Recherche */}
           <div className="flex items-center space-x-4">
-            {/* Select Langue */}
             <Select value={language} onValueChange={setLanguage}>
               <SelectTrigger id="langue" className="w-36">
                 <SelectValue placeholder="Langue" />
@@ -63,7 +59,6 @@ export default function Header() {
               </SelectContent>
             </Select>
 
-            {/* Barre de recherche */}
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
               <Input
@@ -74,9 +69,7 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Main header */}
         <div className="relative flex items-center justify-center h-20 px-4">
-          {/* Logo centré (KLEER INFINI) */}
           <div className="absolute left-10 flex-col items-center justify-center">
             <Link
               href="/"
@@ -87,7 +80,6 @@ export default function Header() {
             </Link>
           </div>
 
-          {/* Navbar */}
           <nav className="absolute left-1/2 transform -translate-x-1/2 flex items-center space-x-10">
             {navItems.map(({ label, href }) => (
               <Link
@@ -104,7 +96,6 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* Bouton menu (à droite) */}
           <div className="ml-auto">
             <Button className="flex items-center bg-[#C80036] text-white rounded-md h-9 px-4 py-2 text-base hover:bg-[#a6002a] transition-colors">
               <Menu className="w-5 h-5 mr-2" />

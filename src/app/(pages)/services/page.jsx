@@ -1,12 +1,15 @@
 "use client";
 
 import Image from "next/image";
-
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { CheckCheck } from "lucide-react";
+import { useState } from "react";
 
 export default function Home() {
+  const [showDossiers, setShowDossiers] = useState(false);
+
+  const handleContinue = () => {
+    setShowDossiers(true);
+  };
   return (
     <div className="flex flex-col items-center justify-center ">
       <section
@@ -32,6 +35,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+
       <section className="w-full px-8 py-6 text-[#0C1844]  flex flex-col  mb-10 gap-10">
         <div className="flex items-center justify-center">
           <h2 className="text-4xl font-bold my-5 text-[#C80036]">
@@ -77,6 +81,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+
       <section className="w-full px-8 py-10 bg-[#0C1844] text-white flex flex-col items-center justify-center">
         <div className="flex items-center justify-center">
           <h1 className="text-[#C80036] text-3xl font-bold">
@@ -164,6 +169,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+
       <section className="w-full px-40">
         <div className=" flex flex-col items-start justify-start px-10 my-10 bg-[#0C1844] text-center bg-cover bg-center relative space-y-10 py-10 rounded-lg ">
           <div className="w-full space-y-6">
@@ -228,57 +234,125 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="w-full px-8 py-6 text-[#0C1844] text-center flex flex-col gap-10">
-        <div className="w-full flex flex-col md:flex-row items-stretch justify-center gap-10">
-          <div className="w-full md:w-3/6 relative min-h-[400px]">
-            <div className="relative z-10 w-full h-full flex items-start justify-center px-8 py-4">
-              <div className="relative w-full h-full">
-                <div className="relative  left-3 w-full h-full bg-[#0C1844]  z-0"></div>
+      <div className="relative w-full overflow-hidden min-h-screen">
+        <section
+          className={`absolute top-0 mt-20 left-0 w-full transition-all duration-700 ease-in-out ${
+            showDossiers
+              ? "-translate-x-full opacity-0"
+              : "translate-x-0 opacity-100"
+          }`}
+        >
+          <div className="w-full px-8 py-6 text-[#0C1844] text-center flex flex-col gap-10">
+            <div className="w-full flex flex-col md:flex-row items-stretch justify-center gap-10">
+              <div className="w-full md:w-3/6 relative min-h-[400px]">
+                <div className="relative z-10 w-full h-full flex items-start justify-center px-8 py-4">
+                  <div className="relative w-full h-full">
+                    <div className="relative  left-3 w-full h-full bg-[#0C1844]  z-0"></div>
+                    <div className="absolute top-5 right-3 w-full h-full   shadow-md z-10 flex justify-between items-center px-4 py-2">
+                      <Image
+                        src="/image5.svg"
+                        alt="Fret Aérien"
+                        fill
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-                <div className="absolute top-5 right-3 w-full h-full   shadow-md z-10 flex justify-between items-center px-4 py-2">
-                  <Image
-                    src="/image5.svg"
-                    alt="Fret Aérien"
-                    fill
-                    className="w-full h-full object-cover "
+              <div className="w-full md:w-4/5 text-left flex flex-col items-start justify-center pr-32">
+                <h2 className="text-4xl font-extrabold mb-8 text-[#C80036]">
+                  Merci de renseigner votre adresse e-mail
+                </h2>
+                <div className="text-lg flex flex-col text-[#0C1844] mt-5 space-y-8">
+                  <input
+                    className="w-full border border-gray-300 p-2"
+                    placeholder="Votre adresse e-mail professionnelle "
                   />
+                  <div className="flex items-center space-x-3">
+                    <input
+                      type="checkbox"
+                      id="acceptEmails"
+                      className="w-5 h-5 text-[#C80036] accent-[#C80036] rounded-sm"
+                    />
+                    <label
+                      htmlFor="acceptEmails"
+                      className="text-lg text-[#0C1844]"
+                    >
+                      J&apos;accepte de recevoir des e-mails promotionnels et
+                      des informations de la part de Kleer Infini
+                    </label>
+                  </div>
+                  <button
+                    className="px-4 py-2 bg-[#0C1844] text-lg text-white rounded-sm"
+                    onClick={handleContinue}
+                  >
+                    Continuer
+                  </button>
                 </div>
               </div>
             </div>
           </div>
+        </section>
 
-          <div className="w-full md:w-4/5 text-left flex flex-col items-start justify-center pr-32">
-            <h2 className="text-4xl font-extrabold mb-8 text-[#C80036]">
-              Merci de renseigner votre adresse e-mail
-            </h2>
-            <div className="text-lg flex flex-col text-[#0C1844] mt-5 space-y-8">
-              <Input
-                className="w-full"
-                placeholder="Votre adresse e-mail professionnelle "
-              />
-              <div className="flex items-center space-x-3">
-                <input
-                  type="checkbox"
-                  id="acceptEmails"
-                  className="w-5 h-5 text-[#C80036] accent-[#C80036] rounded-sm"
-                />
-                <label
-                  htmlFor="acceptEmails"
-                  className="text-lg text-[#0C1844]"
-                >
-                  J&apos;accepte de recevoir des e-mails promotionnels et des
-                  informations de la part de Kleer Infini
-                </label>
+        <section
+          className={`w-full my-10  text-[#0C1844] text-center flex flex-col  absolute top-0 left-0  transition-all duration-700 ease-in-out ${
+            showDossiers
+              ? "translate-x-0 opacity-100"
+              : "translate-x-full opacity-0"
+          }`}
+        >
+          <h2 className="text-4xl font-extrabold mb-3 text-[#C80036]">
+            LISTE DES DOCUMENTS
+          </h2>
+          <p className="text-3xl font-bold  text-[#C80036]">
+            {" "}
+            Nécessaires pour l&apos;Exportation vers l&apos;Europe/France
+          </p>
+          <div className="w-full flex flex-col md:flex-row items-stretch justify-center gap-10">
+            <div className="w-full md:w-3/6 relative min-h-[400px]">
+              <div className="relative z-10 w-full h-full flex items-start justify-center px-8 py-4">
+                <div className="relative w-full h-full">
+                  <div className="absolute top-5 right-3 w-full h-full    z-10 flex justify-between items-center px-4 py-2">
+                    <Image
+                      src="/image.svg"
+                      alt="Fret Aérien"
+                      fill
+                      className="w-full h-full object-cover "
+                    />
+                  </div>
+                </div>
               </div>
-              <button className=" px-4 py-2 bg-[#0C1844] text-lg text-white rounded-sm ">
-                Continuer
-              </button>
+            </div>
+
+            <div className="w-full md:w-4/5 text-left flex flex-col items-start justify-center pr-32">
+              <div className="text-lg flex flex-col text-[#0C1844] mt-5 space-y-8">
+                <ul className="list-decimal list-inside text-lg text-[#0C1844] mt-5 space-y-8">
+                  <li> Documents Commerciaux </li>
+                  <li> Documents d&apos;Origine </li>
+                  <li>
+                    Documents Sanitaires et Phytosanitaires (pour les produits
+                    alimentaires et agricoles)
+                  </li>
+                  <li>Documents Spécifiques selon le Produit </li>
+                  <li>Documents de Transport et Logistique</li>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
 
-      <section className="mt-10 mb-20 w-full px-8 py-10 bg-[#0C1844] text-white flex flex-col items-center justify-center">
+          <div className="flex flex-col items-center justify-center ">
+            <p className="text-3xl font-bold  text-[#0C1844]">
+              Cliquez ici pour découvrir tous les détails !
+            </p>
+            <div className="mt-5 p-2 rounded-md border border-[#0C1844]">
+              <Image src="/Vector.svg" alt="Dossiers" width={50} height={50} />
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <section className=" mb-20 w-full px-8 py-10 bg-[#0C1844] text-white flex flex-col items-center justify-center">
         {" "}
         <h1 className="text-[#C80036] text-4xl font-bold text-left">
           Étapes Clés pour une Exportation Réussie{" "}
