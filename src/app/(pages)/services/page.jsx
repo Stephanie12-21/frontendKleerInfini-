@@ -10,6 +10,45 @@ export default function Home() {
   const [showSecondDiv, setShowSecondDiv] = useState(false);
   const kleerSectionRef = useRef();
   const kleerSectionDevRef = useRef();
+  const [formData, setFormData] = useState({
+    nom: "",
+    email: "",
+    telephone: "",
+    services: {
+      reseauSecurite: false,
+      cloudComputing: false,
+      devOps: false,
+      developpementWeb: false,
+      solutionsDigitales: false,
+    },
+    details: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleCheckboxChange = (e) => {
+    const { name, checked } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      services: {
+        ...prev.services,
+        [name]: checked,
+      },
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Formulaire soumis:", formData);
+    // Ici vous pouvez ajouter la logique pour envoyer les données à votre backend
+    alert("Formulaire envoyé avec succès!");
+  };
 
   const handleContinue = () => {
     setShowSecondDiv(true);
@@ -570,89 +609,234 @@ export default function Home() {
             </div>
           </section>
 
-          {/* Requête de services */}
-          <section className=" w-full px-4 py-10 bg-[#0C1844] text-white flex flex-col items-center justify-center">
-            <div className="grid grid-cols-1 md:grid-cols-2 justify-between gap-20 mb-4">
-              {/* Service 1 */}
-              <div className="bg-[#1E3CAA3B] p-10 rounded-md flex flex-col items-center text-center">
-                <div className="mb-4">
+          {/* Services développement web et mobile */}
+          <section className="px-8 py-6 text-white bg-[#0C1844] text-center flex flex-col ">
+            <div className="flex flex-col md:flex-row items-stretch justify-center gap-28">
+              <div className="w-full md:w-3/6 relative">
+                <div className="w-full h-full relative min-h-[500px]">
                   <Image
-                    src="/service (5).svg"
-                    alt="Sécurité"
-                    width={80}
-                    height={80}
+                    src="/dev2.svg"
+                    alt="Mission"
+                    fill
+                    className="object-cover rounded-lg"
                   />
                 </div>
-                <h3 className="text-white text-xl font-medium">
-                  Administration réseau &<br />
-                  sécurité informatique
-                </h3>
               </div>
 
-              {/* Service 2 */}
-              <div className="bg-[#1E3CAA3B] p-10 rounded-md flex flex-col items-center text-center">
-                <div className="mb-4">
-                  <Image
-                    src="/service (4).svg"
-                    alt="Cloud"
-                    width={80}
-                    height={80}
-                  />
+              <div className="w-full md:w-4/5 text-left flex flex-col items-start justify-center">
+                <h2 className="text-4xl font-extrabold mb-8 text-[#C80036]">
+                  LE DEVELOPEMENT WEB
+                </h2>
+                <div className="text-lg leading-relaxed  space-y-10">
+                  <p>
+                    Le développement web consiste à créer des sites internet et
+                    applications web accessibles via un navigateur (Chrome,
+                    Firefox, etc.).
+                  </p>
+                  <p>Il se divise en deux parties principales :</p>
+                  <ul className="list-disc list-inside pl-4 space-y-6">
+                    <li>
+                      Front-end : Interface utilisateur (HTML, CSS, JavaScript,
+                      React, Angular).
+                    </li>
+                    <li>
+                      Back-end : Logique métier, bases de données (Node.js, PHP,
+                      Python, SQL).
+                    </li>
+                  </ul>
                 </div>
-                <h3 className="text-white text-xl font-medium">
-                  Cloud computing &<br />
-                  infrastructures digitales.
-                </h3>
-              </div>
-
-              {/* Service 3 */}
-              <div className="bg-[#1E3CAA3B] p-10 rounded-md flex flex-col items-center text-center">
-                <div className="mb-4">
-                  <Image
-                    src="/service (3).svg"
-                    alt="Développement"
-                    width={70}
-                    height={70}
-                  />
-                </div>
-                <h3 className="text-white text-xl font-medium">
-                  Développement web & mobile
-                </h3>
-              </div>
-
-              {/* Service 4 */}
-              <div className="bg-[#1E3CAA3B] p-10 rounded-md flex flex-col items-center text-center">
-                <div className="mb-4 relative">
-                  <Image
-                    src="/service (2).svg"
-                    alt="DevOps"
-                    width={80}
-                    height={80}
-                  />
-                </div>
-                <h3 className="text-white text-xl font-medium">
-                  DevOps & automatisation
-                  <br />
-                  des systèmes
-                </h3>
               </div>
             </div>
 
-            {/* Service 5 - Wider card */}
-            <div className="bg-[#1E3CAA3B] p-10 mt-10 rounded-md flex flex-col items-center text-center">
-              <div className="mb-4">
-                <Image
-                  src="/service (1).svg"
-                  alt="Solutions digitales"
-                  width={80}
-                  height={80}
-                />
+            <div className="flex flex-col md:flex-row items-stretch mt-10 ml-10 justify-center gap-20">
+              <div className="w-full md:w-4/5 text-left flex flex-col items-start justify-center">
+                <h2 className="text-4xl font-extrabold mb-8 text-[#C80036]">
+                  LE DEVELOPEMENT MOBILE
+                </h2>
+                <div className="text-lg leading-relaxed  space-y-10">
+                  <p>
+                    Le développement mobile consiste à créer des applications
+                    pour smartphones (iOS, Android) disponibles sur des stores
+                    (App Store, Google Play).
+                  </p>
+                  <p>Deux approches existent :</p>
+                  <ul className="list-disc list-inside pl-4 space-y-6">
+                    <li>
+                      Natifs : Développés spécifiquement pour un OS (Swift pour
+                      iOS, Kotlin pour Android).
+                    </li>
+                    <li>
+                      Cross-platform : Une seule base de code pour plusieurs OS
+                      (Flutter, React Native).
+                    </li>
+                  </ul>
+                </div>
               </div>
-              <h3 className="text-white text-xl font-medium">
-                Solutions digitales pour l'exportation &<br />
-                la présentation des produits algériens
-              </h3>
+
+              <div className="w-full md:w-3/6 relative">
+                <div className="w-full h-full relative min-h-[500px]">
+                  <Image
+                    src="/dev1.svg"
+                    alt="Mission"
+                    fill
+                    className="object-cover rounded-lg"
+                  />
+                </div>
+              </div>
             </div>
+          </section>
+
+          {/* requête de service */}
+          <section className="px-8 py-6 p-5 w-full text-center flex flex-col gap-10">
+            <form
+              onSubmit={handleSubmit}
+              className="w-full  mx-auto flex flex-col px-28  gap-4"
+            >
+              <h1 className="text-4xl font-bold text-[#C41E3A] mb-4">
+                REQUETE DE SERVICE
+              </h1>
+
+              <input
+                type="text"
+                name="nom"
+                value={formData.nom}
+                onChange={handleChange}
+                placeholder="Nom"
+                className="w-full p-3 bg-[#D3D6DE] rounded text-lg text-[##0C1844] font-medium"
+                required
+              />
+
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="Email"
+                className="w-full p-3 bg-[#D3D6DE] rounded text-lg text-[##0C1844] font-medium"
+                required
+              />
+
+              <input
+                type="tel"
+                name="telephone"
+                value={formData.telephone}
+                onChange={handleChange}
+                placeholder="Téléphone"
+                className="w-full p-3 bg-[#D3D6DE] rounded text-lg text-[##0C1844] font-medium"
+                required
+              />
+
+              <div className="flex flex-col gap-2 text-left">
+                <h2 className="text-left text-xl text-[#0C1844] my-4">
+                  Service sollicité
+                </h2>
+
+                <div className="flex flex-col gap-2 mb-4">
+                  <div className="flex items-start gap-2">
+                    <input
+                      type="checkbox"
+                      id="reseauSecurite"
+                      name="reseauSecurite"
+                      checked={formData.services.reseauSecurite}
+                      onChange={handleCheckboxChange}
+                      className="mt-1 w-4 h-4"
+                    />
+                    <label
+                      htmlFor="reseauSecurite"
+                      className="text-left text-lg text-[#0C1844] "
+                    >
+                      Administration réseau & sécurité informatique
+                    </label>
+                  </div>
+
+                  <div className="flex items-start gap-2">
+                    <input
+                      type="checkbox"
+                      id="cloudComputing"
+                      name="cloudComputing"
+                      checked={formData.services.cloudComputing}
+                      onChange={handleCheckboxChange}
+                      className="mt-1 w-4 h-4"
+                    />
+                    <label
+                      htmlFor="cloudComputing"
+                      className="text-left text-lg text-[#0C1844] "
+                    >
+                      Cloud computing & infrastructures digitales
+                    </label>
+                  </div>
+
+                  <div className="flex items-start gap-2">
+                    <input
+                      type="checkbox"
+                      id="devOps"
+                      name="devOps"
+                      checked={formData.services.devOps}
+                      onChange={handleCheckboxChange}
+                      className="mt-1 w-4 h-4"
+                    />
+                    <label
+                      htmlFor="devOps"
+                      className="text-left text-lg text-[#0C1844] "
+                    >
+                      DevOps & automatisation des systèmes
+                    </label>
+                  </div>
+
+                  <div className="flex items-start gap-2">
+                    <input
+                      type="checkbox"
+                      id="developpementWeb"
+                      name="developpementWeb"
+                      checked={formData.services.developpementWeb}
+                      onChange={handleCheckboxChange}
+                      className="mt-1 w-4 h-4"
+                    />
+                    <label
+                      htmlFor="developpementWeb"
+                      className="text-left text-lg text-[#0C1844] "
+                    >
+                      Développement web & mobile
+                    </label>
+                  </div>
+
+                  <div className="flex items-start gap-2">
+                    <input
+                      type="checkbox"
+                      id="solutionsDigitales"
+                      name="solutionsDigitales"
+                      checked={formData.services.solutionsDigitales}
+                      onChange={handleCheckboxChange}
+                      className="mt-1 w-4 h-4"
+                    />
+                    <label
+                      htmlFor="solutionsDigitales"
+                      className="text-left text-lg text-[#0C1844] "
+                    >
+                      Solutions digitales pour l'exportation & la présentation
+                      des produits algériens
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <textarea
+                name="details"
+                value={formData.details}
+                onChange={handleChange}
+                placeholder="Détails"
+                className="w-full p-3 bg-[#D3D6DE] rounded text-lg text-[#0C1844] font-medium min-h-[200px] resize-y"
+              />
+
+              <div className="flex justify-end mt-4">
+                <button
+                  type="submit"
+                  className="bg-[#C80036E5] text-white text-lg py-2 px-4 rounded "
+                >
+                  Envoyer
+                </button>
+              </div>
+            </form>
           </section>
         </div>
       </div>

@@ -495,7 +495,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      
+
       <section className="text-white bg-[#0C1844] mt-20 mb-16 p-6 w-full flex items-center justify-center">
         <div className="flex flex-col md:flex-row items-stretch justify-center w-full max-w-7xl gap-8">
           {/* IMAGE */}
