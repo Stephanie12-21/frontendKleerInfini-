@@ -40,7 +40,7 @@ export default function Header() {
     { name: "Tous les articles", link: "/blog", hasSubmenu: false },
     { name: "Envoie-nous un message", link: "#", hasSubmenu: false },
     { name: "Contact", link: "/contact", hasSubmenu: false },
-    { name: "Connexion", link: "/login", hasSubmenu: false },
+    { name: "Connexion", link: "/auth", hasSubmenu: false },
   ];
 
   return (

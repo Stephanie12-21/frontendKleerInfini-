@@ -62,7 +62,7 @@ export default function Home() {
   const handleScrollDown = () => {
     kleerSectionRef.current?.scrollIntoView({ behavior: "smooth" });
   };
-  
+
   const handleScrollDevDown = () => {
     kleerSectionDevRef.current?.scrollIntoView({ behavior: "smooth" });
   };
