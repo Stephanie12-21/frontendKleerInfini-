@@ -10,6 +10,7 @@ export default function Home() {
   const [showSecondDiv, setShowSecondDiv] = useState(false);
   const kleerSectionRef = useRef();
   const kleerSectionDevRef = useRef();
+
   const [formData, setFormData] = useState({
     nom: "",
     email: "",
@@ -61,6 +62,7 @@ export default function Home() {
   const handleScrollDown = () => {
     kleerSectionRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+  
   const handleScrollDevDown = () => {
     kleerSectionDevRef.current?.scrollIntoView({ behavior: "smooth" });
   };

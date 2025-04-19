@@ -2,7 +2,7 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,6 +15,7 @@ export default function Home() {
   const [prenom, setPrenom] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setphone] = useState("");
+  const kleerSectionRef = useRef();
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -30,6 +31,10 @@ export default function Home() {
     { value: "ATOUTS", label: "NOS ATOUTS" },
     { value: "IMPACT", label: "IMPACT ECONOMIQUE ET SOCIETAL" },
   ];
+
+  const handleScrollDown = () => {
+    kleerSectionRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <div className="flex flex-col items-center justify-center ">
@@ -49,7 +54,10 @@ export default function Home() {
               </h1>
               <p className="text-white text-2xl">Découvrez notre historique</p>
             </div>
-            <Button className="h-12 px-8 py-4 bg-[#1E3CAABF] hover:bg-[#1E3CAABF] rounded-lg cursor-pointer">
+            <Button
+              onClick={handleScrollDown}
+              className="h-12 px-8 py-4 bg-[#1E3CAABF] hover:bg-[#1E3CAABF] rounded-lg cursor-pointer"
+            >
               EN SAVOIR PLUS
             </Button>
           </div>
@@ -62,7 +70,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="w-full mt-3 mb-20">
+      <section ref={kleerSectionRef} className="w-full mt-3 mb-20">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           {isMobile ? (
             <select
