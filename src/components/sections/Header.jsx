@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Search, Menu } from "lucide-react";
+import { Search, Menu, X, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import { Input } from "../ui/input";
 import { useState } from "react";
@@ -14,6 +14,13 @@ import {
   SelectValue,
 } from "../ui/select";
 import { Button } from "../ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetClose,
+  SheetTitle,
+} from "@/components/ui/sheet";
 
 export default function Header() {
   const [language, setLanguage] = useState("fr");
@@ -21,9 +28,19 @@ export default function Header() {
 
   const navItems = [
     { label: "ACCUEIL", href: "/" },
+    { label: "A PROPOS", href: "/" },
     { label: "NOS SERVICES", href: "/services" },
     { label: "BLOG", href: "/blog" },
-    { label: "CONTACT", href: "/contact" },
+    { label: "CONTACT", href: "/" },
+  ];
+
+  const menuItems = [
+    { label: "A propos de nous", href: "/", hasSubmenu: false },
+    { label: "Nos services", href: "/services", hasSubmenu: false },
+    { label: "Tous les articles", href: "/blog", hasSubmenu: false },
+    { label: "Envoie-nous un message", href: "#", hasSubmenu: false },
+    { label: "Contact", href: "/", hasSubmenu: false },
+    { label: "Connexion", href: "/login", hasSubmenu: false },
   ];
 
   return (
@@ -96,10 +113,56 @@ export default function Header() {
           </nav>
 
           <div className="ml-auto">
-            <Button className="flex items-center bg-[#C80036] text-white rounded-md h-9 px-4 py-2 text-base hover:bg-[#a6002a] transition-colors">
-              <Menu className="w-5 h-5 mr-2" />
-              <span>Menu</span>
-            </Button>
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button className="flex items-center bg-[#C80036] text-white rounded-md h-9 px-4 py-2 text-base hover:bg-[#a6002a] transition-colors">
+                  <Menu className="w-5 h-5 mr-2" />
+                  <span>Menu</span>
+                </Button>
+              </SheetTrigger>
+              <SheetContent
+                side="right"
+                className="p-0 max-w-[400px] border-none"
+              >
+                <SheetTitle className="sr-only">Menu de navigation</SheetTitle>
+
+                <div className="flex flex-col h-full bg-white">
+                  <div className="flex justify-end p-4">
+                    <SheetClose className="text-[#C80036]">
+                      <X className="h-6 w-6" />
+                    </SheetClose>
+                  </div>
+
+                  <div className="px-6 pb-6">
+                    <div className="relative mb-6">
+                      <div className="relative rounded-full border border-[#C80036] overflow-hidden">
+                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#C80036]" />
+                        <Input
+                          placeholder="Recherche"
+                          className="border-none pl-10 py-2 focus-visible:ring-0 focus-visible:ring-offset-0"
+                        />
+                      </div>
+                    </div>
+
+                    <nav className="flex flex-col">
+                      {menuItems.map((item, index) => (
+                        <div key={item.href}>
+                          <Link
+                            href={item.href}
+                            className="flex items-center justify-between py-4 text-lg font-medium text-[#0C1844] "
+                          >
+                            {item.label}
+                          </Link>
+                          {index < menuItems.length - 1 && (
+                            <div className="h-px bg-gray-200" />
+                          )}
+                        </div>
+                      ))}
+                    </nav>
+                  </div>
+                </div>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
       </div>
