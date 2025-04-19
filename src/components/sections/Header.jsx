@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Search, Menu, X, ChevronRight } from "lucide-react";
+import { Search, Menu, X } from "lucide-react";
 import Image from "next/image";
 import { Input } from "../ui/input";
 import { useState } from "react";
@@ -28,19 +28,19 @@ export default function Header() {
 
   const navItems = [
     { label: "ACCUEIL", href: "/" },
-    { label: "A PROPOS", href: "/" },
+    { label: "A PROPOS", href: "/a-propos" },
     { label: "NOS SERVICES", href: "/services" },
     { label: "BLOG", href: "/blog" },
-    { label: "CONTACT", href: "/" },
+    { label: "CONTACT", href: "/contact" },
   ];
 
   const menuItems = [
-    { label: "A propos de nous", href: "/", hasSubmenu: false },
-    { label: "Nos services", href: "/services", hasSubmenu: false },
-    { label: "Tous les articles", href: "/blog", hasSubmenu: false },
-    { label: "Envoie-nous un message", href: "#", hasSubmenu: false },
-    { label: "Contact", href: "/", hasSubmenu: false },
-    { label: "Connexion", href: "/login", hasSubmenu: false },
+    { name: "A propos de nous", link: "/a-propos", hasSubmenu: false },
+    { name: "Nos services", link: "/services", hasSubmenu: false },
+    { name: "Tous les articles", link: "/blog", hasSubmenu: false },
+    { name: "Envoie-nous un message", link: "#", hasSubmenu: false },
+    { name: "Contact", link: "/contact", hasSubmenu: false },
+    { name: "Connexion", link: "/login", hasSubmenu: false },
   ];
 
   return (
@@ -97,9 +97,9 @@ export default function Header() {
           </div>
 
           <nav className="absolute left-1/2 transform -translate-x-1/2 flex items-center space-x-10">
-            {navItems.map(({ label, href }) => (
+            {navItems.map(({ label, href }, index) => (
               <Link
-                key={href}
+                key={`${href}-${index}`}
                 href={href}
                 className={`uppercase text-base font-medium transition-colors duration-200 ${
                   pathname === href
@@ -146,12 +146,12 @@ export default function Header() {
 
                     <nav className="flex flex-col">
                       {menuItems.map((item, index) => (
-                        <div key={item.href}>
+                        <div key={`${item.link}-${index}`}>
                           <Link
-                            href={item.href}
+                            href={item.link}
                             className="flex items-center justify-between py-4 text-lg font-medium text-[#0C1844] "
                           >
-                            {item.label}
+                            {item.name}
                           </Link>
                           {index < menuItems.length - 1 && (
                             <div className="h-px bg-gray-200" />
