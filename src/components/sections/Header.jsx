@@ -28,18 +28,18 @@ export default function Header() {
 
   const navItems = [
     { label: "ACCUEIL", href: "/" },
-    { label: "A PROPOS", href: "/" },
+    { label: "A PROPOS", href: "#" },
     { label: "NOS SERVICES", href: "/services" },
     { label: "BLOG", href: "/blog" },
-    { label: "CONTACT", href: "/" },
+    { label: "CONTACT", href: "#" },
   ];
 
   const menuItems = [
     { name: "A propos de nous", link: "/", hasSubmenu: false },
     { name: "Nos services", link: "/services", hasSubmenu: false },
     { name: "Tous les articles", link: "/blog", hasSubmenu: false },
-    { name: "Envoie-nous un message", link: "/", hasSubmenu: false },
-    { name: "Contact", link: "/", hasSubmenu: false },
+    { name: "Envoie-nous un message", link: "#", hasSubmenu: false },
+    { name: "Contact", link: "#", hasSubmenu: false },
     { name: "Connexion", link: "/auth", hasSubmenu: false },
   ];
 
