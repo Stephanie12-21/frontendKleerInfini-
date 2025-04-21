@@ -6,16 +6,66 @@ import { useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+import { SuccessModal } from "../(modal)/success/page";
+import { ErrorModal } from "../(modal)/erreurs/page";
 
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
   const [activeTab, setActiveTab] = useState("MISSION");
+  const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [nom, setNom] = useState("");
   const [prenom, setPrenom] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setphone] = useState("");
   const kleerSectionRef = useRef();
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
+
+  const handleSendMessage = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    const data = {
+      nom,
+      prenom,
+      email,
+      phone: `+${phone}`,
+      message,
+    };
+
+    try {
+      const response = await fetch("/api/contact/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error(
+          "Une erreur s'est produite lors de l'envoi du message."
+        );
+      }
+
+      setIsSuccessModalOpen(true);
+      handleResetForm();
+    } catch (error) {
+      setIsErrorModalOpen(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleResetForm = () => {
+    setNom("");
+    setPrenom("");
+    setEmail("");
+    setphone("");
+    setMessage("");
+  };
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -504,7 +554,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="text-white bg-[#0C1844] mt-20 mb-16 p-6 w-full flex items-center justify-center">
+      <section className="bg-[#0C1844] mt-20 mb-16 p-6 w-full flex items-center justify-center">
         <div className="flex flex-col md:flex-row items-stretch justify-center w-full max-w-7xl gap-8">
           {/* IMAGE */}
           <div className="w-full md:w-1/2 h-full">
@@ -520,10 +570,10 @@ export default function Home() {
 
           {/* FORMULAIRE */}
           <div className="w-full md:w-1/2 flex flex-col justify-center">
-            <h2 className="text-4xl font-extrabold mb-8">
+            <h2 className="text-4xl text-white font-extrabold mb-8">
               ENVOIE-NOUS UN MESSAGE
             </h2>
-            <form className="space-y-6 w-full">
+            <form onSubmit={handleSendMessage} className="space-y-6 w-full">
               <div className="flex flex-col md:flex-row gap-4">
                 <Input
                   id="nom"
@@ -531,7 +581,7 @@ export default function Home() {
                   value={nom}
                   required
                   onChange={(e) => setNom(e.target.value)}
-                  className="bg-[#edf2f7]  font-medium w-full"
+                  className="bg-[#edf2f7] text-[#0C1844D9] font-medium w-full"
                 />
                 <Input
                   id="prenom"
@@ -539,7 +589,7 @@ export default function Home() {
                   value={prenom}
                   required
                   onChange={(e) => setPrenom(e.target.value)}
-                  className="bg-[#edf2f7]  font-medium w-full"
+                  className="bg-[#edf2f7] text-[#0C1844D9] font-medium w-full"
                 />
               </div>
               <Input
@@ -549,15 +599,21 @@ export default function Home() {
                 value={email}
                 required
                 onChange={(e) => setEmail(e.target.value)}
-                className="bg-[#edf2f7]  font-medium w-full"
+                className="bg-[#edf2f7] text-[#0C1844D9] font-medium w-full"
               />
-              <Input
-                id="phone"
-                placeholder="Téléphone"
+              <PhoneInput
+                country="dz"
                 value={phone}
                 required
-                onChange={(e) => setphone(e.target.value)}
-                className="bg-[#edf2f7] font-medium w-full"
+                onChange={setphone}
+                placeholder="Entrez votre numéro de téléphone"
+                inputStyle={{
+                  width: "100%",
+                  height: "40px",
+                  color: "#0C1844D9",
+                }}
+                buttonClass="custom-flag-style"
+                inputClass="col-span-3 items-start w-full bg-[#edf2f7] h-11 text-base font-medium"
               />
               <div className="relative w-full">
                 <textarea
@@ -566,19 +622,51 @@ export default function Home() {
                   onChange={(e) => setMessage(e.target.value)}
                   rows={5}
                   required
-                  className="w-full h-[250px] rounded-md bg-[#edf2f7] text-[#0C1844D9]/85 font-medium p-3 pr-12"
+                  className="w-full h-[250px] rounded-md bg-[#edf2f7] text-[#0C1844D9] font-medium p-3 pr-12"
                 ></textarea>
 
                 <button
                   type="submit"
+                  disabled={loading}
                   className="absolute bottom-3 cursor-pointer right-3 bg-[#C80036] hover:bg-[#C80036] text-white font-extrabold rounded-md w-9 h-9 p-2 flex items-center justify-center"
                 >
-                  <Image src="/envoi.png" alt="play" width={20} height={20} />
+                  {loading ? (
+                    <svg
+                      className="animate-spin h-5 w-5 text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      />
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                      />
+                    </svg>
+                  ) : (
+                    <Image src="/envoi.png" alt="play" width={20} height={20} />
+                  )}
                 </button>
               </div>
             </form>
           </div>
         </div>
+        <SuccessModal
+          isOpen={isSuccessModalOpen}
+          onClose={() => setIsSuccessModalOpen(false)}
+        />
+        <ErrorModal
+          isOpen={isErrorModalOpen}
+          onClose={() => setIsErrorModalOpen(false)}
+        />
       </section>
     </div>
   );

@@ -11,9 +11,10 @@ datasource db {
 /////////pour l'administrateur//////////////////////
 model admin {
   id            Int            @id @default(autoincrement())
+  name          String
+  phone         String         @unique
   email         String         @unique
-  name          String?
-  password      String
+  hashPassword  String
   profileImages profileImage[]
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
@@ -28,9 +29,8 @@ model profileImage {
 
 /////////pour le newsletter//////////////////////
 model newsletter {
-  id               Int     @id @default(autoincrement())
-  email            String  @unique
-  unsubscribeToken String?
+  id    Int    @id @default(autoincrement())
+  email String @unique
 }
 
 ///////pour le blog//////////////////////
