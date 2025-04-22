@@ -26,11 +26,25 @@ model profileImage {
   adminId Int
   admin   admin  @relation(fields: [adminId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
-
+reseauSecurite
 /////////pour le newsletter//////////////////////
 model newsletter {
   id    Int    @id @default(autoincrement())
   email String @unique
+}
+
+////////pour la requête de service////////////////
+model requeteService {
+  id                 Int     @id @default(autoincrement())
+  nom                String
+  email              String
+  telephone          String
+  details            String
+       Boolean @default(false)
+  cloudComputing     Boolean @default(false)
+  devOps             Boolean @default(false)
+  developpementWeb   Boolean @default(false)
+  solutionsDigitales Boolean @default(false)
 }
 
 ///////pour le blog//////////////////////

@@ -1,7 +1,6 @@
 import nodemailer from "nodemailer";
 import { NextResponse } from "next/server";
 
-import jwt from "jsonwebtoken";
 import { db } from "@/lib/db";
 
 async function sendNewsletterEmail(email) {
@@ -14,8 +13,6 @@ async function sendNewsletterEmail(email) {
       pass: process.env.SMTP_PASS,
     },
   });
-
-  const unsubscribeToken = jwt.sign({ email }, process.env.JWT_SECRET);
 
   const mailOptions = {
     from: `"Kleer Infini" <${process.env.SMTP_USER}>`,

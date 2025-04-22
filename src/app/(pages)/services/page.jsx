@@ -4,17 +4,45 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useState, useRef } from "react";
 import { Input } from "@/components/ui/input";
-import { Cloud, Code, Infinity, Lightbulb, Lock } from "lucide-react";
+import { SuccessModal } from "@/app/(modal)/success/page";
+import { ErrorModal } from "@/app/(modal)/erreurs/page";
+import { InfoModal } from "@/app/(modal)/info/page";
+import { z } from "zod";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+
+const emailSchema = z.object({
+  email: z.string().email("Adresse email invalide"),
+});
+const requeteServiceSchema = z.object({
+  nom: z.string().min(2, "Le nom est requis."),
+  email: z.string().email("Email invalide."),
+  telephone: z.string().min(6, "Téléphone invalide."),
+  details: z.string().min(5, "Les détails sont requis."),
+  reseauSecurite: z.boolean(),
+  cloudComputing: z.boolean(),
+  devOps: z.boolean(),
+  developpementWeb: z.boolean(),
+  solutionsDigitales: z.boolean(),
+});
 
 export default function Home() {
   const [showSecondDiv, setShowSecondDiv] = useState(false);
+  const [telephone, setTelephone] = useState("");
   const kleerSectionRef = useRef();
   const kleerSectionDevRef = useRef();
+  const [isLoading, setIsLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
+  const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
+  const [infoMessage, setInfoMessage] = useState("");
+  const [acceptedEmails, setAcceptedEmails] = useState(false);
 
   const [formData, setFormData] = useState({
     nom: "",
     email: "",
-    telephone: "",
+
     services: {
       reseauSecurite: false,
       cloudComputing: false,
@@ -33,6 +61,70 @@ export default function Home() {
     }));
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    const dataToValidateAndSend = {
+      nom: formData.nom,
+      email: formData.email,
+      telephone: `+${telephone}`,
+      details: formData.details,
+      ...formData.services,
+    };
+
+    const result = requeteServiceSchema.safeParse(dataToValidateAndSend);
+
+    console.log(result);
+
+    if (!result.success) {
+      const message = result.error.errors[0].message;
+      alert(message);
+      return;
+    }
+
+    try {
+      const response = await fetch("/api/requeteService", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(result.data),
+      });
+
+      if (response.ok) {
+        alert("Requête envoyée avec succès !");
+        setFormData({
+          nom: "",
+          email: "",
+          telephone: "",
+          details: "",
+          services: {
+            reseauSecurite: false,
+            cloudComputing: false,
+            devOps: false,
+            developpementWeb: false,
+            solutionsDigitales: false,
+          },
+        });
+      } else {
+        alert("Erreur lors de l'envoi de la requête.");
+      }
+    } catch (error) {
+      console.error("Erreur réseau :", error);
+      alert("Erreur réseau.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleContinue = () => {
+    setShowSecondDiv(true);
+  };
+
+  const handleBack = () => {
+    setShowSecondDiv(false);
+  };
+
   const handleCheckboxChange = (e) => {
     const { name, checked } = e.target;
     setFormData((prev) => ({
@@ -44,27 +136,53 @@ export default function Home() {
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Formulaire soumis:", formData);
-    // Ici vous pouvez ajouter la logique pour envoyer les données à votre backend
-    alert("Formulaire envoyé avec succès!");
-  };
-
-  const handleContinue = () => {
-    setShowSecondDiv(true);
-  };
-
-  const handleBack = () => {
-    setShowSecondDiv(false);
-  };
-
   const handleScrollDown = () => {
     kleerSectionRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   const handleScrollDevDown = () => {
     kleerSectionDevRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleNewsletter = async () => {
+    const result = emailSchema.safeParse({ email });
+
+    if (!result.success) {
+      setInfoMessage(result.error.errors[0].message);
+      setIsInfoModalOpen(true);
+      return;
+    }
+
+    try {
+      const response = await fetch("/api/renseignerEmail", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          acceptedEmails, // <-- ajouté ici
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setIsSuccessModalOpen(true);
+        setEmail("");
+        setAcceptedEmails(false);
+      } else if (response.status === 409) {
+        setInfoMessage("Vous avez déjà soumis cette adresse email !");
+        setIsInfoModalOpen(true);
+        setEmail("");
+      } else {
+        setIsErrorModalOpen(true);
+        setEmail("");
+      }
+    } catch (error) {
+      console.error("Erreur réseau :", error);
+      setIsErrorModalOpen(true);
+    }
   };
 
   return (
@@ -333,6 +451,9 @@ export default function Home() {
                 <div className="text-lg flex flex-col text-[#0C1844] mt-5 space-y-8">
                   <Input
                     className="w-full"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     placeholder="Votre adresse e-mail professionnelle "
                   />
                   <div className="flex items-center space-x-3">
@@ -340,6 +461,8 @@ export default function Home() {
                       type="checkbox"
                       id="acceptEmails"
                       className="w-5 h-5 text-[#C80036] accent-[#C80036] rounded-sm"
+                      checked={acceptedEmails}
+                      onChange={(e) => setAcceptedEmails(e.target.checked)}
                     />
                     <label
                       htmlFor="acceptEmails"
@@ -349,7 +472,10 @@ export default function Home() {
                       des informations de la part de Kleer Infini
                     </label>
                   </div>
-                  <button className=" px-4 py-2 bg-[#0C1844] text-lg text-white rounded-sm ">
+                  <button
+                    onClick={handleNewsletter}
+                    className=" px-4 py-2 bg-[#0C1844] text-lg text-white rounded-sm "
+                  >
                     Continuer
                   </button>
                 </div>
@@ -698,34 +824,39 @@ export default function Home() {
                 REQUETE DE SERVICE
               </h1>
 
-              <input
+              <Input
                 type="text"
                 name="nom"
                 value={formData.nom}
                 onChange={handleChange}
                 placeholder="Nom"
-                className="w-full p-3 bg-[#D3D6DE] rounded text-lg text-[##0C1844] font-medium"
+                className="w-full p-3 bg-[#D3D6DE] rounded text-lg text-[#0C1844] font-medium"
                 required
               />
 
-              <input
+              <Input
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="Email"
-                className="w-full p-3 bg-[#D3D6DE] rounded text-lg text-[##0C1844] font-medium"
+                className="w-full p-3 bg-[#D3D6DE] rounded text-lg text-[#0C1844] font-medium"
                 required
               />
 
-              <input
-                type="tel"
-                name="telephone"
-                value={formData.telephone}
-                onChange={handleChange}
-                placeholder="Téléphone"
-                className="w-full p-3 bg-[#D3D6DE] rounded text-lg text-[##0C1844] font-medium"
+              <PhoneInput
+                country="dz"
+                value={telephone}
                 required
+                onChange={setTelephone}
+                placeholder="Entrez votre numéro de téléphone"
+                inputStyle={{
+                  width: "100%",
+                  height: "40px",
+                  color: "#0C1844D9",
+                }}
+                buttonClass="custom-flag-style"
+                inputClass="col-span-3 items-start w-full bg-[#edf2f7] h-11 text-base font-medium"
               />
 
               <div className="flex flex-col gap-2 text-left">
@@ -830,18 +961,56 @@ export default function Home() {
                 className="w-full p-3 bg-[#D3D6DE] rounded text-lg text-[#0C1844] font-medium min-h-[200px] resize-y"
               />
 
-              <div className="flex justify-end mt-4">
+              <div className="flex justify-center w-full mt-4">
                 <button
                   type="submit"
-                  className="bg-[#C80036E5] text-white text-lg py-2 px-4 rounded "
+                  disabled={isLoading}
+                  className="bg-[#C80036E5] w-full text-white cursor-pointer text-lg py-2 px-4 rounded flex justify-center items-center gap-2"
                 >
-                  Envoyer
+                  {isLoading ? (
+                    <svg
+                      className="animate-spin h-8 w-8 text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      />
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                      />
+                    </svg>
+                  ) : (
+                    <span>Envoyer la requête</span>
+                  )}
                 </button>
               </div>
             </form>
           </section>
         </div>
       </div>
+
+      <SuccessModal
+        isOpen={isSuccessModalOpen}
+        onClose={() => setIsSuccessModalOpen(false)}
+      />
+      <ErrorModal
+        isOpen={isErrorModalOpen}
+        onClose={() => setIsErrorModalOpen(false)}
+      />
+      <InfoModal
+        isOpen={isInfoModalOpen}
+        onClose={() => setIsInfoModalOpen(false)}
+        message={infoMessage}
+      />
     </div>
   );
 }
