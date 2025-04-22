@@ -33,20 +33,6 @@ model newsletter {
   email String @unique
 }
 
-////////pour la requête de service////////////////
-model requeteService {
-  id                 Int     @id @default(autoincrement())
-  nom                String
-  email              String
-  telephone          String
-  details            String
-  reseauSecurite     Boolean @default(false)
-  cloudComputing     Boolean @default(false)
-  devOps             Boolean @default(false)
-  developpementWeb   Boolean @default(false)
-  solutionsDigitales Boolean @default(false)
-}
-
 ///////pour le blog//////////////////////
 model article {
   id               Int      @id @default(autoincrement())
