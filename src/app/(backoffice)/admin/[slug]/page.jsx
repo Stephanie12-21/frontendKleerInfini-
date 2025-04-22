@@ -4,21 +4,11 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Head from "next/head";
 import { Input } from "@/components/ui/input";
-
-// Exemple de sécurité (à remplacer par ton vrai système d'authentification)
-const mockUser = {
-  isLoggedIn: true,
-  role: "admin", // Change pour tester : "user" ou "guest"
-};
+import { useSession } from "next-auth/react";
 
 export default function ProfilePage() {
+  const { data: session } = useSession();
   const router = useRouter();
-
-  useEffect(() => {
-    if (!mockUser.isLoggedIn || mockUser.role !== "admin") {
-      router.push("/auth");
-    }
-  }, []);
 
   return (
     <>

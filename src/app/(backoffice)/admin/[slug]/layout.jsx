@@ -3,7 +3,7 @@
 import Footer from "@/components/sections/Footer";
 import Header from "@/components/sections/Header";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   Bell,
@@ -12,10 +12,20 @@ import {
   UserCircle,
   adminCircle,
 } from "lucide-react";
+import { useSession } from "next-auth/react";
+import Provider from "../../../context/Provider";
 
 export default function RootLayout({ children }) {
+  const { data: session } = useSession();
+  const router = useRouter();
+
   const pathname = usePathname();
   const isActive = (path) => pathname === path;
+
+  if (!session) {
+    router.push("/");
+    return null;
+  }
 
   return (
     <div className="min-h-screen ">
