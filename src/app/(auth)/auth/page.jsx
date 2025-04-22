@@ -2,29 +2,61 @@
 
 import Image from "next/image";
 import React, { useState } from "react";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+import { useRouter } from "next/navigation";
+import { set } from "zod";
+import { ErrorModal } from "@/app/(modal)/erreurs/page";
+import { SuccessModal } from "@/app/(modal)/success/page";
 
 const Connexion = () => {
-  const [formData, setFormData] = useState({
-    nom: "",
-    email: "",
-    telephone: "",
-    password: "",
-    confirmPassword: "",
-  });
+  const router = useRouter();
+  const [nom, setNom] = useState("");
+  const [email, setEmail] = useState("");
+  const [emailConnexion, setEmailConnexion] = useState("");
+  const [Phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConnexion, setPasswordConnexion] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleCreateAccount = async (e) => {
     e.preventDefault();
-    console.log("Formulaire soumis:", formData);
-    // Ici vous pouvez ajouter la logique pour envoyer les données à votre backend
-    alert("Formulaire envoyé avec succès!");
-  };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    const telephone = `+${Phone}`;
+
+    const formData = new FormData();
+    formData.append("name", nom);
+    formData.append("email", email);
+    formData.append("phone", telephone);
+    formData.append("password", password);
+
+    if (password !== confirmPassword) {
+      alert("Les mots de passe ne correspondent pas.");
+      return;
+    }
+
+    try {
+      const response = await fetch("/api/compte/", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+      console.log(data);
+
+      if (!response.ok) {
+        setIsErrorModalOpen(true);
+        throw new Error(data.message || "Erreur lors de l'envoi des données.");
+      } else {
+        setIsSuccessModalOpen(true);
+        router.push(`/auth`);
+      }
+    } catch (error) {
+      setIsErrorModalOpen(true);
+      console.error("Erreur lors de l'envoi des données :", error);
+    }
   };
 
   return (
@@ -58,10 +90,7 @@ const Connexion = () => {
               <h2 className="text-4xl font-extrabold mb-8 text-[#C80036]">
                 Avez-vous déja un compte ?
               </h2>
-              <form
-                onSubmit={handleSubmit}
-                className="w-full  mx-auto flex flex-col px-28  gap-4"
-              >
+              <form className="w-full  mx-auto flex flex-col px-28  gap-4">
                 <div className="space-y-2">
                   <label className="text-lg text-[#0C1844]">
                     Adresse e-mail
@@ -69,8 +98,8 @@ const Connexion = () => {
                   <input
                     type="email"
                     name="email"
-                    value={formData.email}
-                    onChange={handleChange}
+                    value={emailConnexion}
+                    onChange={(e) => setEmailConnexion(e.target.value)}
                     className="w-full p-3 bg-[#D3D6DE]  text-lg text-[##0C1844] font-medium"
                     required
                   />
@@ -81,17 +110,17 @@ const Connexion = () => {
                   <input
                     type="password"
                     name="password"
-                    value={formData.password}
-                    onChange={handleChange}
+                    value={passwordConnexion}
+                    onChange={(e) => setPasswordConnexion(e.target.value)}
                     className="w-full p-3 bg-[#D3D6DE]  text-lg text-[##0C1844] font-medium"
                     required
                   />
                 </div>
 
-                <div className="flex justify-center  mt-4">
+                <div className="flex justify-center w-full  mt-4">
                   <button
                     type="submit"
-                    className="bg-[#0C1844] text-white text-lg py-2  px-4 rounded "
+                    className="bg-[#0C1844] text-white w-full text-lg py-2  px-4 rounded "
                   >
                     Continue
                   </button>
@@ -106,7 +135,7 @@ const Connexion = () => {
                 Créer un compte
               </h2>
               <form
-                onSubmit={handleSubmit}
+                onSubmit={handleCreateAccount}
                 className="w-full  mx-auto flex flex-col px-28  gap-4"
               >
                 <div className="space-y-2">
@@ -114,8 +143,8 @@ const Connexion = () => {
                   <input
                     type="name"
                     name="nom"
-                    value={formData.nom}
-                    onChange={handleChange}
+                    value={nom}
+                    onChange={(e) => setNom(e.target.value)}
                     className="w-full p-3 bg-[#D3D6DE]  text-lg text-[##0C1844] font-medium"
                     required
                   />
@@ -128,8 +157,8 @@ const Connexion = () => {
                   <input
                     type="email"
                     name="email"
-                    value={formData.email}
-                    onChange={handleChange}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     className="w-full p-3 bg-[#D3D6DE]  text-lg text-[##0C1844] font-medium"
                     required
                   />
@@ -137,13 +166,20 @@ const Connexion = () => {
 
                 <div className="space-y-2">
                   <label className="text-lg text-[#0C1844]">Téléphone</label>
-                  <input
-                    type="telephone"
-                    name="telephone"
-                    value={formData.telephone}
-                    onChange={handleChange}
-                    className="w-full p-3 bg-[#D3D6DE]  text-lg text-[##0C1844] font-medium"
+                  <PhoneInput
+                    country="dz"
+                    value={Phone}
                     required
+                    onChange={setPhone}
+                    placeholder="Entrez votre numéro de téléphone"
+                    inputStyle={{
+                      width: "100%",
+                      height: "50px",
+                      color: "#0C1844D9",
+                      backgroundColor: "#D3D6DE",
+                    }}
+                    buttonClass="custom-flag-style"
+                    inputClass="col-span-3 items-start w-full h-18 text-lg font-medium"
                   />
                 </div>
 
@@ -152,8 +188,8 @@ const Connexion = () => {
                   <input
                     type="password"
                     name="password"
-                    value={formData.password}
-                    onChange={handleChange}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     className="w-full p-3 bg-[#D3D6DE]  text-lg text-[##0C1844] font-medium"
                     required
                   />
@@ -166,8 +202,8 @@ const Connexion = () => {
                   <input
                     type="password"
                     name="confirmPassword"
-                    value={formData.confirmPassword}
-                    onChange={handleChange}
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
                     className="w-full p-3 bg-[#D3D6DE]  text-lg text-[##0C1844] font-medium"
                     required
                   />
@@ -176,7 +212,7 @@ const Connexion = () => {
                 <div className="flex justify-center  mt-4">
                   <button
                     type="submit"
-                    className="bg-[#0C1844] text-white text-lg py-2  px-4 rounded "
+                    className="bg-[#0C1844] text-white text-lg py-2 w-full px-4 rounded "
                   >
                     Créer
                   </button>
@@ -197,6 +233,14 @@ const Connexion = () => {
           </div>
         </section>
       </div>
+      <SuccessModal
+        isOpen={isSuccessModalOpen}
+        onClose={() => setIsSuccessModalOpen(false)}
+      />
+      <ErrorModal
+        isOpen={isErrorModalOpen}
+        onClose={() => setIsErrorModalOpen(false)}
+      />
     </div>
   );
 };

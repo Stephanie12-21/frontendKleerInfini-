@@ -111,8 +111,6 @@ export default function Home() {
             solutionsDigitales: false,
           },
         });
-
-       
       } else {
         setIsErrorModalOpen(true);
       }
