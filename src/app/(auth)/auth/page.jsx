@@ -5,21 +5,27 @@ import React, { useState } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { useRouter } from "next/navigation";
-import { set } from "zod";
 import { ErrorModal } from "@/app/(modal)/erreurs/page";
+import { getSession, signIn } from "next-auth/react";
 import { SuccessModal } from "@/app/(modal)/success/page";
+import { InfoModal } from "@/app/(modal)/info/page";
+import slugify from "slugify";
 
 const Connexion = () => {
   const router = useRouter();
   const [nom, setNom] = useState("");
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
   const [emailConnexion, setEmailConnexion] = useState("");
   const [Phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const [passwordConnexion, setPasswordConnexion] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
+  const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
+  const [infoMessage, setInfoMessage] = useState("");
 
   const handleCreateAccount = async (e) => {
     e.preventDefault();
@@ -59,6 +65,46 @@ const Connexion = () => {
     }
   };
 
+  const handleLogIn = async (e) => {
+    e.preventDefault();
+    setLoading(true); // Lance l'indicateur de chargement
+
+    setError(""); // Réinitialise les erreurs précédentes
+    try {
+      const loginData = await signIn("credentials", {
+        email: emailConnexion,
+        password: passwordConnexion,
+        redirect: false, // On veut gérer la redirection manuellement
+      });
+
+      if (loginData?.error) {
+        setError(loginData.error); // Affiche l'erreur du serveur
+        setLoading(false); // Désactive l'indicateur de chargement
+        return;
+      }
+
+      const updatedSession = await getSession();
+
+      if (!updatedSession?.user) {
+        setError("Utilisateur introuvable ou session invalide.");
+        setLoading(false);
+        return;
+      }
+
+      const firstName = updatedSession.user.name || "utilisateur";
+      const slug = `${slugify(firstName)}`;
+
+      // Redirige après une petite pause pour laisser l'état se mettre à jour
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      router.push(`/admin/${slug}/`);
+    } catch (error) {
+      console.error("Login error:", error);
+      setError("Une erreur s'est produite, veuillez réessayer.");
+    } finally {
+      setLoading(false); // Assure-toi de désactiver le loading à la fin
+    }
+  };
+
   return (
     <div className="min-h-screen">
       <div
@@ -90,7 +136,10 @@ const Connexion = () => {
               <h2 className="text-4xl font-extrabold mb-8 text-[#C80036]">
                 Avez-vous déja un compte ?
               </h2>
-              <form className="w-full  mx-auto flex flex-col px-28  gap-4">
+              <form
+                onSubmit={handleLogIn}
+                className="w-full  mx-auto flex flex-col px-28  gap-4"
+              >
                 <div className="space-y-2">
                   <label className="text-lg text-[#0C1844]">
                     Adresse e-mail
@@ -240,6 +289,11 @@ const Connexion = () => {
       <ErrorModal
         isOpen={isErrorModalOpen}
         onClose={() => setIsErrorModalOpen(false)}
+      />
+      <InfoModal
+        isOpen={isInfoModalOpen}
+        onClose={() => setIsInfoModalOpen(false)}
+        message={infoMessage}
       />
     </div>
   );

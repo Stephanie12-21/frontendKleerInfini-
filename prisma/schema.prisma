@@ -15,17 +15,11 @@ model admin {
   phone         String         @unique
   email         String         @unique
   hashPassword  String
-  profileImages profileImage[]
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
 }
 
-model profileImage {
-  id      Int    @id @default(autoincrement())
-  path    String
-  adminId Int
-  admin   admin  @relation(fields: [adminId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-}
+
 
 /////////pour le newsletter//////////////////////
 model newsletter {
