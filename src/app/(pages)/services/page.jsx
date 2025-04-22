@@ -78,7 +78,8 @@ export default function Home() {
 
     if (!result.success) {
       const message = result.error.errors[0].message;
-      alert(message);
+      setInfoMessage(message);
+
       return;
     }
 
@@ -92,7 +93,11 @@ export default function Home() {
       });
 
       if (response.ok) {
-        alert("Requête envoyée avec succès !");
+        setInfoMessage(
+          "Votre demande a bien été envoyée  et vous recevrez une notification par email!"
+        );
+        setIsInfoModalOpen(true);
+
         setFormData({
           nom: "",
           email: "",
@@ -106,12 +111,14 @@ export default function Home() {
             solutionsDigitales: false,
           },
         });
+
+       
       } else {
-        alert("Erreur lors de l'envoi de la requête.");
+        setIsErrorModalOpen(true);
       }
     } catch (error) {
       console.error("Erreur réseau :", error);
-      alert("Erreur réseau.");
+      setIsErrorModalOpen(true);
     } finally {
       setIsLoading(false);
     }

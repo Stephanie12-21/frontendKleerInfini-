@@ -19,7 +19,7 @@ async function sendRequeteServiceEmail(data) {
     html: `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff;">
       <div style="background-color: #C80036; padding: 20px; border-radius: 8px; text-align: center; margin-bottom: 20px;">
-        <h1 style="color: #ffffff; margin: 0; font-size: 24px;">Nouvelle requête reçue depuis le site Kleer Infini !</h1>
+        <h1 style="color: #ffffff; margin: 0; font-size: 24px;">Nouvelle requête reçue depuis le site Kleer Infini</h1>
       </div>
 
       <div style="padding: 20px; line-height: 1.5; color: #333333;">
