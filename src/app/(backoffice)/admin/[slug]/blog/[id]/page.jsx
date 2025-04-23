@@ -7,22 +7,11 @@ import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
+import { useParams } from "next/navigation";
 
-const fetchArticle = async (id) => {
-  try {
-    const response = await fetch(`/api/blog/${id}`);
-    if (!response.ok) {
-      throw new Error("Article non trouvé");
-    }
-    return await response.json();
-  } catch (error) {
-    console.error("Erreur lors de la récupération de l'article:", error);
-    throw error;
-  }
-};
-
-const ArticleDetailPage = ({ params }) => {
-  const { id } = params || {};
+const ArticleDetailPage = () => {
+  const params = useParams();
+  const id = params?.id;
   const [article, setArticle] = useState(null);
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");

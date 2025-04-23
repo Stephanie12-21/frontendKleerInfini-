@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
   const [email, setEmail] = useState("");
   const { data: session, status } = useSession();
   const { slug } = useParams();
-  
+
   if (!slug) {
     return <div>Chargement...</div>;
   }

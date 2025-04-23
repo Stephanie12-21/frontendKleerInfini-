@@ -88,7 +88,7 @@ const Annonces = () => {
       setIsSuccessModalOpen(true);
 
       setTimeout(() => {
-        router.push("/admin/blog");
+        router.push(`/admin/${slug}/blog/`);
       }, 2000);
     } catch (error) {
       console.error("Erreur lors de la suppression des données :", error);
@@ -196,14 +196,14 @@ const Annonces = () => {
 
                 <div className="flex justify-between items-center w-full pt-8 mt-auto">
                   <Link
-                    href={`/admin/blog/${article.id}`}
+                    href={`/admin/${slug}/blog/${article.id}`}
                     className="text-green-500 hover:text-green-700 transition-colors"
                     title="Voir"
                   >
                     <Eye className="h-6 w-6" />
                   </Link>
                   <Link
-                    href={`/admin/blog/editBlog/${article.id}`}
+                    href={`/admin/${slug}/blog/editBlog/${article.id}`}
                     className="text-yellow-500 hover:text-yellow-700 transition-colors"
                     title="Éditer"
                   >
