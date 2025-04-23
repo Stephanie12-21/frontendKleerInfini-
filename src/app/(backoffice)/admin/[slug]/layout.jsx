@@ -3,32 +3,57 @@
 import Footer from "@/components/sections/Footer";
 import Header from "@/components/sections/Header";
 import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import {
   Bell,
   MessageCircleMore,
   Newspaper,
+  Settings,
   UserCircle,
-  adminCircle,
 } from "lucide-react";
 import { useSession } from "next-auth/react";
-import Provider from "../../../context/Provider";
+import { useEffect, useState } from "react";
 
 export default function RootLayout({ children }) {
-  const { data: session } = useSession();
-  const router = useRouter();
-
   const pathname = usePathname();
   const isActive = (path) => pathname === path;
 
-  if (!session) {
-    router.push("/");
-    return null;
+  const [phone, setPhone] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [editMode, setEditMode] = useState(false);
+  const { data: session, status } = useSession();
+
+  useEffect(() => {
+    if (status === "authenticated" && session?.user) {
+      setName(session.user.name || "");
+      setEmail(session.user.email || "");
+      setPhone(session.user.phone || "");
+    }
+  }, [session, status]);
+
+  if (status === "loading") {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p>Chargement...</p>
+      </div>
+    );
+  }
+
+  if (status === "unauthenticated") {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <p className="text-lg font-semibold text-red-600">
+          Une connexion est requise pour accéder à cette page.
+        </p>
+      </div>
+    );
   }
 
   return (
-    <div className="min-h-screen ">
+    <div className="min-h-screen">
       <Header />
       <div className="w-full mt-5 px-6 flex items-center gap-6">
         <Image
@@ -57,55 +82,55 @@ export default function RootLayout({ children }) {
           </div>
 
           <nav className="space-y-4">
-            <Link
+            <SidebarLink
               href="/admin"
-              className={`flex items-center gap-3 p-2 rounded-md ${
-                isActive("/admin") ? "text-[#C80036]" : "text-[#0C1844]"
-              }`}
-            >
-              <UserCircle className="h-10 w-10" />
-              <span className="text-lg font-bold">PROFILE</span>
-            </Link>
-
-            <Link
+              label="PROFILE"
+              icon={<UserCircle className="h-10 w-10" />}
+              active={isActive("/admin")}
+            />
+            <SidebarLink
               href="/admin/notifications"
-              className={`flex items-center gap-3 p-2 rounded-md ${
-                isActive("/admin/notifications")
-                  ? "text-[#C80036]"
-                  : "text-[#0C1844]"
-              }`}
-            >
-              <Bell className="h-10 w-10" />
-              <span className="text-lg font-bold">NOTIFICATIONS</span>
-            </Link>
-
-            <Link
+              label="NOTIFICATIONS"
+              icon={<Bell className="h-10 w-10" />}
+              active={isActive("/admin/notifications")}
+            />
+            <SidebarLink
               href="/admin/blog"
-              className={`flex items-center gap-3 p-2 rounded-md ${
-                isActive("/admin/blog") ? "text-[#C80036]" : "text-[#0C1844]"
-              }`}
-            >
-              <Newspaper className="h-10 w-10" />
-              <span className="text-lg font-bold">BLOG & ARTICLES</span>
-            </Link>
-
-            <Link
+              label="BLOG & ARTICLES"
+              icon={<Newspaper className="h-10 w-10" />}
+              active={isActive("/admin/blog")}
+            />
+            <SidebarLink
               href="/admin/chat"
-              className={`flex items-center gap-3 p-2 rounded-md ${
-                isActive("/admin/chat") ? "text-[#C80036]" : "text-[#0C1844]"
-              }`}
-            >
-              <MessageCircleMore className="h-10 w-10" />
-              <div className="flex flex-col">
-                <span className="text-lg font-bold">CHAT</span>
-                <span className="text-lg font-bold">KLEER INFINI</span>
-              </div>
-            </Link>
+              label="CHAT KLEER INFINI"
+              icon={<MessageCircleMore className="h-10 w-10" />}
+              active={isActive("/admin/chat")}
+            />
+            <SidebarLink
+              href="/admin/parameters"
+              label="PARAMETRES"
+              icon={<Settings className="h-10 w-10" />}
+              active={isActive("/admin/parameters")}
+            />
           </nav>
         </div>
-        <main className="flex-1 p-4">{children}</main>
+        <main className="flex-1 p-8">{children}</main>
       </div>
       <Footer />
     </div>
+  );
+}
+
+function SidebarLink({ href, icon, label, active }) {
+  return (
+    <Link
+      href={href}
+      className={`flex items-center gap-3 p-2 rounded-md ${
+        active ? "text-[#C80036]" : "text-[#0C1844]"
+      }`}
+    >
+      {icon}
+      <span className="text-lg font-bold">{label}</span>
+    </Link>
   );
 }

@@ -67,19 +67,19 @@ const Connexion = () => {
 
   const handleLogIn = async (e) => {
     e.preventDefault();
-    setLoading(true); // Lance l'indicateur de chargement
+    setLoading(true);
 
-    setError(""); // Réinitialise les erreurs précédentes
+    setError("");
     try {
       const loginData = await signIn("credentials", {
         email: emailConnexion,
         password: passwordConnexion,
-        redirect: false, // On veut gérer la redirection manuellement
+        redirect: false,
       });
 
       if (loginData?.error) {
-        setError(loginData.error); // Affiche l'erreur du serveur
-        setLoading(false); // Désactive l'indicateur de chargement
+        setError(loginData.error);
+        setLoading(false);
         return;
       }
 
@@ -94,14 +94,13 @@ const Connexion = () => {
       const firstName = updatedSession.user.name || "utilisateur";
       const slug = `${slugify(firstName)}`;
 
-      // Redirige après une petite pause pour laisser l'état se mettre à jour
       await new Promise((resolve) => setTimeout(resolve, 500));
-      router.push(`/admin/${slug}/`);
+      router.push(`/admin/${slug}/profile/${updatedSession.user.id}`);
     } catch (error) {
       console.error("Login error:", error);
       setError("Une erreur s'est produite, veuillez réessayer.");
     } finally {
-      setLoading(false); // Assure-toi de désactiver le loading à la fin
+      setLoading(false);
     }
   };
 

@@ -14,9 +14,6 @@ export async function GET(req, { params }) {
   try {
     const admin = await db.admin.findUnique({
       where: { id: parseInt(adminId, 10) },
-      include: {
-        profileImages: true,
-      },
     });
 
     if (!admin) {
@@ -58,7 +55,6 @@ export async function PUT(request, { params }) {
     const name = body.get("name");
     const email = body.get("email");
     const phone = body.get("phone");
-    const images = body.getAll("image");
 
     if (!name || !email || !phone) {
       return new NextResponse(
@@ -75,40 +71,11 @@ export async function PUT(request, { params }) {
         phone,
       },
     });
-
-    if (images.length > 0) {
-      await db.profileImage.deleteMany({
-        where: { adminId: updatedadmin.id },
-      });
-
-      for (const file of images) {
-        const formData = new FormData();
-        formData.append("file", file);
-        formData.append("upload_preset", "ko4bjtic");
-
-        const uploadResponse = await fetch(
-          "https://api.cloudinary.com/v1_1/dtryutlkz/image/upload",
-          {
-            method: "POST",
-            body: formData,
-          }
-        );
-
-        const uploadResult = await uploadResponse.json();
-
-        if (!uploadResponse.ok || !uploadResult.secure_url) {
-          throw new Error("Échec du téléchargement de l'image");
-        }
-
-        const imageUrl = uploadResult.secure_url;
-
-        await db.profileImage.create({
-          data: {
-            path: imageUrl,
-            adminId: updatedadmin.id,
-          },
-        });
-      }
+    if (!updatedadmin) {
+      return new NextResponse(
+        JSON.stringify({ message: "Utilisateur non trouvé." }),
+        { status: 404 }
+      );
     }
 
     return new NextResponse(
@@ -139,9 +106,6 @@ export async function DELETE(req, { params }) {
   try {
     const admin = await db.admin.findUnique({
       where: { id: parseInt(adminId, 10) },
-      include: {
-        profileImages: true,
-      },
     });
 
     if (!admin) {

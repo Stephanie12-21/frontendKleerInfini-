@@ -47,6 +47,7 @@ export const auth = {
           id: admin.id.toString(),
           name: admin.name,
           email: admin.email,
+          phone: admin.phone,
         };
       },
     }),
@@ -57,6 +58,7 @@ export const auth = {
         token.id = user.id;
         token.name = user.name;
         token.email = user.email;
+        token.phone = user.phone;
       }
       return token;
     },
@@ -65,6 +67,7 @@ export const auth = {
         id: token.id,
         name: token.name,
         email: token.email,
+        phone: token.phone,
       };
       return session;
     },
