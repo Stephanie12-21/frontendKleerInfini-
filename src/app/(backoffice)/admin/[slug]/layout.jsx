@@ -18,14 +18,12 @@ import { useEffect, useState } from "react";
 export default function RootLayout({ children }) {
   const pathname = usePathname();
   const isActive = (path) => pathname === path;
-  const { slug } = useParams();
   const [phone, setPhone] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [editMode, setEditMode] = useState(false);
   const { data: session, status } = useSession();
-
+  const { slug } = useParams();
+  
   if (!slug) {
     return <div>Chargement...</div>;
   }
@@ -35,12 +33,6 @@ export default function RootLayout({ children }) {
   if (!nom) {
     return <div>Erreur : données du slug invalides</div>;
   }
-  const capitalizeWords = (str) => {
-    return str
-      .split("-")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ");
-  };
 
   const handleSignOut = async () => {
     await signOut({ redirect: false });
