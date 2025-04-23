@@ -3,7 +3,7 @@
 import Footer from "@/components/sections/Footer";
 import Header from "@/components/sections/Header";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import Link from "next/link";
 import {
   Bell,
@@ -12,19 +12,40 @@ import {
   Settings,
   UserCircle,
 } from "lucide-react";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
 export default function RootLayout({ children }) {
   const pathname = usePathname();
   const isActive = (path) => pathname === path;
-
+  const { slug } = useParams();
   const [phone, setPhone] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [editMode, setEditMode] = useState(false);
   const { data: session, status } = useSession();
+
+  if (!slug) {
+    return <div>Chargement...</div>;
+  }
+
+  const [nom] = slug.split("-");
+
+  if (!nom) {
+    return <div>Erreur : données du slug invalides</div>;
+  }
+  const capitalizeWords = (str) => {
+    return str
+      .split("-")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
+
+  const handleSignOut = async () => {
+    await signOut({ redirect: false });
+    router.push("/auth");
+  };
 
   useEffect(() => {
     if (status === "authenticated" && session?.user) {
@@ -83,35 +104,44 @@ export default function RootLayout({ children }) {
 
           <nav className="space-y-4">
             <SidebarLink
-              href="/admin"
+              href={`/admin/${slug}/profile/${session?.user.id}`}
               label="PROFILE"
               icon={<UserCircle className="h-10 w-10" />}
-              active={isActive("/admin")}
+              active={isActive(`/admin/${slug}/profile/${session?.user?.id}`)}
             />
             <SidebarLink
-              href="/admin/notifications"
+              href={`/admin/${slug}/notifications/`}
               label="NOTIFICATIONS"
               icon={<Bell className="h-10 w-10" />}
-              active={isActive("/admin/notifications")}
+              active={isActive(`/admin/${slug}/notifications/`)}
             />
             <SidebarLink
-              href="/admin/blog"
+              href={`/admin/${slug}/blog/`}
               label="BLOG & ARTICLES"
               icon={<Newspaper className="h-10 w-10" />}
-              active={isActive("/admin/blog")}
+              active={isActive(`/admin/${slug}/blog/`)}
             />
             <SidebarLink
-              href="/admin/chat"
+              href={`/admin/${slug}/chat/`}
               label="CHAT KLEER INFINI"
               icon={<MessageCircleMore className="h-10 w-10" />}
-              active={isActive("/admin/chat")}
+              active={isActive(`/admin/${slug}/chat/`)}
             />
             <SidebarLink
-              href="/admin/parameters"
+              href={`/admin/${slug}/parameters/${session?.user.id}`}
               label="PARAMETRES"
               icon={<Settings className="h-10 w-10" />}
-              active={isActive("/admin/parameters")}
+              active={isActive(
+                `/admin/${slug}/paramaters/${session?.user?.id}`
+              )}
             />
+            <button>
+              <span className="text-lg font-bold text-[#0C1844]">
+                <Link href="/auth" onClick={handleSignOut}>
+                  Se déconnecter
+                </Link>
+              </span>
+            </button>
           </nav>
         </div>
         <main className="flex-1 p-8">{children}</main>

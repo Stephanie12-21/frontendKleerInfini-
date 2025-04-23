@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 
-export async function GET(req, { params }) {
+export async function GET(request, context) {
+  const { params } = context;
   const adminId = params.id;
 
   if (!adminId) {
