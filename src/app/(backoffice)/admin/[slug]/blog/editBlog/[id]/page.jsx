@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Loader2, X } from "lucide-react";
@@ -12,7 +12,7 @@ import { SuccessModal } from "@/app/(modal)/success/page";
 import { ErrorModal } from "@/app/(modal)/erreurs/page";
 
 const ArticleDetailPageModif = ({ params }) => {
-  const { id } = params;
+  const { id } = use(params);
   const [article, setArticle] = useState(null);
   const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
