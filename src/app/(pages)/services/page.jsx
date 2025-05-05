@@ -10,6 +10,7 @@ import { InfoModal } from "@/app/(modal)/info/page";
 import { z } from "zod";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import { Label } from "@/components/ui/label";
 
 const emailSchema = z.object({
   email: z.string().email("Adresse email invalide"),
@@ -199,7 +200,7 @@ export default function Home() {
         style={{ width: "200%" }}
       >
         {/* Premier écran */}
-        <div className="w-1/2 flex-shrink-0">
+        <div className="w-full flex-grow">
           <section
             className="relative flex flex-col items-center justify-center h-[600px] text-center px-10 bg-cover bg-center space-y-10 w-full"
             style={{
@@ -239,8 +240,9 @@ export default function Home() {
                 KLEER INFINI
               </h2>
             </div>
-            <div className="w-full relative flex justify-between gap-20">
-              <div className="w-full md:w-2/5">
+            <div className="w-full relative flex flex-col md:flex-row justify-between gap-20">
+              {/* IMAGE : cachée sur petits écrans */}
+              <div className="hidden md:block w-full md:w-2/5">
                 <div className="w-full h-full relative min-h-[300px]">
                   <Image
                     src="/serviceImage.jfif"
@@ -250,6 +252,8 @@ export default function Home() {
                   />
                 </div>
               </div>
+
+              {/* TEXTE */}
               <div className="w-full md:w-3/5 flex flex-col gap-y-5">
                 <p className="text-lg">
                   Kleernet Infini prend en charge l'ensemble du processus
@@ -281,12 +285,15 @@ export default function Home() {
           {/* services logistiques personnalisés */}
           <section className="w-full px-8 py-10 bg-[#0C1844] text-white flex flex-col items-center justify-center">
             <div className="flex items-center justify-center">
-              <h1 className="text-[#C80036] text-3xl font-bold">
-                NOS SERVICES LOGISTIQUES SPECIALISES
+              <h1 className="text-[#C80036] text-3xl font-bold text-center">
+                NOS SERVICES LOGISTIQUES SPÉCIALISÉS
               </h1>
             </div>
-            <div className="flex items-center justify-center gap-10 pt-10">
-              <div className="relative w-[400px] h-[500px] rounded-lg overflow-hidden">
+
+            {/* Disposition en colonne sur mobile, en ligne à partir de md */}
+            <div className="flex flex-col md:flex-row items-center justify-center gap-10 pt-10">
+              {/* Image 1 */}
+              <div className="relative w-[300px] md:w-[400px] h-[450px] md:h-[500px] rounded-lg overflow-hidden">
                 <div className="absolute inset-0 z-0">
                   <Image
                     src="/image2.svg"
@@ -296,11 +303,9 @@ export default function Home() {
                     className="w-full h-full object-cover"
                   />
                 </div>
-
                 <div className="relative z-10 w-full h-full flex items-end justify-center px-8 py-4">
                   <div className="relative w-full h-[60px]">
                     <div className="absolute top-0 right-0 w-full h-[45px] bg-[#C80036] rounded-sm z-0"></div>
-
                     <div className="absolute bottom-1 right-3 w-full bg-white rounded-sm shadow-md z-10 flex justify-between items-center px-4 py-2">
                       <span className="text-[#0C1844] font-medium text-lg">
                         Fret Routier
@@ -311,7 +316,8 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="relative w-[400px] h-[500px] rounded-lg overflow-hidden">
+              {/* Image 2 */}
+              <div className="relative w-[300px] md:w-[400px] h-[450px] md:h-[500px] rounded-lg overflow-hidden">
                 <div className="absolute inset-0 z-0">
                   <Image
                     src="/image3.jfif"
@@ -321,11 +327,9 @@ export default function Home() {
                     className="w-full h-full object-cover"
                   />
                 </div>
-
                 <div className="relative z-10 w-full h-full flex items-end justify-center px-8 py-4">
                   <div className="relative w-full h-[60px]">
                     <div className="absolute top-0 right-0 w-full h-[45px] bg-[#C80036] rounded-sm z-0"></div>
-
                     <div className="absolute bottom-1 right-3 w-full bg-white rounded-sm shadow-md z-10 flex justify-between items-center px-4 py-2">
                       <span className="text-[#0C1844] font-medium text-lg">
                         Fret Maritime
@@ -336,7 +340,8 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="relative w-[400px] h-[500px] rounded-lg overflow-hidden">
+              {/* Image 3 */}
+              <div className="relative w-[300px] md:w-[400px] h-[450px] md:h-[500px] rounded-lg overflow-hidden">
                 <div className="absolute inset-0 z-0">
                   <Image
                     src="/image4.jfif"
@@ -346,11 +351,9 @@ export default function Home() {
                     className="w-full h-full object-cover"
                   />
                 </div>
-
                 <div className="relative z-10 w-full h-full flex items-end justify-center px-8 py-4">
                   <div className="relative w-full h-[60px]">
                     <div className="absolute top-0 right-0 w-full h-[45px] bg-[#C80036] rounded-sm z-0"></div>
-
                     <div className="absolute bottom-1 right-3 w-full bg-white rounded-sm shadow-md z-10 flex justify-between items-center px-4 py-2">
                       <span className="text-[#0C1844] font-medium text-lg">
                         Fret Aérien
@@ -364,22 +367,21 @@ export default function Home() {
           </section>
 
           {/* suivie et traçabilité */}
-          <section className="w-full px-40">
-            <div className=" flex flex-col items-start justify-start px-10 my-10 bg-[#0C1844] text-center bg-cover bg-center relative space-y-10 py-10 rounded-lg ">
+          <section className="w-full px-4 sm:px-8 md:px-20 lg:px-40">
+            <div className="flex flex-col items-start justify-start px-4 sm:px-6 md:px-10 my-10 bg-[#0C1844] text-center bg-cover bg-center relative space-y-10 py-10 rounded-lg">
               <div className="w-full space-y-6">
-                <h1 className="text-[#C80036] text-4xl font-bold text-left">
+                <h1 className="text-[#C80036] text-2xl sm:text-3xl md:text-4xl font-bold text-left">
                   SUIVI & TRAÇABILITÉ
                 </h1>
 
-                <div className="w-full bg-white rounded-sm shadow-md flex justify-between items-center px-4 py-2">
+                <div className="w-full bg-white rounded-sm shadow-md flex flex-col sm:flex-row justify-between items-stretch sm:items-center px-4 py-2 space-y-4 sm:space-y-0 sm:space-x-4">
                   <input
                     type="text"
                     placeholder="Numéro de recherche"
-                    className="flex-1 text-[#0C1844] font-medium text-lg outline-none bg-transparent"
+                    className="flex-1 text-[#0C1844] font-medium text-base md:text-lg outline-none bg-transparent"
                   />
 
-                  <button className=" px-4 py-2 bg-[#C80036E5] text-lg text-white rounded-sm ml-4">
-                    {" "}
+                  <button className="w-full sm:w-auto px-4 py-2 bg-[#C80036E5] text-base md:text-lg text-white rounded-sm">
                     Trouver
                   </button>
                 </div>
@@ -388,30 +390,32 @@ export default function Home() {
           </section>
 
           {/*type de produits */}
-          <section className="px-8 py-6 text-[#0C1844] text-center flex flex-col gap-10">
+          <section className="px-4 sm:px-6 md:px-8 py-6 text-[#0C1844] text-center flex flex-col gap-10">
             <div className="flex flex-col md:flex-row items-stretch justify-center gap-10">
-              <div className="w-full md:w-3/6 relative min-h-[400px]">
-                <div className="relative z-10 w-full h-full flex items-start justify-center px-8 py-4">
+              {/* Image - visible uniquement à partir de md */}
+              <div className="hidden md:block w-full md:w-1/2 relative min-h-[300px] sm:min-h-[400px]">
+                <div className="relative z-10 w-full h-full flex items-start justify-center px-4 py-4">
                   <div className="relative w-full h-full">
-                    <div className="relative  left-3 w-full h-full bg-[#0C1844]  z-0"></div>
+                    <div className="absolute left-3 w-full h-full bg-[#0C1844] z-0 "></div>
 
-                    <div className="absolute top-5 right-3 w-full h-full   shadow-md z-10 flex justify-between items-center px-4 py-2">
+                    <div className="absolute top-5 right-3 w-full h-full shadow-md z-10  overflow-hidden">
                       <Image
                         src="/image5.svg"
                         alt="Fret Aérien"
                         fill
-                        className="w-full h-full object-cover "
+                        className="w-full h-full object-cover"
                       />
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="w-full md:w-4/5 text-left flex flex-col items-start justify-center">
-                <h2 className="text-4xl font-extrabold mb-8 text-[#C80036]">
+              {/* Texte */}
+              <div className="w-full md:w-1/2 text-left flex flex-col items-start justify-center">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-4 sm:mb-6 text-[#C80036]">
                   TYPE PRODUIT
                 </h2>
-                <div className="text-lg leading-relaxed text-[#0C1844] mt-5 space-y-15">
+                <div className="text-base sm:text-lg leading-relaxed text-[#0C1844] space-y-4">
                   <p>
                     Notre entreprise est spécialisée dans l&apos;exportation et
                     le commerce international de tous types de produits (y
@@ -419,7 +423,6 @@ export default function Home() {
                     parapharmaceutiques), à l&apos;exception des carburants.
                   </p>
                   <p>
-                    {" "}
                     Nous garantissons des produits conformes aux normes
                     internationales et assurons une livraison rapide et
                     sécurisée grâce à notre réseau logistique performant.
@@ -432,28 +435,30 @@ export default function Home() {
           {/* saisir l'adresse mail*/}
           <section className="w-full px-8 py-6 text-[#0C1844] text-center flex flex-col gap-10">
             <div className="w-full flex flex-col md:flex-row items-stretch justify-center gap-10">
-              <div className="w-full md:w-3/6 relative min-h-[400px]">
-                <div className="relative z-10 w-full h-full flex items-start justify-center px-8 py-4">
+              {/* Image - visible uniquement à partir de md */}
+              <div className="hidden md:block w-full md:w-1/2 relative min-h-[300px] sm:min-h-[400px]">
+                <div className="relative z-10 w-full h-full flex items-start justify-center px-4 py-4">
                   <div className="relative w-full h-full">
-                    <div className="relative  left-3 w-full h-full bg-[#0C1844]  z-0"></div>
+                    <div className="absolute left-3 w-full h-full bg-[#0C1844] z-0"></div>
 
-                    <div className="absolute top-5 right-3 w-full h-full   shadow-md z-10 flex justify-between items-center px-4 py-2">
+                    <div className="absolute top-5 right-3 w-full h-full shadow-md z-10">
                       <Image
                         src="/image7.jfif"
                         alt="Fret Aérien"
                         fill
-                        className="w-full h-full object-cover "
+                        className="w-full h-full object-cover"
                       />
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="w-full md:w-4/5 text-left flex flex-col items-start justify-center pr-32">
-                <h2 className="text-4xl font-extrabold mb-8 text-[#C80036]">
+              {/* Formulaire */}
+              <div className="w-full md:w-1/2 text-left flex flex-col items-start justify-center pr-8 md:pr-32">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-6 text-[#C80036]">
                   Merci de renseigner votre adresse e-mail
                 </h2>
-                <div className="text-lg flex flex-col text-[#0C1844] mt-5 space-y-8">
+                <div className="text-base sm:text-lg leading-relaxed text-[#0C1844] mt-5 space-y-6">
                   <Input
                     className="w-full"
                     type="email"
@@ -479,7 +484,7 @@ export default function Home() {
                   </div>
                   <button
                     onClick={handleNewsletter}
-                    className=" px-4 py-2 bg-[#0C1844] text-lg text-white rounded-sm "
+                    className="px-4 py-2 bg-[#0C1844] text-lg text-white rounded-sm"
                   >
                     Continuer
                   </button>
@@ -489,48 +494,45 @@ export default function Home() {
           </section>
 
           {/* liste des documents */}
-          <section className="w-full my-10  text-[#0C1844] text-center flex flex-col ">
+          <section className="w-full my-10 text-[#0C1844] text-center flex flex-col">
             <h2 className="text-4xl font-extrabold mb-3 text-[#C80036]">
               LISTE DES DOCUMENTS
             </h2>
-            <p className="text-3xl font-bold  text-[#C80036]">
-              {" "}
+            <p className="text-3xl font-bold text-[#C80036] mb-10">
               Nécessaires pour l&apos;Exportation vers l&apos;Europe/France
             </p>
-            <div className="w-full flex flex-col md:flex-row items-stretch justify-center gap-10">
-              <div className="w-full md:w-3/6 relative min-h-[400px]">
-                <div className="relative z-10 w-full h-full flex items-start justify-center px-8 py-4">
-                  <div className="relative w-full h-full">
-                    <div className="absolute top-5 right-3 w-full h-full    z-10 flex justify-between items-center px-4 py-2">
-                      <Image
-                        src="/image.svg"
-                        alt="Fret Aérien"
-                        fill
-                        className="w-full h-full object-cover "
-                      />
-                    </div>
-                  </div>
+
+            <div className="w-full flex flex-col md:flex-row items-stretch justify-center gap-10 px-4">
+              {/* Image visible uniquement sur écrans moyens et plus */}
+              <div className="hidden md:block w-full md:w-3/6 relative min-h-[400px]">
+                <div className="relative w-full h-full">
+                  <Image
+                    src="/image.svg"
+                    alt="Fret Aérien"
+                    fill
+                    className="w-full h-full object-cover rounded-lg"
+                  />
                 </div>
               </div>
 
-              <div className="w-full md:w-4/5 text-left flex flex-col items-start justify-center pr-32">
-                <div className="text-lg flex flex-col text-[#0C1844] mt-5 space-y-8">
-                  <ul className="list-decimal list-inside text-lg text-[#0C1844] mt-5 space-y-8">
-                    <li> Documents Commerciaux </li>
-                    <li> Documents d&apos;Origine </li>
-                    <li>
-                      Documents Sanitaires et Phytosanitaires (pour les produits
-                      alimentaires et agricoles)
-                    </li>
-                    <li>Documents Spécifiques selon le Produit </li>
-                    <li>Documents de Transport et Logistique</li>
-                  </ul>
-                </div>
+              {/* Liste de documents */}
+              <div className="w-full md:w-4/5 text-left flex flex-col justify-center px-2 md:px-16">
+                <ul className="list-decimal list-inside text-lg text-[#0C1844] space-y-6">
+                  <li>Documents Commerciaux</li>
+                  <li>Documents d&apos;Origine</li>
+                  <li>
+                    Documents Sanitaires et Phytosanitaires (pour les produits
+                    alimentaires et agricoles)
+                  </li>
+                  <li>Documents Spécifiques selon le Produit</li>
+                  <li>Documents de Transport et Logistique</li>
+                </ul>
               </div>
             </div>
 
-            <div className="flex flex-col items-center justify-center ">
-              <p className="text-3xl font-bold  text-[#0C1844]">
+            {/* CTA */}
+            <div className="flex flex-col items-center justify-center mt-10 px-4">
+              <p className="text-3xl font-bold text-[#0C1844] text-center">
                 Cliquez ici pour découvrir tous les détails !
               </p>
               <div className="mt-5 p-2 rounded-md border border-[#0C1844]">
@@ -544,22 +546,21 @@ export default function Home() {
             </div>
           </section>
 
-          {/* liste des étapes */}
-          <section className=" mb-20 w-full px-8 py-10 bg-[#0C1844] text-white flex flex-col items-center justify-center">
-            {" "}
-            <h1 className="text-[#C80036] text-4xl font-bold text-left">
-              Étapes Clés pour une Exportation Réussie{" "}
+          {/* Étapes Clés */}
+          <section className="w-full px-4  py-10 mb-5 bg-[#0C1844] text-white flex flex-col items-center justify-start">
+            <h1 className="text-[#C80036] text-2xl sm:text-3xl md:text-4xl font-bold text-center md:text-center w-full">
+              Étapes Clés pour une Exportation Réussie
             </h1>
-            <div className="flex flex-col text-lg md:flex-row items-center justify-center gap-10 mt-10">
-              <ul className="list-disc list-inside space-y-5">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-10 mt-10 max-w-screen-lg w-full">
+              <ul className="list-disc list-inside space-y-5 text-base sm:text-lg text-left">
                 <li>Vérifier les certifications des fournisseurs</li>
                 <li>
                   Obtenir tous les certificats nécessaires (sanitaires,
                   phytosanitaires, d&apos;origine, etc.)
                 </li>
                 <li>
-                  S&apos;assurer que l&apos;étiquetage est conforme aux
-                  normeseuropéennes Préparer tous les documents commerciaux et
+                  S&apos;assurer que l&apos;étiquetage est conforme aux normes
+                  européennes et préparer tous les documents commerciaux et
                   logistiques
                 </li>
                 <li>
@@ -572,7 +573,7 @@ export default function Home() {
         </div>
 
         {/* Second écran */}
-        <div className="w-1/2 flex-shrink-0 ">
+        <div className="w-full ">
           <section
             className="relative flex flex-col items-center justify-center h-[600px] mb-10 text-center px-10 bg-cover bg-center space-y-10 w-full"
             style={{
@@ -644,7 +645,7 @@ export default function Home() {
                 </ul>
               </div>
 
-              <div className="w-full md:w-2/5">
+              <div className="hidden md:block w-full md:w-2/5">
                 <div className="w-full h-full relative min-h-[400px]">
                   <Image
                     src="/serviceImage.jfif"
@@ -659,9 +660,9 @@ export default function Home() {
 
           {/* présentaton des services numériques */}
           <section className="mb-20 w-full px-4 py-10 bg-[#0C1844] text-white flex flex-col items-center justify-center">
-            <div className="grid grid-cols-1 md:grid-cols-2 justify-between gap-20 mb-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-4">
               {/* Service 1 */}
-              <div className="bg-[#1E3CAA3B] p-10 rounded-md flex flex-col items-center text-center">
+              <div className="bg-[#1E3CAA3B] p-8 rounded-md flex flex-col items-center text-center">
                 <div className="mb-4">
                   <Image
                     src="/service (5).svg"
@@ -677,7 +678,7 @@ export default function Home() {
               </div>
 
               {/* Service 2 */}
-              <div className="bg-[#1E3CAA3B] p-10 rounded-md flex flex-col items-center text-center">
+              <div className="bg-[#1E3CAA3B] p-8 rounded-md flex flex-col items-center text-center">
                 <div className="mb-4">
                   <Image
                     src="/service (4).svg"
@@ -693,7 +694,7 @@ export default function Home() {
               </div>
 
               {/* Service 3 */}
-              <div className="bg-[#1E3CAA3B] p-10 rounded-md flex flex-col items-center text-center">
+              <div className="bg-[#1E3CAA3B] p-8 rounded-md flex flex-col items-center text-center">
                 <div className="mb-4">
                   <Image
                     src="/service (3).svg"
@@ -708,7 +709,7 @@ export default function Home() {
               </div>
 
               {/* Service 4 */}
-              <div className="bg-[#1E3CAA3B] p-10 rounded-md flex flex-col items-center text-center">
+              <div className="bg-[#1E3CAA3B] p-8 rounded-md flex flex-col items-center text-center">
                 <div className="mb-4 relative">
                   <Image
                     src="/service (2).svg"
@@ -725,9 +726,9 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Service 5 - Wider card */}
-            <div className="bg-[#1E3CAA3B] p-10 mt-10 rounded-md flex flex-col items-center text-center">
-              <div className="mb-4">
+            {/* Service 5 - Carte plus large */}
+            <div className="bg-[#1E3CAA3B] p-8 rounded-md flex flex-col items-center text-center">
+              <div className="mb-4 relative">
                 <Image
                   src="/service (1).svg"
                   alt="Solutions digitales"
@@ -745,8 +746,8 @@ export default function Home() {
           {/* Services développement web et mobile */}
           <section className="px-8 py-6 text-white bg-[#0C1844] text-center flex flex-col ">
             <div className="flex flex-col md:flex-row items-stretch justify-center gap-28">
-              <div className="w-full md:w-3/6 relative">
-                <div className="w-full h-full relative min-h-[500px]">
+              <div className="w-full hidden md:block md:w-3/6 relative">
+                <div className=" w-full h-full relative min-h-[500px]">
                   <Image
                     src="/dev2.svg"
                     alt="Mission"
@@ -756,7 +757,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="w-full md:w-4/5 text-left flex flex-col items-start justify-center">
+              <div className="w-full md:w-4/5 text-center flex flex-col items-start justify-center">
                 <h2 className="text-4xl font-extrabold mb-8 text-[#C80036]">
                   LE DEVELOPEMENT WEB
                 </h2>
@@ -782,7 +783,7 @@ export default function Home() {
             </div>
 
             <div className="flex flex-col md:flex-row items-stretch mt-10 ml-10 justify-center gap-20">
-              <div className="w-full md:w-4/5 text-left flex flex-col items-start justify-center">
+              <div className="w-full md:w-4/5 text-center flex flex-col items-start justify-center">
                 <h2 className="text-4xl font-extrabold mb-8 text-[#C80036]">
                   LE DEVELOPEMENT MOBILE
                 </h2>
@@ -806,7 +807,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="w-full md:w-3/6 relative">
+              <div className="w-full hidden md:block md:w-3/6 relative">
                 <div className="w-full h-full relative min-h-[500px]">
                   <Image
                     src="/dev1.svg"
@@ -820,53 +821,76 @@ export default function Home() {
           </section>
 
           {/* requête de service */}
-          <section className="px-8 py-6 p-5 w-full text-center flex flex-col gap-10">
+          <section className="px-8 py-10 p-5 w-full text-center flex flex-col gap-10">
             <form
               onSubmit={handleSubmit}
-              className="w-full  mx-auto flex flex-col px-28  gap-4"
+              className="w-full mx-auto flex flex-col px-4 md:px-28 gap-4"
             >
-              <h1 className="text-4xl font-bold text-[#C41E3A] mb-4">
+              <h1 className="text-3xl md:text-4xl font-bold text-[#C41E3A] mb-4">
                 REQUETE DE SERVICE
               </h1>
+              <div>
+                <Label
+                  htmlFor="nom"
+                  className="text-lg text-[#0C1844] font-medium mb-2"
+                >
+                  Nom complet
+                </Label>
+                <Input
+                  type="text"
+                  name="nom"
+                  value={formData.nom}
+                  onChange={handleChange}
+                  placeholder="Nom"
+                  className="w-full p-3 bg-[#D3D6DE] rounded text-lg text-[#0C1844] font-medium"
+                  required
+                />
+              </div>
 
-              <Input
-                type="text"
-                name="nom"
-                value={formData.nom}
-                onChange={handleChange}
-                placeholder="Nom"
-                className="w-full p-3 bg-[#D3D6DE] rounded text-lg text-[#0C1844] font-medium"
-                required
-              />
+              <div>
+                <Label
+                  htmlFor="nom"
+                  className="text-lg text-[#0C1844] font-medium mb-2"
+                >
+                  Adresse e-mail
+                </Label>
+                <Input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="Email"
+                  className="w-full p-3 bg-[#D3D6DE] rounded text-lg text-[#0C1844] font-medium"
+                  required
+                />
+              </div>
 
-              <Input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="Email"
-                className="w-full p-3 bg-[#D3D6DE] rounded text-lg text-[#0C1844] font-medium"
-                required
-              />
-
-              <PhoneInput
-                country="dz"
-                value={telephone}
-                required
-                onChange={setTelephone}
-                placeholder="Entrez votre numéro de téléphone"
-                inputStyle={{
-                  width: "100%",
-                  height: "40px",
-                  color: "#0C1844D9",
-                }}
-                buttonClass="custom-flag-style"
-                inputClass="col-span-3 items-start w-full bg-[#edf2f7] h-11 text-base font-medium"
-              />
+              <div>
+                <Label
+                  htmlFor="nom"
+                  className="text-lg text-[#0C1844] font-medium mb-2"
+                >
+                  Numéro de téléphone
+                </Label>
+                <PhoneInput
+                  country="dz"
+                  value={telephone}
+                  required
+                  onChange={setTelephone}
+                  placeholder="Entrez votre numéro de téléphone"
+                  inputStyle={{
+                    width: "100%",
+                    height: "40px",
+                    color: "#0C1844D9",
+                  }}
+                  buttonClass="custom-flag-style"
+                  inputClass="col-span-3 items-start w-full bg-[#edf2f7] h-11 text-base font-medium"
+                />
+              </div>
 
               <div className="flex flex-col gap-2 text-left">
-                <h2 className="text-left text-xl text-[#0C1844] my-4">
-                  Service sollicité
+                <h2 className="text-lg text-[#0C1844] font-medium mb-2 my-4">
+                  Services sollicités
                 </h2>
 
                 <div className="flex flex-col gap-2 mb-4">
@@ -958,19 +982,27 @@ export default function Home() {
                 </div>
               </div>
 
-              <textarea
-                name="details"
-                value={formData.details}
-                onChange={handleChange}
-                placeholder="Détails"
-                className="w-full p-3 bg-[#D3D6DE] rounded text-lg text-[#0C1844] font-medium min-h-[200px] resize-y"
-              />
+              <div>
+                <Label
+                  htmlFor="nom"
+                  className="text-lg text-[#0C1844] font-medium mb-2"
+                >
+                  Détails pertinents
+                </Label>
+                <textarea
+                  name="details"
+                  value={formData.details}
+                  onChange={handleChange}
+                  placeholder="Détails"
+                  className="w-full p-3 bg-[#D3D6DE] rounded text-lg text-[#0C1844] font-medium min-h-[600px] md:min-h-[200px] resize-y"
+                />
+              </div>
 
               <div className="flex justify-center w-full mt-4">
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="bg-[#C80036E5] w-full text-white cursor-pointer text-lg py-2 px-4 rounded flex justify-center items-center gap-2"
+                  className="bg-[#C80036E5] w-full md:w-full text-white cursor-pointer text-lg py-2 px-4 rounded flex justify-center items-center gap-2"
                 >
                   {isLoading ? (
                     <svg
