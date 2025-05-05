@@ -105,23 +105,21 @@ const Connexion = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-gray-50">
       <div
-        className="w-full h-20 flex items-center text-white text-2xl font-semibold pl-6"
+        className="w-full h-20 flex items-center text-white text-2xl font-semibold pl-6 bg-cover bg-center"
         style={{
           backgroundImage: "url('/bg.svg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
         }}
       >
         CONNEXION
       </div>
 
-      <div className=" mx-auto">
-        <section className="px-8 py-6 text-[#0C1844] text-center flex flex-col mb-10">
-          <div className="flex flex-col md:flex-row items-stretch justify-center gap-28">
-            <div className="w-full md:w-4/5 relative">
-              <div className="w-full  h-full relative min-h-[500px]">
+      <div className="mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="py-6 text-[#0C1844] text-left flex flex-col mb-10">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-10 md:gap-20">
+            <div className="w-full md:w-1/2  justify-center hidden md:block">
+              <div className="w-full h-72 md:h-full relative min-h-[400px]">
                 <Image
                   src="/authImage (1).svg"
                   alt="Mission"
@@ -131,15 +129,15 @@ const Connexion = () => {
               </div>
             </div>
 
-            <div className="w-full md:w-4/5 text-left flex flex-col items-center justify-center">
-              <h2 className="text-4xl font-extrabold mb-8 text-[#C80036]">
-                Avez-vous déja un compte ?
+            <div className="w-full md:w-1/2 flex flex-col items-center justify-center">
+              <h2 className="text-4xl font-extrabold   mb-8 text-[#C80036]">
+                Se connecter
               </h2>
               <form
                 onSubmit={handleLogIn}
-                className="w-full  mx-auto flex flex-col px-28  gap-4"
+                className="w-full flex flex-col items-center gap-4 px-6 sm:px-16 lg:px-28"
               >
-                <div className="space-y-2">
+                <div className="space-y-2 w-full">
                   <label className="text-lg text-[#0C1844]">
                     Adresse e-mail
                   </label>
@@ -148,57 +146,57 @@ const Connexion = () => {
                     name="email"
                     value={emailConnexion}
                     onChange={(e) => setEmailConnexion(e.target.value)}
-                    className="w-full p-3 bg-[#D3D6DE]  text-lg text-[##0C1844] font-medium"
+                    className="w-full p-3 bg-[#D3D6DE] text-lg text-[#0C1844] font-medium rounded"
                     required
                   />
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-2 w-full">
                   <label className="text-lg text-[#0C1844]">Mot de passe</label>
                   <input
                     type="password"
                     name="password"
                     value={passwordConnexion}
                     onChange={(e) => setPasswordConnexion(e.target.value)}
-                    className="w-full p-3 bg-[#D3D6DE]  text-lg text-[##0C1844] font-medium"
+                    className="w-full p-3 bg-[#D3D6DE] text-lg text-[#0C1844] font-medium rounded"
                     required
                   />
                 </div>
 
-                <div className="flex justify-center w-full  mt-4">
+                <div className="flex justify-center w-full mt-4">
                   <button
                     type="submit"
-                    className="bg-[#0C1844] text-white w-full text-lg py-2  px-4 rounded "
+                    className="bg-[#0C1844] text-white w-full text-lg py-2 px-4 rounded"
                   >
-                    Continue
+                    Continuer
                   </button>
                 </div>
               </form>
             </div>
           </div>
 
-          <div className="flex flex-col md:flex-row items-stretch mt-20 ml-10 justify-center gap-20">
-            <div className="w-full md:w-4/5 text-left flex flex-col items-center justify-center">
+          <div className="flex flex-col md:flex-row items-center mt-20 gap-10 md:gap-20">
+            <div className="w-full md:w-1/2 text-left flex flex-col items-center justify-center">
               <h2 className="text-4xl font-extrabold mb-8 text-[#C80036]">
                 Créer un compte
               </h2>
               <form
                 onSubmit={handleCreateAccount}
-                className="w-full  mx-auto flex flex-col px-28  gap-4"
+                className="w-full flex flex-col items-center gap-4 px-6 sm:px-16 lg:px-28"
               >
-                <div className="space-y-2">
+                <div className="space-y-2 w-full">
                   <label className="text-lg text-[#0C1844]">Nom</label>
                   <input
-                    type="name"
+                    type="text"
                     name="nom"
                     value={nom}
                     onChange={(e) => setNom(e.target.value)}
-                    className="w-full p-3 bg-[#D3D6DE]  text-lg text-[##0C1844] font-medium"
+                    className="w-full p-3 bg-[#D3D6DE] text-lg text-[#0C1844] font-medium rounded"
                     required
                   />
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-2 w-full">
                   <label className="text-lg text-[#0C1844]">
                     Adresse e-mail
                   </label>
@@ -207,12 +205,12 @@ const Connexion = () => {
                     name="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full p-3 bg-[#D3D6DE]  text-lg text-[##0C1844] font-medium"
+                    className="w-full p-3 bg-[#D3D6DE] text-lg text-[#0C1844] font-medium rounded"
                     required
                   />
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-2 w-full">
                   <label className="text-lg text-[#0C1844]">Téléphone</label>
                   <PhoneInput
                     country="dz"
@@ -231,19 +229,19 @@ const Connexion = () => {
                   />
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-2 w-full">
                   <label className="text-lg text-[#0C1844]">Mot de passe</label>
                   <input
                     type="password"
                     name="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full p-3 bg-[#D3D6DE]  text-lg text-[##0C1844] font-medium"
+                    className="w-full p-3 bg-[#D3D6DE] text-lg text-[#0C1844] font-medium rounded"
                     required
                   />
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-2 w-full">
                   <label className="text-lg text-[#0C1844]">
                     Confirmer le mot de passe
                   </label>
@@ -252,15 +250,15 @@ const Connexion = () => {
                     name="confirmPassword"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="w-full p-3 bg-[#D3D6DE]  text-lg text-[##0C1844] font-medium"
+                    className="w-full p-3 bg-[#D3D6DE] text-lg text-[#0C1844] font-medium rounded"
                     required
                   />
                 </div>
 
-                <div className="flex justify-center  mt-4">
+                <div className="flex justify-center mt-4 w-full">
                   <button
                     type="submit"
-                    className="bg-[#0C1844] text-white text-lg py-2 w-full px-4 rounded "
+                    className="bg-[#0C1844] text-white text-lg py-2 px-4 rounded w-full"
                   >
                     Créer
                   </button>
@@ -268,8 +266,8 @@ const Connexion = () => {
               </form>
             </div>
 
-            <div className="w-full md:w-4/5 relative">
-              <div className="w-full h-full relative min-h-[500px]">
+            <div className="w-full md:w-1/2 hidden md:block relative">
+              <div className="w-full h-full relative min-h-[400px]">
                 <Image
                   src="/authImage (2).svg"
                   alt="Mission"
@@ -281,6 +279,7 @@ const Connexion = () => {
           </div>
         </section>
       </div>
+
       <SuccessModal
         isOpen={isSuccessModalOpen}
         onClose={() => setIsSuccessModalOpen(false)}
