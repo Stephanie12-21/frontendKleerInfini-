@@ -121,19 +121,25 @@ export default function Home() {
       </section>
 
       <section ref={kleerSectionRef} className="w-full mt-3 mb-20">
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <Tabs
+          value={activeTab}
+          onValueChange={setActiveTab}
+          className="w-full "
+        >
           {isMobile ? (
-            <select
-              value={activeTab}
-              onChange={(e) => setActiveTab(e.target.value)}
-              className="w-full p-3 mb-4 border rounded-lg"
-            >
-              {tabItems.map((item) => (
-                <option key={item.value} value={item.value}>
-                  {item.label}
-                </option>
-              ))}
-            </select>
+            <div className="w-full flex justify-center px-4 mb-4">
+              <select
+                value={activeTab}
+                onChange={(e) => setActiveTab(e.target.value)}
+                className="w-full max-w-2xl p-3 border rounded-lg"
+              >
+                {tabItems.map((item) => (
+                  <option key={item.value} value={item.value}>
+                    {item.label}
+                  </option>
+                ))}
+              </select>
+            </div>
           ) : (
             <TabsList className="flex flex-wrap justify-center gap-4 px-5 py-2">
               {tabItems.map((item) => (
@@ -449,27 +455,30 @@ export default function Home() {
       </section>
 
       <section
-        className="w-full flex items-center justify-center  h-screen text-center px-10 bg-cover bg-center relative"
+        className="w-full flex items-center justify-center h-screen text-center px-4 md:px-10 bg-cover bg-center relative"
         style={{
           backgroundImage: "url('/temImage.jfif')",
         }}
       >
-        <div className="flex w-full max-w-7xl items-center justify-between rounded-xl p-6 relative z-20">
-          <div className="w-2/3 flex flex-col items-center justify-center space-y-20">
-            <div className="flex flex-col items-center justify-center space-y-5">
-              <h1 className="text-white text-5xl font-bold">
+        <div className="flex flex-col md:flex-row w-full max-w-7xl items-center justify-between rounded-xl p-4 md:p-6 relative z-20 space-y-6 md:space-y-0">
+          {/* Texte gauche */}
+          <div className="w-full md:w-2/3 flex flex-col items-center justify-center space-y-10 md:space-y-20">
+            <div className="flex flex-col items-center justify-center space-y-3 md:space-y-5">
+              <h1 className="text-white text-3xl md:text-5xl font-bold">
                 NOS REALISATIONS
               </h1>
-              <p className="text-[#C80036] text-3xl font-bold">
-                Témoignage Client{" "}
+              <p className="text-[#C80036] text-xl md:text-3xl font-bold">
+                Témoignage Client
               </p>
             </div>
           </div>
 
-          <div className="w-1/3 flex items-center justify-center">
-            <div className="bg-white/80 rounded-[40px] w-full p-6">
-              <div className="flex items-start justify-start space-x-5">
-                <div className="w-1/8">
+          {/* Bloc témoignage droite */}
+          <div className="w-full md:w-1/3 flex items-center justify-center">
+            <div className="bg-white/80 rounded-[30px] md:rounded-[40px] w-full p-4 md:p-6">
+              <div className="flex flex-col md:flex-row items-start md:items-start justify-start space-y-4 md:space-y-0 md:space-x-5">
+                {/* Icône */}
+                <div className="w-12 md:w-1/6">
                   <Image
                     src="/message.svg"
                     alt="message"
@@ -477,22 +486,25 @@ export default function Home() {
                     height={50}
                   />
                 </div>
-                <div className="w-3/4">
-                  <p className="text-[#0C1844] text-base text-left">
+
+                {/* Texte du témoignage */}
+                <div className="w-full md:w-5/6">
+                  <p className="text-[#0C1844] text-sm md:text-base text-left">
                     Grâce à KLEER INFINI, nous avons pu développer notre marché
                     à l'international avec succès. Leur expertise en logistique,
                     conformité douanière et négociations internationales a été
                     essentielle à notre expansion.
                   </p>
-                  <div className="flex items-center justify-between space-x-5 mt-4">
-                    <span className="text-[#1E3CAA] text-base hover:underline hover:cursor-pointer">
+
+                  <div className="flex items-center justify-between mt-4">
+                    <span className="text-[#1E3CAA] text-sm md:text-base hover:underline hover:cursor-pointer">
                       Mme MAHLEB Kenza
                     </span>
                     <Image
                       src="/chevron.svg"
                       alt="chevron"
-                      width={35}
-                      height={35}
+                      width={30}
+                      height={30}
                     />
                   </div>
                 </div>
@@ -502,52 +514,64 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="flex flex-col justify-center items-center">
-        <h1 className="text-5xl text-[#C80036] mt-10 font-bold">
+      <section className="flex flex-col justify-center items-center px-4 py-10">
+        <h1 className="text-3xl md:text-5xl text-[#C80036] mt-6 md:mt-10 font-bold text-center">
           NOS PARTENARIATS
         </h1>
-        <div className="flex justify-center items-center gap-32 mt-12">
-          <div className="flex flex-col justify-center items-center">
+
+        <div className="flex flex-wrap justify-center items-center gap-10 md:gap-20 mt-10 md:mt-12">
+          {/* Partenaire 1 */}
+          <div className="flex flex-col justify-center items-center max-w-[150px]">
             <Image
               src="/Group 6.png"
-              alt="partenaire"
-              width={120}
-              height={120}
+              alt="ExportHUB"
+              width={100}
+              height={100}
+              className="object-contain"
             />
-            <span className="text-[#0C1844] text-2xl font-bold pt-9">
+            <span className="text-[#0C1844] text-lg md:text-2xl font-bold pt-6 text-center">
               ExportHUB
             </span>
           </div>
-          <div className="flex flex-col justify-center items-center">
+
+          {/* Partenaire 2 */}
+          <div className="flex flex-col justify-center items-center max-w-[150px]">
             <Image
               src="/Group 7.png"
-              alt="partenaire"
-              width={120}
-              height={120}
+              alt="MCS Tech"
+              width={100}
+              height={100}
+              className="object-contain"
             />
-            <span className="text-[#0C1844] text-2xl font-bold pt-9">
+            <span className="text-[#0C1844] text-lg md:text-2xl font-bold pt-6 text-center">
               MCS Tech
             </span>
           </div>
-          <div className="flex flex-col justify-center items-center">
+
+          {/* Partenaire 3 */}
+          <div className="flex flex-col justify-center items-center max-w-[200px]">
             <Image
               src="/Group 11.svg"
-              alt="partenaire"
-              width={240}
-              height={240}
+              alt="ALGEX"
+              width={180}
+              height={180}
+              className="object-contain"
             />
-            <span className="text-[#0C1844] text-2xl font-bold pt-5">
+            <span className="text-[#0C1844] text-lg md:text-2xl font-bold pt-4 text-center">
               ALGEX
             </span>
           </div>
-          <div className="flex flex-col justify-center items-center">
+
+          {/* Partenaire 4 */}
+          <div className="flex flex-col justify-center items-center max-w-[150px]">
             <Image
               src="/Group 10.png"
-              alt="partenaire"
-              width={120}
-              height={120}
+              alt="Alibaba"
+              width={100}
+              height={100}
+              className="object-contain"
             />
-            <span className="text-[#0C1844] text-2xl font-bold pt-9">
+            <span className="text-[#0C1844] text-lg md:text-2xl font-bold pt-6 text-center">
               Alibaba
             </span>
           </div>
@@ -557,7 +581,7 @@ export default function Home() {
       <section className="bg-[#0C1844] mt-20 mb-16 p-6 w-full flex items-center justify-center">
         <div className="flex flex-col md:flex-row items-stretch justify-center w-full max-w-7xl gap-8">
           {/* IMAGE */}
-          <div className="w-full md:w-1/2 h-full">
+          <div className="hidden md:block w-full md:w-1/2 h-full">
             <div className="relative w-full h-full min-h-[500px]">
               <Image
                 src="/contactimage.svg"
