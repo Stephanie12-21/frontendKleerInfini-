@@ -87,7 +87,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center ">
+    <div className="flex flex-col items-center justify-center min-h-screen ">
       <section
         className="w-full flex items-center justify-center h-[600px] text-center px-10 bg-cover bg-center relative"
         style={{
