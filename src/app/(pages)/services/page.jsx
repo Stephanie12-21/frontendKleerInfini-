@@ -282,7 +282,7 @@ export default function Home() {
               <div className="w-full flex justify-start pt-3 md:pt-5">
                 <button
                   onClick={handleScrollDown}
-                  className="h-10 sm:h-11 md:h-12 px-4 sm:px-6 md:px-8 py-2 md:py-4 bg-[#C80036BF]/80 hover:bg-[#C80036BF] rounded-lg cursor-pointer text-white text-sm sm:text-base md:text-lg"
+                  className="px-4 sm:px-6 md:px-8 py-2 sm:py-2.5 md:py-3 bg-[#C80036] hover:bg-[#A80030] transition-colors duration-200 rounded-lg cursor-pointer text-white text-sm sm:text-base md:text-lg font-medium"
                 >
                   EN SAVOIR PLUS
                 </button>
@@ -634,7 +634,7 @@ export default function Home() {
               <div className="w-full flex justify-end pt-5">
                 <Button
                   onClick={handleScrollDevDown}
-                  className="h-10 sm:h-11 md:h-12 px-4 sm:px-6 md:px-8 py-2 md:py-4 bg-[#C80036BF]/80 hover:bg-[#C80036BF] rounded-lg cursor-pointer text-white text-sm sm:text-base md:text-lg"
+                  className="px-4 sm:px-6 md:px-8 py-2 sm:py-2.5 md:py-3 bg-[#C80036] hover:bg-[#A80030] transition-colors duration-200 rounded-lg cursor-pointer text-white text-sm sm:text-base md:text-lg font-medium"
                 >
                   EN SAVOIR PLUS
                 </Button>

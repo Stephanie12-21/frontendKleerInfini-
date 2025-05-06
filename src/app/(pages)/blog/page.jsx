@@ -1,27 +1,115 @@
 "use client";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import React, { useRef, useState, useEffect } from "react";
 import { Search } from "lucide-react";
+import Link from "next/link";
 
+// Fonction pour formater les dates
+function formatDate(date) {
+  return new Intl.DateTimeFormat("fr-FR", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  }).format(new Date(date));
+}
+
+// Composant ArticleCard
+function ArticleCard({ article }) {
+  const removeQuotes = (content) => {
+    return content.replace(/^"|"$/g, "");
+  };
+  return (
+    <div className="flex flex-col h-full overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all hover:shadow-md">
+      <div className="relative h-48 w-full overflow-hidden">
+        {article.images.length > 0 ? (
+          <Image
+            src={
+              article.images[0].path || "/placeholder.svg?height=400&width=600"
+            }
+            alt={article.titre}
+            width={600}
+            height={400}
+            className="h-full w-full object-cover transition-transform hover:scale-105"
+          />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center bg-gray-100">
+            <span className="text-gray-400">Aucune image</span>
+          </div>
+        )}
+        <div className="absolute right-2 top-2 rounded-full bg-[#C80036] px-3 py-1 text-xs font-medium text-white">
+          {article.categorieArticle}
+        </div>
+      </div>
+      <div className="flex flex-1 flex-col p-4">
+        <h3 className="mb-2 text-xl font-bold text-[#0C1844] line-clamp-2">
+          {article.titre}
+        </h3>
+        <p
+          className="mb-4 flex-1 text-sm text-gray-600 line-clamp-3"
+          dangerouslySetInnerHTML={{
+            __html: removeQuotes(article.contenu.substring(0, 150)) + "...",
+          }}
+        />
+
+        <div className="mt-auto flex items-center justify-between">
+          <span className="text-xs text-gray-500">
+            {formatDate(article.createdAt)}
+          </span>
+          <Link
+            href={`/blog/${article.id}`}
+            className="rounded-full bg-[#0C1844] px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-[#0C1844]/90"
+          >
+            Lire plus
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
 const Blog = () => {
+  const [articles, setArticles] = useState([]);
+  const [filteredArticles, setFilteredArticles] = useState([]);
   const [activeTab, setActiveTab] = useState("Tous");
-  const [isMobile, setIsMobile] = useState(false);
-  const kleerSectionRef = useRef();
   const [searchQuery, setSearchQuery] = useState("");
+  const [visibleArticles, setVisibleArticles] = useState(9);
+  const kleerSectionRef = useRef();
+  const [isMobile, setIsMobile] = useState(false);
 
   const handleScrollDown = () => {
     kleerSectionRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const tabItems = [
-    { value: "Tous", label: "Tous" },
-    { value: "Technologie", label: "Technologie" },
-    { value: "Exportation", label: "Exportation" },
-    { value: "Commerce", label: "Commerce international" },
-  ];
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        const res = await fetch("/api/blog");
+        const data = await res.json();
+        setArticles(data);
+        setFilteredArticles(data);
+      } catch (err) {
+        console.error("Erreur de chargement des articles", err);
+      }
+    };
+    fetchArticles();
+  }, []);
+
+  useEffect(() => {
+    let filtered = [...articles];
+    if (activeTab !== "Tous") {
+      filtered = filtered.filter((a) => a.categorieArticle === activeTab);
+    }
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+      filtered = filtered.filter(
+        (a) =>
+          a.titre.toLowerCase().includes(query) ||
+          a.contenu.toLowerCase().includes(query)
+      );
+    }
+    setFilteredArticles(filtered);
+    setVisibleArticles(9); // Reset visible count on filter
+  }, [activeTab, searchQuery, articles]);
 
   useEffect(() => {
     const checkIfMobile = () => {
@@ -33,125 +121,122 @@ const Blog = () => {
     return () => window.removeEventListener("resize", checkIfMobile);
   }, []);
 
-  return (
-    <div className="flex flex-col items-center justify-center">
-      <section
-        className="w-full flex items-center justify-center h-[600px] text-center px-10 bg-cover bg-center relative"
-        style={{ backgroundImage: "url('/heroimage.jpg')" }}
-      >
-        <div className="absolute inset-0 bg-[#1E3CAA3B]/80 z-10"></div>
+  const categories = [
+    "Tous",
+    ...new Set(articles.map((a) => a.categorieArticle)),
+  ];
+  const articlesToShow = filteredArticles.slice(0, visibleArticles);
+  const hasMoreArticles = filteredArticles.length > visibleArticles;
 
-        <div className="flex w-full max-w-7xl items-center justify-between rounded-xl p-6 relative z-20">
-          <div className="w-2/3 flex flex-col items-center justify-center space-y-20">
-            <div className="flex flex-col items-center justify-center space-y-5">
-              <h1 className="text-white text-5xl font-bold">
-                Toutes les articles de Kleer Infini
-              </h1>
-              <p className="text-white text-2xl">
-                Explorez notre sélection d'articles sur le commerce
-                international
-              </p>
-            </div>
-            <Button
+  const handleLoadMore = () => setVisibleArticles((prev) => prev + 9);
+
+  return (
+    <div className="flex flex-col items-centerjustify-center">
+      <section
+        className="relative flex flex-col items-center justify-center min-h-[400px] md:min-h-[500px] lg:min-h-[600px] text-center px-4 sm:px-6 md:px-10 bg-cover bg-center w-full py-8 md:py-10 lg:py-12"
+        style={{
+          backgroundImage: "url('/serviceImage.jfif')",
+        }}
+      >
+        <div className="max-w-7xl mx-auto w-full">
+          <h1 className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
+            Tous les articles de Kleer Infini
+          </h1>
+
+          <div className="w-full flex justify-center pt-3 md:pt-5">
+            <button
               onClick={handleScrollDown}
-              className="h-12 px-8 py-4 bg-[#1E3CAABF] hover:bg-[#1E3CAABF] rounded-lg"
+              className="px-4 sm:px-6 md:px-8 py-2 sm:py-2.5 md:py-3 bg-[#C80036] hover:bg-[#A80030] transition-colors duration-200 rounded-lg cursor-pointer text-white text-sm sm:text-base md:text-lg font-medium"
             >
               EN SAVOIR PLUS
-            </Button>
-          </div>
-
-          <div className="w-1/6 flex items-center justify-center">
-            <Button className="bg-[#C80036] hover:bg-[#C80036] text-white font-extrabold rounded-md w-16 h-16 p-0">
-              <Image src="/icone.png" alt="play" width={35} height={35} />
-            </Button>
+            </button>
           </div>
         </div>
       </section>
 
-      <section ref={kleerSectionRef} className="w-full mt-10 mb-20">
-        <div className="w-full max-w-[850px] mx-auto mb-4 sm:mb-6 px-4 sm:px-0">
+      <section
+        ref={kleerSectionRef}
+        className="w-full my-8 sm:my-12 md:my-16 lg:my-20"
+      >
+        {/* Barre de recherche */}
+        <div className="w-full max-w-[850px] mx-auto mb-6 px-4 sm:px-0">
           <div className="relative">
             <input
               type="text"
-              placeholder="Rechercher"
+              placeholder="Rechercher un article"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full py-2 sm:py-3 pl-10 sm:pl-14 pr-4 border-2 border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 text-base sm:text-lg"
+              className="w-full py-2 sm:py-3 pl-10 sm:pl-14 pr-4 border-2 border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#0C1844] text-base sm:text-lg"
             />
             <Search className="absolute left-3 sm:left-5 top-1/2 transform -translate-y-1/2 text-gray-700 h-5 w-5 sm:h-6 sm:w-6" />
           </div>
         </div>
 
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          {isMobile ? (
-            <div className="px-4 mb-6">
-              <select
-                value={activeTab}
-                onChange={(e) => setActiveTab(e.target.value)}
-                className="w-full p-3 border-2 rounded-full border-[#0C1844] text-[#0C1844] font-medium focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                {tabItems.map((item) => (
-                  <option key={item.value} value={item.value}>
-                    {item.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-          ) : (
-            <div className="flex flex-wrap justify-center gap-2 sm:gap-4 px-2 sm:px-5 py-2 mb-4 sm:mb-6 overflow-x-auto">
-              {tabItems.map((item) => (
-                <button
-                  key={item.value}
-                  onClick={() => setActiveTab(item.value)}
-                  className={`relative py-2 sm:py-3 px-4 sm:px-8 text-sm sm:text-base font-medium rounded-full border-2 transition-colors whitespace-nowrap ${
-                    activeTab === item.value
-                      ? "bg-[#C80036] text-white border-[#C80036]"
-                      : "bg-white text-[#0C1844] border-[#0C1844] "
-                  }`}
-                  style={{
-                    minWidth:
-                      item.value === "Tous" && !isMobile ? "180px" : "auto",
-                  }}
-                >
-                  {item.label}
-                </button>
+        {/* Onglets de catégories */}
+        {isMobile ? (
+          <div className="px-4 mb-6">
+            <select
+              value={activeTab}
+              onChange={(e) => setActiveTab(e.target.value)}
+              className="w-full p-3 border-2 rounded-full border-[#0C1844] text-[#0C1844] font-medium focus:outline-none focus:ring-2 focus:ring-[#0C1844]"
+            >
+              {categories.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
               ))}
-            </div>
-          )}
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 px-4 sm:px-0">
-            <div className="border border-blue-200 rounded-lg overflow-hidden">
-              <Image
-                src="/placeholder.svg?height=400&width=600"
-                alt="Bitcoin image"
-                width={600}
-                height={400}
-                className="w-full h-auto"
-              />
-            </div>
-            <div className="border border-blue-200 rounded-lg overflow-hidden">
-              <Image
-                src="/placeholder.svg?height=400&width=600"
-                alt="Smartphone image"
-                width={600}
-                height={400}
-                className="w-full h-auto"
-              />
-            </div>
+            </select>
           </div>
-
-          <div className="hidden">
-            {tabItems.map((item) => (
-              <TabsContent
-                key={item.value}
-                value={item.value}
-                className="px-8 py-6 text-white bg-[#0C1844] text-center flex flex-col gap-10"
+        ) : (
+          <div className="flex flex-wrap justify-center gap-2 sm:gap-4 px-4 sm:px-5 py-2 mb-6 overflow-x-auto">
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setActiveTab(category)}
+                className={`relative py-2 sm:py-3 px-4 sm:px-8 text-sm sm:text-base font-medium rounded-full border-2 transition-colors ${
+                  activeTab === category
+                    ? "bg-[#C80036] text-white border-[#C80036]"
+                    : "bg-white text-[#0C1844] border-[#0C1844] hover:bg-gray-50"
+                }`}
               >
-                {/* Contenu préservé mais caché */}
-              </TabsContent>
+                {category}
+              </button>
             ))}
           </div>
-        </Tabs>
+        )}
+
+        {/* Grille d'articles */}
+        {articlesToShow.length > 0 ? (
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  p-8  gap-6">
+              {filteredArticles.slice(0, visibleArticles).map((article) => (
+                <ArticleCard key={article.id} article={article} />
+              ))}
+            </div>
+
+            {/* Bouton "Voir plus" */}
+            {hasMoreArticles && (
+              <div className="flex justify-center mt-10 mb-6">
+                <button
+                  onClick={handleLoadMore}
+                  className="px-6 py-3 bg-white border-2 border-[#0C1844] text-[#0C1844] hover:bg-gray-50 transition-colors duration-200 rounded-full font-medium"
+                >
+                  Voir plus d'articles (
+                  {filteredArticles.length - visibleArticles} restants)
+                </button>
+              </div>
+            )}
+          </>
+        ) : (
+          <div className="text-center py-12">
+            <h3 className="text-xl font-medium text-gray-600">
+              Aucun article trouvé
+            </h3>
+            <p className="mt-2 text-gray-500">
+              Essayez une autre recherche ou catégorie
+            </p>
+          </div>
+        )}
       </section>
     </div>
   );

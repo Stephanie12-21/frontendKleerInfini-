@@ -31,7 +31,7 @@ export async function GET(request, { params }) {
 
 export async function DELETE(req, { params }) {
   try {
-    const { id } = params;
+    const { id } = await params;
 
     if (!id) {
       console.error("ID manquant");
@@ -80,7 +80,7 @@ export async function DELETE(req, { params }) {
 
 export async function PUT(request, { params }) {
   try {
-    const { id } = params;
+    const { id } = await params;
     const body = await request.formData();
 
     if (!id) {

@@ -114,7 +114,7 @@ const ArticleDetailPageModif = ({ params }) => {
       resetForm();
 
       setTimeout(() => {
-        router.push("/admin/blog");
+        router.refresh();
       }, 5000);
     } catch (error) {
       setIsErrorModalOpen(true);
