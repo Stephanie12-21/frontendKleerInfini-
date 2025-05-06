@@ -8,8 +8,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import RichTextEditor from "@/components/TextEditor/RichEditor";
-import { SuccessModal } from "@/app/(modal)/success/page";
-import { ErrorModal } from "@/app/(modal)/erreurs/page";
+import { SuccessModal } from "@/app/[locale]/(modal)/success/page";
+import { ErrorModal } from "@/app/[locale]/(modal)/erreurs/page";
 
 const ArticleDetailPageModif = ({ params }) => {
   const { id } = use(params);

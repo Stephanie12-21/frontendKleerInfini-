@@ -10,9 +10,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Eye, Edit, Trash2, Search } from "lucide-react";
-import ConfirmDeleteModal from "@/app/(modal)/delete/page";
-import { SuccessModal } from "@/app/(modal)/success/page";
-import { ErrorModal } from "@/app/(modal)/erreurs/page";
+import ConfirmDeleteModal from "@/app/[locale]/(modal)/delete/page";
+import { SuccessModal } from "@/app/[locale]/(modal)/success/page";
+import { ErrorModal } from "@/app/[locale]/(modal)/erreurs/page";
 
 const Annonces = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);

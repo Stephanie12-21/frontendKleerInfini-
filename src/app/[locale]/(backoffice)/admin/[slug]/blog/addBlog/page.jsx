@@ -6,8 +6,8 @@ import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { SuccessModal } from "@/app/(modal)/success/page";
-import { ErrorModal } from "@/app/(modal)/erreurs/page";
+import { SuccessModal } from "@/app/[locale]/(modal)/success/page";
+import { ErrorModal } from "@/app/[locale]/(modal)/erreurs/page";
 import RichTextEditor from "@/components/TextEditor/RichEditor";
 
 const ArticleForm = () => {

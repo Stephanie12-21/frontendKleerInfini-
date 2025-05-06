@@ -5,10 +5,10 @@ import React, { useState } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { useRouter } from "next/navigation";
-import { ErrorModal } from "@/app/(modal)/erreurs/page";
+import { ErrorModal } from "@/app/[locale]/(modal)/erreurs/page";
 import { getSession, signIn } from "next-auth/react";
-import { SuccessModal } from "@/app/(modal)/success/page";
-import { InfoModal } from "@/app/(modal)/info/page";
+import { SuccessModal } from "@/app/[locale]/(modal)/success/page";
+import { InfoModal } from "@/app/[locale]/(modal)/info/page";
 import slugify from "slugify";
 
 const Connexion = () => {
