@@ -8,8 +8,10 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { SuccessModal } from "../(modal)/success/page";
 import { ErrorModal } from "../(modal)/erreurs/page";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function Home() {
+  const t = useTranslations();
   const [isMobile, setIsMobile] = useState(false);
   const [activeTab, setActiveTab] = useState("MISSION");
   const [loading, setLoading] = useState(false);
@@ -21,6 +23,8 @@ export default function Home() {
   const kleerSectionRef = useRef();
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
+  const locale = useLocale();
+  const isArabic = locale === "ar";
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
@@ -73,51 +77,16 @@ export default function Home() {
   }, []);
 
   const tabItems = [
-    { value: "HISTORIQUE", label: "HISTORIQUE" },
-    { value: "MISSION", label: "MISSION" },
-    { value: "VISION", label: "VISION" },
-    { value: "ATOUTS", label: "NOS ATOUTS" },
-    { value: "IMPACT", label: "IMPACT ECONOMIQUE ET SOCIETAL" },
+    { value: "HISTORIQUE", label: t("historique") },
+    { value: "MISSION", label: t("mission") },
+    { value: "VISION", label: t("vision") },
+    { value: "ATOUTS", label: t("atouts") },
+    { value: "IMPACT", label: t("impact") },
   ];
 
   const handleScrollDown = () => {
     kleerSectionRef.current?.scrollIntoView({ behavior: "smooth" });
   };
-
-  const partners = [
-    {
-      name: "ExportHUB",
-      image: "/Group 6.png",
-      width: 100,
-      height: 100,
-      maxWidth: "150px",
-      paddingTop: "pt-6",
-    },
-    {
-      name: "MCS Tech",
-      image: "/Group 7.png",
-      width: 100,
-      height: 100,
-      maxWidth: "150px",
-      paddingTop: "pt-6",
-    },
-    {
-      name: "ALGEX",
-      image: "/Group 11.svg",
-      width: 180,
-      height: 180,
-      maxWidth: "200px",
-      paddingTop: "pt-4",
-    },
-    {
-      name: "Alibaba",
-      image: "/Group 10.png",
-      width: 100,
-      height: 100,
-      maxWidth: "150px",
-      paddingTop: "pt-6",
-    },
-  ];
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen ">
@@ -129,8 +98,11 @@ export default function Home() {
       >
         <div className="absolute inset-0 bg-[#1E3CAA3B]/80 z-10"></div>
         <div className="max-w-7xl mx-auto w-full">
-          <h1 className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
-            A PROPOS DE KLEER INFINI
+          <h1
+            className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight"
+            dir={isArabic ? "rtl" : "ltr"}
+          >
+            {t("A-PROPOS-DE-KLEER-INFINI")}
           </h1>
 
           <div className="w-full flex justify-end pt-3 md:pt-5">
@@ -148,9 +120,10 @@ export default function Home() {
           <div className="w-full flex justify-start pt-3 md:pt-5">
             <button
               onClick={handleScrollDown}
+              dir={isArabic ? "rtl" : "ltr"}
               className="px-4 sm:px-6 md:px-8 py-2 sm:py-2.5 md:py-3 bg-[#C80036] hover:bg-[#A80030] transition-colors duration-200 rounded-lg cursor-pointer text-white text-sm sm:text-base md:text-lg font-medium"
             >
-              EN SAVOIR PLUS
+              {t("EN-SAVOIR-PLUS")}
             </button>
           </div>
         </div>
@@ -182,6 +155,7 @@ export default function Home() {
                 <TabsTrigger
                   key={item.value}
                   value={item.value}
+                  dir={isArabic ? "rtl" : "ltr"}
                   className="relative text-[#0C1844] hover:text-[#C80036] py-2 px-4 text-base font-bold"
                 >
                   {item.label}
@@ -208,8 +182,11 @@ export default function Home() {
               </div>
 
               <div className="w-full md:w-4/5 text-left flex flex-col items-start justify-start">
-                <h2 className="text-4xl font-extrabold mb-16 mt-10 text-[#C80036]">
-                  HISTORIQUE DE L&apos;ENTREPRISE
+                <h2
+                  className="text-4xl font-extrabold mb-16 mt-10 text-[#C80036]"
+                  dir={isArabic ? "rtl" : "ltr"}
+                >
+                  {t("HISTORIQUE-DE-L-ENTREPRISE")}
                 </h2>
                 <div className="text-lg leading-relaxed  space-y-10">
                   <p>
@@ -253,54 +230,32 @@ export default function Home() {
                 <h2 className="text-4xl font-extrabold mb-8 text-[#C80036]">
                   KLEER INFINI
                 </h2>
-                <div className="text-lg leading-relaxed  space-y-10">
-                  <p>
-                    Kleer Infini est une entreprise spécialisée dans
-                    l'intermédiation commerciale entre les producteurs algériens
-                    et les clients étrangers.{" "}
-                  </p>
-                  <p>
-                    Nous facilitons l'exportation des produits algériens en
-                    collaborant avec des fabricants et des producteurs locaux,
-                    tout en veillant à respecter les standards internationaux de
-                    qualité et de certification.
-                  </p>{" "}
-                  <p>
-                    Dans ce cadre, nous travaillons exclusivement avec des
-                    entreprises et des marques disposant de certifications
-                    internationales reconnues, garantissant ainsi la conformité
-                    des produits aux exigences des marchés étrangers.
-                  </p>
+                <div
+                  className="text-lg leading-relaxed  space-y-10"
+                  dir={isArabic ? "rtl" : "ltr"}
+                >
+                  <p>{t("mission1")}</p>
+
+                  <p>{t("mission2")}</p>
+
+                  <p>{t("mission3")}</p>
                 </div>
               </div>
             </div>
 
             <div className="flex flex-col md:flex-row items-stretch  justify-center gap-28">
               <div className="w-full md:w-4/5 text-left flex flex-col items-start justify-start">
-                <div className="text-lg leading-relaxed text-white space-y-10">
-                  <p>
-                    En parallèle, nous accompagnons également les producteurs
-                    algériens qui ne sont pas encore certifiés afin de leur
-                    permettre d'obtenir les certifications nécessaires et ainsi
-                    accéder aux opportunités d'exportation.
-                  </p>
-                  <p>
-                    Par ailleurs, nous nous appuyons sur des solutions
-                    technologiques innovantes pour valoriser les produits
-                    algériens sur la scène internationale.
-                  </p>{" "}
-                  <p>
-                    Nous préparons nos producteurs à présenter leurs produits de
-                    manière professionnelle à travers des sites web et des
-                    applications dédiées, renforçant ainsi leur attractivité et
-                    leur compétitivité.
-                  </p>{" "}
-                  <p>
-                    De plus, nos services numériques permettent la création de
-                    nombreux emplois pour les ingénieurs informatiques
-                    algériens, qui travaillent sur des projets intemationaux
-                    tout en contribuant au développement du commerce.
-                  </p>
+                <div
+                  className="text-lg leading-relaxed text-white space-y-10"
+                  dir={isArabic ? "rtl" : "ltr"}
+                >
+                  <p>{t("mission4")}</p>
+
+                  <p>{t("mission5")}</p>
+
+                  <p>{t("mission6")}</p>
+
+                  <p>{t("mission7")}</p>
                 </div>
               </div>
               {/* Image : prend la même hauteur que le texte */}
@@ -324,8 +279,11 @@ export default function Home() {
           >
             <div className="flex flex-col md:flex-row items-center justify-center gap-28">
               <div className="w-full md:w-4/5 text-left flex flex-col items-start justify-start">
-                <h2 className="text-4xl font-extrabold mb-16 mt-10 text-[#C80036]">
-                  VISION DE KLEER INFINI
+                <h2
+                  className="text-4xl font-extrabold mb-16 mt-10 text-[#C80036]"
+                  dir={isArabic ? "rtl" : "ltr"}
+                >
+                  {t("VISION-DE-KLEER-INFINI")}
                 </h2>
                 <div className="text-lg leading-relaxed  space-y-10">
                   <p>
@@ -380,24 +338,19 @@ export default function Home() {
 
               <div className="w-full md:w-4/5 text-left flex flex-col items-start justify-start">
                 <h2 className="text-4xl font-extrabold mb-16 mt-10 text-[#C80036]">
-                  NOS ATOUTS
+                  {t("atouts")}
                 </h2>
-                <div className="text-lg leading-relaxed  space-y-10">
-                  <p>
-                    Une expertise en mise en relation avec les marchés étrangers
-                  </p>
-                  <p>
-                    Des solutions digitales innovantes pour renforcer la
-                    visibilitedes produits exportés
-                  </p>{" "}
-                  <p>
-                    Une équipe d'experts en commerce international et en
-                    technologies numériques
-                  </p>
-                  <p>
-                    Un accompagnement personnalisé pour chaque client et
-                    partenaire
-                  </p>
+                <div
+                  className="text-lg leading-relaxed  space-y-10"
+                  dir={isArabic ? "rtl" : "ltr"}
+                >
+                  <p>{t("atout1")}</p>
+
+                  <p>{t("atout2")}</p>
+
+                  <p>{t("atout3")}</p>
+
+                  <p>{t("atout4")}</p>
                 </div>
               </div>
             </div>
@@ -406,7 +359,7 @@ export default function Home() {
           {/* IMPACT */}
           <TabsContent
             value="IMPACT"
-            className="px-8 py-6 bg-[#0C1844] text-center flex flex-col gap-10"
+            className="px-8 py-6 text-white bg-[#0C1844] p-5  text-center flex flex-col gap-10"
           >
             <div className="flex flex-col md:flex-row items-stretch justify-center gap-28">
               <div className="w-full hidden md:block  md:w-3/6 relative">
@@ -424,54 +377,32 @@ export default function Home() {
                 <h2 className="text-4xl font-extrabold mb-8 text-[#C80036]">
                   KLEER INFINI
                 </h2>
-                <div className="text-lg leading-relaxed text-white space-y-10">
-                  <p>
-                    Kleer Infini est une entreprise spécialisée dans
-                    l'intermédiation commerciale entre les producteurs algériens
-                    et les clients étrangers.{" "}
-                  </p>
-                  <p>
-                    Nous facilitons l'exportation des produits algériens en
-                    collaborant avec des fabricants et des producteurs locaux,
-                    tout en veillant à respecter les standards internationaux de
-                    qualité et de certification.
-                  </p>{" "}
-                  <p>
-                    Dans ce cadre, nous travaillons exclusivement avec des
-                    entreprises et des marques disposant de certifications
-                    internationales reconnues, garantissant ainsi la conformité
-                    des produits aux exigences des marchés étrangers.
-                  </p>
+                <div
+                  className="text-lg leading-relaxed  space-y-10"
+                  dir={isArabic ? "rtl" : "ltr"}
+                >
+                  <p>{t("mission1")}</p>
+
+                  <p>{t("mission2")}</p>
+
+                  <p>{t("mission3")}</p>
                 </div>
               </div>
             </div>
 
-            <div className="flex flex-col md:flex-row   rounded-md  gap-28">
+            <div className="flex flex-col md:flex-row items-stretch  justify-center gap-28">
               <div className="w-full md:w-4/5 text-left flex flex-col items-start justify-start">
-                <div className="text-lg leading-relaxed text-white space-y-10">
-                  <p>
-                    En parallèle, nous accompagnons également les producteurs
-                    algériens qui ne sont pas encore certifiés afin de leur
-                    permettre d'obtenir les certifications nécessaires et ainsi
-                    accéder aux opportunités d'exportation.
-                  </p>
-                  <p>
-                    Par ailleurs, nous nous appuyons sur des solutions
-                    technologiques innovantes pour valoriser les produits
-                    algériens sur la scène internationale.
-                  </p>{" "}
-                  <p>
-                    Nous préparons nos producteurs à présenter leurs produits de
-                    manière professionnelle à travers des sites web et des
-                    applications dédiées, renforçant ainsi leur attractivité et
-                    leur compétitivité.
-                  </p>{" "}
-                  <p>
-                    De plus, nos services numériques permettent la création de
-                    nombreux emplois pour les ingénieurs informatiques
-                    algériens, qui travaillent sur des projets intemationaux
-                    tout en contribuant au développement du commerce.
-                  </p>
+                <div
+                  className="text-lg leading-relaxed text-white space-y-10"
+                  dir={isArabic ? "rtl" : "ltr"}
+                >
+                  <p>{t("mission4")}</p>
+
+                  <p>{t("mission5")}</p>
+
+                  <p>{t("mission6")}</p>
+
+                  <p>{t("mission7")}</p>
                 </div>
               </div>
               {/* Image : prend la même hauteur que le texte */}
@@ -501,10 +432,10 @@ export default function Home() {
           <div className="w-full md:w-2/3 flex flex-col items-center justify-center space-y-10 md:space-y-20">
             <div className="flex flex-col items-center justify-center space-y-3 md:space-y-5">
               <h1 className="text-white text-3xl md:text-5xl font-bold">
-                NOS REALISATIONS
+                {t("NOS-REALISATIONS")}
               </h1>
               <p className="text-[#C80036] text-xl md:text-3xl font-bold">
-                Témoignage Client
+                {t("Temoignage-Client")}
               </p>
             </div>
           </div>
@@ -526,15 +457,12 @@ export default function Home() {
                 {/* Texte du témoignage */}
                 <div className="w-full md:w-5/6">
                   <p className="text-[#0C1844] text-sm md:text-base text-left">
-                    Grâce à KLEER INFINI, nous avons pu développer notre marché
-                    à l'international avec succès. Leur expertise en logistique,
-                    conformité douanière et négociations internationales a été
-                    essentielle à notre expansion.
+                    {t("testimonial1")}
                   </p>
 
                   <div className="flex items-center justify-between mt-4">
                     <span className="text-[#1E3CAA] text-sm md:text-base hover:underline hover:cursor-pointer">
-                      Mme MAHLEB Kenza
+                      {t("author1")}
                     </span>
                     <Image
                       src="/chevron.svg"
@@ -552,7 +480,7 @@ export default function Home() {
 
       <section className="flex flex-col justify-center items-center px-4 py-10">
         <h1 className="text-3xl md:text-5xl text-[#C80036] mt-6 md:mt-10 font-bold text-center">
-          NOS PARTENARIATS
+          {t("NOS-PARTENAIRES")}
         </h1>
 
         <div className="flex flex-wrap justify-center items-center gap-10 md:gap-20 mt-10 md:mt-12">
@@ -602,7 +530,7 @@ export default function Home() {
 
             {/* Texte du partenaire exactement comme dans l'exemple */}
             <span className="text-[#0C1844] text-lg md:text-2xl font-bold pt-6 text-center">
-              ExportHUB
+              ALGEX
             </span>
           </div>
 
@@ -639,13 +567,13 @@ export default function Home() {
           {/* FORMULAIRE */}
           <div className="w-full md:w-1/2 flex flex-col justify-center">
             <h2 className="text-4xl text-white font-extrabold mb-8">
-              ENVOIE-NOUS UN MESSAGE
+              {t("SendMessage")}
             </h2>
             <form onSubmit={handleSendMessage} className="space-y-6 w-full">
               <div className="flex flex-col md:flex-row gap-4">
                 <Input
                   id="nom"
-                  placeholder="Nom"
+                  placeholder={t("placeholder-nom")}
                   value={nom}
                   required
                   onChange={(e) => setNom(e.target.value)}
@@ -653,7 +581,7 @@ export default function Home() {
                 />
                 <Input
                   id="prenom"
-                  placeholder="Prénom"
+                  placeholder={t("placeholder-prenom")}
                   value={prenom}
                   required
                   onChange={(e) => setPrenom(e.target.value)}
@@ -662,7 +590,7 @@ export default function Home() {
               </div>
               <Input
                 id="email"
-                placeholder="Email"
+                placeholder={t("placeholder-email")}
                 type="email"
                 value={email}
                 required
@@ -674,7 +602,7 @@ export default function Home() {
                 value={phone}
                 required
                 onChange={setphone}
-                placeholder="Entrez votre numéro de téléphone"
+                placeholder={t("placeholder-telephone")}
                 inputStyle={{
                   width: "100%",
                   height: "40px",
@@ -685,7 +613,7 @@ export default function Home() {
               />
               <div className="relative w-full">
                 <textarea
-                  placeholder="Message"
+                  placeholder={t("placeholder-message")}
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   rows={5}

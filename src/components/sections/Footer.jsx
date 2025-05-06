@@ -1,8 +1,11 @@
-import { Linkedin, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
+"use client";
+
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Footer() {
+  const t = useTranslations();
   return (
     <footer className="relative bg-[#0a2680] text-white overflow-hidden py-2 sm:py-4">
       <div className="flex flex-col sm:flex-row items-stretch justify-center gap-6 sm:gap-10 md:gap-20">
@@ -34,7 +37,7 @@ export default function Footer() {
         {/* Section texte */}
         <div className="w-full sm:w-3/5 md:w-4/5 text-left flex flex-col items-start justify-center px-4 sm:px-0">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold mt-3 sm:mt-5">
-            CONTACTEZ-NOUS
+            {t("contactezNous")}
           </h2>
 
           <div className="space-y-5 sm:space-y-8 md:space-y-10 w-full max-w-md mt-5 sm:mt-8 md:mt-10">
@@ -118,15 +121,13 @@ export default function Footer() {
         </div>
       </div>
       <div className="text-center mt-6 sm:mt-8 mb-2 text-xs sm:text-sm md:text-base text-gray-300">
-        © 2025 Kleer Infini. Conçu par{" "}
+        © 2025 Kleer Infini. {t("concuPar")}{" "}
         <Link
           href="https://stephanie-maminiaina.vercel.app/"
           className="text-[#C80036] hover:underline"
         >
-          {" "}
           Stéphanie MAMINIAINA
         </Link>
-        .
       </div>
     </footer>
   );

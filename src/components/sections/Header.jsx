@@ -29,7 +29,7 @@ export default function Header() {
   const currentLocale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
-
+  const locale = useLocale();
   const handleLocaleChange = (locale) => {
     const segments = pathname.split("/");
     segments[1] = locale;
@@ -37,20 +37,19 @@ export default function Header() {
   };
 
   const navItems = [
-    { label: t("ACCUEIL"), href: "/" },
+    { label: t("ACCUEIL"), href: `/${locale}` },
     { label: t("A-PROPOS"), href: "#" },
-    { label: t("NOS-SERVICES"), href: "/services" },
-    { label: t("BLOG"), href: "/blog" },
+    { label: t("NOS-SERVICES"), href: `/${locale}/services` },
+    { label: t("BLOG"), href: `/${locale}/blog` },
     { label: t("CONTACT"), href: "#" },
   ];
-
   const menuItems = [
-    { name: "A propos de nous", link: "/" },
-    { name: "Nos services", link: "/services" },
-    { name: "Tous les articles", link: "/blog" },
-    { name: "Envoie-nous un message", link: "#" },
-    { name: "Contact", link: "#" },
-    { name: "Connexion", link: "/auth" },
+    { name: t("about"), link: `/${locale}` },
+    { name: t("services"), link: `/${locale}/services` },
+    { name: t("articles"), link: `/${locale}/blog` },
+    { name: t("sendMessage"), link: `/${locale}#contact` }, // ancre vers section contact
+    { name: t("contact"), link: `/${locale}#contact` },
+    { name: t("login"), link: `/${locale}/auth` },
   ];
 
   return (
@@ -92,7 +91,7 @@ export default function Header() {
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
               <Input
-                placeholder="Recherche"
+                placeholder={t("searchPlaceholder")}
                 className="pl-10 pr-4 py-2 w-64 border-2 border-primary/20 bg-white"
               />
             </div>
@@ -131,7 +130,7 @@ export default function Header() {
               <SheetTrigger asChild>
                 <Button className="flex items-center bg-[#C80036] text-white rounded-md h-9 px-4 py-2 text-sm md:text-base hover:bg-[#a6002a]">
                   <Menu className="w-5 h-5 md:mr-2" />
-                  <span className="hidden md:inline">Menu</span>
+                  <span className="hidden md:inline">{t("Menu")}</span>
                 </Button>
               </SheetTrigger>
 
@@ -139,7 +138,7 @@ export default function Header() {
                 side="right"
                 className="p-0 max-w-full sm:max-w-sm border-none"
               >
-                <SheetTitle className="sr-only">Menu de navigation</SheetTitle>
+                <SheetTitle className="sr-only"> {t("Menu")}</SheetTitle>
 
                 <div className="flex flex-col h-full bg-white">
                   <div className="flex justify-end p-4">
@@ -154,19 +153,19 @@ export default function Header() {
                       <div className="relative rounded-full border border-[#C80036]">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[#C80036]" />
                         <Input
-                          placeholder="Recherche"
+                          placeholder={t("searchPlaceholder")}
                           className="pl-10 py-2 border-none focus-visible:ring-0 focus-visible:ring-offset-0"
                         />
                       </div>
                     </div>
 
                     {/* Language select (mobile only) */}
-                    <div className="mb-6 md:hidden">
+                    <div className="mb-6 w-full md:hidden">
                       <Select
                         defaultValue={currentLocale}
                         onValueChange={handleLocaleChange}
                       >
-                        <SelectTrigger id={id} className="w-36">
+                        <SelectTrigger id={id} className="w-full">
                           <SelectValue placeholder="Langue" />
                         </SelectTrigger>
                         <SelectContent>
