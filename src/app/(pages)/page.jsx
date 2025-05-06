@@ -86,36 +86,74 @@ export default function Home() {
     kleerSectionRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const partners = [
+    {
+      name: "ExportHUB",
+      image: "/Group 6.png",
+      width: 100,
+      height: 100,
+      maxWidth: "150px",
+      paddingTop: "pt-6",
+    },
+    {
+      name: "MCS Tech",
+      image: "/Group 7.png",
+      width: 100,
+      height: 100,
+      maxWidth: "150px",
+      paddingTop: "pt-6",
+    },
+    {
+      name: "ALGEX",
+      image: "/Group 11.svg",
+      width: 180,
+      height: 180,
+      maxWidth: "200px",
+      paddingTop: "pt-4",
+    },
+    {
+      name: "Alibaba",
+      image: "/Group 10.png",
+      width: 100,
+      height: 100,
+      maxWidth: "150px",
+      paddingTop: "pt-6",
+    },
+  ];
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen ">
       <section
-        className="w-full flex items-center justify-center h-[600px] text-center px-10 bg-cover bg-center relative"
+        className="relative flex flex-col items-center justify-center min-h-[400px] md:min-h-[500px] lg:min-h-[600px] text-center px-4 sm:px-6 md:px-10 bg-cover bg-center w-full py-8 md:py-10 lg:py-12"
         style={{
           backgroundImage: "url('/heroimage.jpg')",
         }}
       >
         <div className="absolute inset-0 bg-[#1E3CAA3B]/80 z-10"></div>
+        <div className="max-w-7xl mx-auto w-full">
+          <h1 className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
+            A PROPOS DE KLEER INFINI
+          </h1>
 
-        <div className="flex w-full max-w-7xl items-center justify-between rounded-xl p-6 relative z-20">
-          <div className="w-2/3 flex flex-col items-center justify-center space-y-20">
-            <div className="flex flex-col items-center justify-center space-y-5">
-              <h1 className="text-white text-5xl font-bold">
-                A PROPOS DE KLEER INFINI
-              </h1>
-              <p className="text-white text-2xl">Découvrez notre historique</p>
-            </div>
-            <Button
-              onClick={handleScrollDown}
-              className="h-12 px-8 py-4 bg-[#1E3CAABF] hover:bg-[#1E3CAABF] rounded-lg cursor-pointer"
+          <div className="w-full flex justify-end pt-3 md:pt-5">
+            <button
+              className="bg-[#C80036] hover:bg-opacity-90 text-white font-extrabold rounded-md w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 p-0 flex items-center justify-center"
+              aria-label="Continuer"
             >
-              EN SAVOIR PLUS
-            </Button>
+              {/* Image remplacée par un placeholder pour l'exemple */}
+              <div className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 relative">
+                <img src="icone.png" alt="play" className="w-full h-full" />
+              </div>
+            </button>
           </div>
 
-          <div className="w-1/6 flex items-center justify-center">
-            <Button className="bg-[#C80036] hover:bg-[#C80036] text-white font-extrabold rounded-md w-16 h-16 p-0">
-              <Image src="/icone.png" alt="play" width={35} height={35} />
-            </Button>
+          <div className="w-full flex justify-start pt-3 md:pt-5">
+            <button
+              onClick={handleScrollDown}
+              className="h-10 sm:h-11 md:h-12 px-4 sm:px-6 md:px-8 py-2 md:py-4 bg-[#C80036BF]/80 hover:bg-[#C80036BF] rounded-lg cursor-pointer text-white text-sm sm:text-base md:text-lg"
+            >
+              EN SAVOIR PLUS
+            </button>
           </div>
         </div>
       </section>
@@ -160,7 +198,7 @@ export default function Home() {
             className="px-8 py-6 text-white bg-[#0C1844] text-center flex flex-col gap-10"
           >
             <div className="flex flex-col md:flex-row items-stretch justify-center gap-28">
-              <div className="w-full md:w-3/6 relative">
+              <div className="w-full hidden md:block md:w-3/6 relative">
                 <div className="w-full h-full relative min-h-[500px]">
                   <Image
                     src="/atoutImage.svg"
@@ -202,7 +240,7 @@ export default function Home() {
             className="px-8 py-6 text-white bg-[#0C1844] p-5  text-center flex flex-col gap-10"
           >
             <div className="flex flex-col md:flex-row items-stretch justify-center gap-28">
-              <div className="w-full md:w-3/6 relative">
+              <div className="w-full hidden md:block  md:w-3/6 relative">
                 <div className="w-full h-full relative min-h-[500px]">
                   <Image
                     src="/missionImage.jfif"
@@ -268,7 +306,7 @@ export default function Home() {
                 </div>
               </div>
               {/* Image : prend la même hauteur que le texte */}
-              <div className="w-full md:w-3/6 relative">
+              <div className="w-full hidden md:block  md:w-3/6 relative">
                 <div className="w-full h-full relative min-h-[500px]">
                   <Image
                     src="/missionImage2.jfif"
@@ -312,7 +350,7 @@ export default function Home() {
                   </p>
                 </div>
               </div>
-              <div className="w-full md:w-3/6 relative">
+              <div className="w-full hidden md:block  md:w-3/6 relative">
                 <div className="w-full h-full relative min-h-[500px]">
                   <Image
                     src="/atoutImage.svg"
@@ -331,7 +369,7 @@ export default function Home() {
             className="px-8 py-6 text-white bg-[#0C1844] text-center flex flex-col gap-10"
           >
             <div className="flex flex-col md:flex-row items-stretch justify-center gap-28">
-              <div className="w-full md:w-3/6 relative">
+              <div className="w-full hidden md:block  md:w-3/6 relative">
                 <div className="w-full h-full relative min-h-[500px]">
                   <Image
                     src="/atoutImage.svg"
@@ -370,10 +408,10 @@ export default function Home() {
           {/* IMPACT */}
           <TabsContent
             value="IMPACT"
-            className="px-8 py-6 text-[#0C1844] text-center flex flex-col gap-10"
+            className="px-8 py-6 bg-[#0C1844] text-center flex flex-col gap-10"
           >
             <div className="flex flex-col md:flex-row items-stretch justify-center gap-28">
-              <div className="w-full md:w-3/6 relative">
+              <div className="w-full hidden md:block  md:w-3/6 relative">
                 <div className="w-full h-full relative min-h-[500px]">
                   <Image
                     src="/missionImage.jfif"
@@ -388,7 +426,7 @@ export default function Home() {
                 <h2 className="text-4xl font-extrabold mb-8 text-[#C80036]">
                   KLEER INFINI
                 </h2>
-                <div className="text-lg leading-relaxed text-[#0C1844] space-y-10">
+                <div className="text-lg leading-relaxed text-white space-y-10">
                   <p>
                     Kleer Infini est une entreprise spécialisée dans
                     l'intermédiation commerciale entre les producteurs algériens
@@ -410,7 +448,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="flex flex-col md:flex-row items-stretch bg-[#0C1844] p-5 rounded-md justify-center gap-28">
+            <div className="flex flex-col md:flex-row   rounded-md  gap-28">
               <div className="w-full md:w-4/5 text-left flex flex-col items-start justify-start">
                 <div className="text-lg leading-relaxed text-white space-y-10">
                   <p>
@@ -439,7 +477,7 @@ export default function Home() {
                 </div>
               </div>
               {/* Image : prend la même hauteur que le texte */}
-              <div className="w-full md:w-3/6 relative">
+              <div className="w-full hidden md:block  md:w-3/6 relative">
                 <div className="w-full h-full relative min-h-[500px]">
                   <Image
                     src="/missionImage2.jfif"
@@ -537,7 +575,7 @@ export default function Home() {
           {/* Partenaire 2 */}
           <div className="flex flex-col justify-center items-center max-w-[150px]">
             <Image
-              src="/Group 7.png"
+              src="/Group 10.png"
               alt="MCS Tech"
               width={100}
               height={100}
@@ -549,23 +587,31 @@ export default function Home() {
           </div>
 
           {/* Partenaire 3 */}
-          <div className="flex flex-col justify-center items-center max-w-[200px]">
-            <Image
-              src="/Group 11.svg"
-              alt="ALGEX"
-              width={180}
-              height={180}
-              className="object-contain"
-            />
-            <span className="text-[#0C1844] text-lg md:text-2xl font-bold pt-4 text-center">
-              ALGEX
+          <div className="flex flex-col justify-center items-center max-w-[150px]">
+            <div className="relative w-[100px] h-[100px]">
+              <div className="absolute inset-0 rounded-full bg-[#C80036] flex items-center justify-center">
+                <div className="w-3/4 h-3/4 flex items-center justify-center">
+                  <Image
+                    src="/algex.png"
+                    alt="ALGEX"
+                    width={75}
+                    height={30}
+                    className="object-contain"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Texte du partenaire exactement comme dans l'exemple */}
+            <span className="text-[#0C1844] text-lg md:text-2xl font-bold pt-6 text-center">
+              ExportHUB
             </span>
           </div>
 
           {/* Partenaire 4 */}
           <div className="flex flex-col justify-center items-center max-w-[150px]">
             <Image
-              src="/Group 10.png"
+              src="/Group 7.png"
               alt="Alibaba"
               width={100}
               height={100}

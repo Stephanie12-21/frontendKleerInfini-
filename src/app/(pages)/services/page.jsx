@@ -202,30 +202,36 @@ export default function Home() {
         {/* Premier écran */}
         <div className="w-full flex-grow">
           <section
-            className="relative flex flex-col items-center justify-center h-[600px] text-center px-10 bg-cover bg-center space-y-10 w-full"
+            className="relative flex flex-col items-center justify-center min-h-[400px] md:min-h-[500px] lg:min-h-[600px] text-center px-4 sm:px-6 md:px-10 bg-cover bg-center w-full py-8 md:py-10 lg:py-12"
             style={{
               backgroundImage: "url('/serviceImage.jfif')",
             }}
           >
-            <div className="max-w-7xl">
-              <h1 className="text-white text-5xl font-bold">
+            <div className="max-w-7xl mx-auto w-full">
+              <h1 className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
                 EXPORTATION & COMMERCE INTERNATIONAL
               </h1>
-              <div className="w-full flex justify-end pt-5">
-                <Button
+
+              <div className="w-full flex justify-end pt-3 md:pt-5">
+                <button
                   onClick={handleContinue}
-                  className="bg-[#C80036] hover:bg-[#C80036] text-white font-extrabold rounded-md w-16 h-16 p-0"
+                  className="bg-[#C80036] hover:bg-opacity-90 text-white font-extrabold rounded-md w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 p-0 flex items-center justify-center"
+                  aria-label="Continuer"
                 >
-                  <Image src="/icone.png" alt="play" width={35} height={35} />
-                </Button>
+                  {/* Image remplacée par un placeholder pour l'exemple */}
+                  <div className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 relative">
+                    <img src="icone.png" alt="play" className="w-full h-full" />
+                  </div>
+                </button>
               </div>
-              <div className="w-full flex justify-start pt-5">
-                <Button
+
+              <div className="w-full flex justify-start pt-3 md:pt-5">
+                <button
                   onClick={handleScrollDown}
-                  className="h-12 px-8 py-4 bg-[#C80036BF]/80 hover:bg-[#C80036BF] rounded-lg cursor-pointer"
+                  className="h-10 sm:h-11 md:h-12 px-4 sm:px-6 md:px-8 py-2 md:py-4 bg-[#C80036BF]/80 hover:bg-[#C80036BF] rounded-lg cursor-pointer text-white text-sm sm:text-base md:text-lg"
                 >
                   EN SAVOIR PLUS
-                </Button>
+                </button>
               </div>
             </div>
           </section>
