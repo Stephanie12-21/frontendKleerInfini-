@@ -38,10 +38,10 @@ export default function Header() {
 
   const navItems = [
     { label: t("ACCUEIL"), href: `/${locale}` },
-    { label: t("A-PROPOS"), href: "#" },
+    { label: t("A-PROPOS"), href: `/${locale}#about` },
     { label: t("NOS-SERVICES"), href: `/${locale}/services` },
     { label: t("BLOG"), href: `/${locale}/blog` },
-    { label: t("CONTACT"), href: "#" },
+    { label: t("CONTACT"), href: `/${locale}#contact` },
   ];
   const menuItems = [
     { name: t("about"), link: `/${locale}` },
