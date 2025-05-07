@@ -1,7 +1,10 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 
 export function SuccessModal({ isOpen, onClose }) {
+  const { t } = useTranslations();
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -40,13 +43,13 @@ export function SuccessModal({ isOpen, onClose }) {
                 </svg>
               </motion.div>
               <h2 className="mt-6 text-2xl font-bold text-[#0C1844]">
-                Félicitations, opération réussie !
+                {t("successModal.congratulationsMessage")}
               </h2>
               <Button
                 onClick={onClose}
                 className="mt-6 w-full py-2 px-4 bg-[#0C1844] hover:bg-[#0C1844] cursor-pointer text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-300 ease-in-out"
               >
-                Fermer
+                {t("successModal.closeButton")}
               </Button>
             </div>
           </motion.div>

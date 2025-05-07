@@ -11,6 +11,7 @@ import { z } from "zod";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { Label } from "@/components/ui/label";
+import { useTranslations } from "next-intl";
 
 const emailSchema = z.object({
   email: z.string().email("Adresse email invalide"),
@@ -28,6 +29,7 @@ const requeteServiceSchema = z.object({
 });
 
 export default function Home() {
+  const t = useTranslations();
   const [showSecondDiv, setShowSecondDiv] = useState(false);
   const [telephone, setTelephone] = useState("");
   const kleerSectionRef = useRef();
@@ -200,28 +202,28 @@ export default function Home() {
     {
       icon: "/service (5).svg",
       alt: "Sécurité",
-      title: "Administration réseau & sécurité informatique",
+      title: t("Administration-réseau-sécurité-informatique"),
       width: 80,
       height: 80,
     },
     {
       icon: "/service (4).svg",
       alt: "Cloud",
-      title: "Cloud computing & infrastructures digitales.",
+      title: t("Cloud-computing-infrastructures-digitales"),
       width: 80,
       height: 80,
     },
     {
       icon: "/service (3).svg",
       alt: "Développement",
-      title: "Développement web & mobile",
+      title: t("Développement-web-mobile"),
       width: 70,
       height: 70,
     },
     {
       icon: "/service (2).svg",
       alt: "DevOps",
-      title: "DevOps & automatisation des systèmes",
+      title: t("DevOps-automatisation-des-systèmes"),
       width: 80,
       height: 80,
     },
@@ -231,17 +233,17 @@ export default function Home() {
     {
       image: "/image2.svg",
       alt: "Fret Routier",
-      title: "Fret Routier",
+      title: t("Fret-Routier"),
     },
     {
       image: "/image3.jfif",
       alt: "Fret Maritime",
-      title: "Fret Maritime",
+      title: t("Fret-Maritime"),
     },
     {
       image: "/image4.jfif",
       alt: "Fret Aérien",
-      title: "Fret Aérien",
+      title: t("Fret-Aérien"),
     },
   ];
 
@@ -263,7 +265,7 @@ export default function Home() {
           >
             <div className="max-w-7xl mx-auto w-full">
               <h1 className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
-                EXPORTATION & COMMERCE INTERNATIONAL
+                {t("EXPORTATION-COMMERCE-INTERNATIONAL")}
               </h1>
 
               <div className="w-full flex justify-end pt-3 md:pt-5">
@@ -274,7 +276,11 @@ export default function Home() {
                 >
                   {/* Image remplacée par un placeholder pour l'exemple */}
                   <div className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 relative">
-                    <img src="icone.png" alt="play" className="w-full h-full" />
+                    <img
+                      src="/icone.png"
+                      alt="play"
+                      className="w-full h-full"
+                    />
                   </div>
                 </button>
               </div>
@@ -284,7 +290,7 @@ export default function Home() {
                   onClick={handleScrollDown}
                   className="px-4 sm:px-6 md:px-8 py-2 sm:py-2.5 md:py-3 bg-[#C80036] hover:bg-[#A80030] transition-colors duration-200 rounded-lg cursor-pointer text-white text-sm sm:text-base md:text-lg font-medium"
                 >
-                  EN SAVOIR PLUS
+                  {t("EN-SAVOIR-PLUS")}
                 </button>
               </div>
             </div>
@@ -314,29 +320,11 @@ export default function Home() {
 
               {/* TEXTE */}
               <div className="w-full md:w-3/5 flex flex-col gap-y-5">
-                <p className="text-lg">
-                  Kleernet Infini prend en charge l'ensemble du processus
-                  logistique et douanier pour garantir une exportation fluide et
-                  sécurisée.
-                </p>
-                <p className="text-lg">
-                  De la recherche de fournisseurs à l'expédition, nous gérons le
-                  transport, les formalités douanières et la conformité
-                  réglementaire pour assurer une livraison efficace à
-                  l'international.
-                </p>
-                <p className="text-lg">
-                  Facilitation des exportations et mise en relation entre
-                  producteurs algériens et marchés internationaux.
-                </p>
-                <p className="text-lg">
-                  Collaboration avec des fabricants certifiés. Accompagnement
-                  des entreprises pour l'obtention des certifications.
-                </p>
-                <p className="text-lg">
-                  Suivi des normes de qualité et conformité aux standards
-                  internationaux.
-                </p>
+                <p className="text-lg">{t("p1")}</p>
+                <p className="text-lg">{t("p2")}</p>
+                <p className="text-lg">{t("p3")}</p>
+                <p className="text-lg">{t("p4")}</p>
+                <p className="text-lg">{t("p5")}</p>
               </div>
             </div>
           </section>
@@ -345,7 +333,7 @@ export default function Home() {
           <section className="w-full mt-20 px-4 sm:px-6 md:px-8 py-6 sm:py-8 md:py-10 bg-[#0C1844] text-white flex flex-col items-center justify-center">
             <div className="flex items-center justify-center w-full max-w-7xl">
               <h1 className="text-[#C80036] text-xl sm:text-2xl md:text-3xl font-bold text-center">
-                NOS SERVICES LOGISTIQUES SPÉCIALISÉS
+                {t("NOS-SERVICES-LOGISTIQUES-SPÉCIALISÉS")}
               </h1>
             </div>
 
@@ -386,18 +374,18 @@ export default function Home() {
             <div className="flex flex-col items-start justify-start px-3 sm:px-5 md:px-8 lg:px-10 my-6 sm:my-8 md:my-10 bg-[#0C1844] text-center bg-cover bg-center relative py-6 sm:py-8 md:py-10 rounded-lg">
               <div className="w-full space-y-4 sm:space-y-5 md:space-y-6">
                 <h1 className="text-[#C80036] text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-left">
-                  SUIVI & TRAÇABILITÉ
+                  {t("SUIVI-TRAÇABILITÉ")}
                 </h1>
 
                 <div className="w-full bg-white rounded-sm shadow-md flex flex-col sm:flex-row justify-between items-stretch sm:items-center p-3 sm:p-4 space-y-3 sm:space-y-0 sm:space-x-4">
                   <input
                     type="text"
-                    placeholder="Numéro de recherche"
+                    placeholder={t("numeroSearch")}
                     className="flex-1 text-[#0C1844] font-medium text-sm sm:text-base md:text-lg outline-none bg-transparent px-1 py-2 sm:py-0"
                   />
 
                   <button className="w-full sm:w-auto px-3 sm:px-4 py-2 bg-[#C80036E5] text-sm sm:text-base md:text-lg text-white rounded-sm transition-colors hover:bg-[#C80036]">
-                    Trouver
+                    {t("Trouver")}
                   </button>
                 </div>
               </div>
@@ -428,20 +416,11 @@ export default function Home() {
               {/* Texte */}
               <div className="w-full md:w-1/2 text-left flex flex-col items-start justify-center">
                 <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-4 sm:mb-6 text-[#C80036]">
-                  TYPE PRODUIT
+                  {t("TYPE-PRODUIT")}
                 </h2>
                 <div className="text-base sm:text-lg leading-relaxed text-[#0C1844] space-y-4">
-                  <p>
-                    Notre entreprise est spécialisée dans l&apos;exportation et
-                    le commerce international de tous types de produits (y
-                    compris alimentaires, cosmétiques, pharmaceutiques et
-                    parapharmaceutiques), à l&apos;exception des carburants.
-                  </p>
-                  <p>
-                    Nous garantissons des produits conformes aux normes
-                    internationales et assurons une livraison rapide et
-                    sécurisée grâce à notre réseau logistique performant.
-                  </p>
+                  <p>{t("type1")}</p>
+                  <p>{t("type2")}</p>
                 </div>
               </div>
             </div>
@@ -470,7 +449,7 @@ export default function Home() {
               {/* Formulaire */}
               <div className="w-full md:w-1/2 text-left flex flex-col items-start justify-center pr-0 sm:pr-4 md:pr-6 lg:pr-16 xl:pr-32">
                 <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold mb-4 sm:mb-5 md:mb-6 text-[#C80036]">
-                  Merci de renseigner votre adresse e-mail
+                  {t("Merci-de-renseigner-votre-adrese-email")}
                 </h2>
                 <div className="text-sm sm:text-base md:text-lg leading-relaxed text-[#0C1844] mt-3 sm:mt-4 md:mt-5 space-y-4 sm:space-y-5 md:space-y-6 w-full">
                   <Input
@@ -478,7 +457,7 @@ export default function Home() {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Votre adresse e-mail professionnelle"
+                    placeholder={t("Votre-adresse-e-mail-professionnelle")}
                   />
                   <div className="flex items-start sm:items-center space-x-2 sm:space-x-3">
                     <input
@@ -492,15 +471,14 @@ export default function Home() {
                       htmlFor="acceptEmails"
                       className="text-sm sm:text-base md:text-lg text-[#0C1844]"
                     >
-                      J&apos;accepte de recevoir des e-mails promotionnels et
-                      des informations de la part de Kleer Infini
+                      {t("termes-et-conditions")}
                     </label>
                   </div>
                   <button
                     onClick={handleNewsletter}
                     className="px-3 sm:px-4 py-2 w-full  bg-[#0C1844] text-sm sm:text-base md:text-lg text-white rounded-sm hover:bg-opacity-90 transition-colors"
                   >
-                    Continuer
+                    {t("Continuer")}
                   </button>
                 </div>
               </div>
@@ -510,10 +488,10 @@ export default function Home() {
           {/* liste des documents */}
           <section className="w-full py-8 mt-20 sm:py-12 md:py-16 text-[#0C1844] text-center flex flex-col px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-2 sm:mb-3 text-[#C80036]">
-              LISTE DES DOCUMENTS
+              {t("LISTE-DES-DOCUMENTS")}
             </h2>
             <p className="text-xl sm:text-2xl md:text-3xl font-bold text-[#C80036] mb-6 sm:mb-8 md:mb-10">
-              Nécessaires pour l&apos;Exportation vers l&apos;Europe/France
+              {t("description")}
             </p>
 
             <div className="w-full flex flex-col lg:flex-row items-center lg:items-stretch justify-center gap-6 lg:gap-10">
@@ -542,16 +520,11 @@ export default function Home() {
               {/* Liste de documents */}
               <div className="w-full lg:w-3/5 text-left flex flex-col justify-center bg-white/50 p-4 sm:p-6 rounded-lg">
                 <ul className="list-decimal list-inside text-base sm:text-lg text-[#0C1844] space-y-3 sm:space-y-4 md:space-y-6">
-                  <li className="pl-2">Documents Commerciaux</li>
-                  <li className="pl-2">Documents d&apos;Origine</li>
-                  <li className="pl-2">
-                    Documents Sanitaires et Phytosanitaires (pour les produits
-                    alimentaires et agricoles)
-                  </li>
-                  <li className="pl-2">
-                    Documents Spécifiques selon le Produit
-                  </li>
-                  <li className="pl-2">Documents de Transport et Logistique</li>
+                  <li className="pl-2">{t("commercial-docs")}</li>
+                  <li className="pl-2">{t("origin-docs")}</li>
+                  <li className="pl-2">{t("health-docs")}</li>
+                  <li className="pl-2">{t("specific-docs")}</li>
+                  <li className="pl-2">{t("logistics-docs")}</li>
                 </ul>
               </div>
             </div>
@@ -559,7 +532,7 @@ export default function Home() {
             {/* CTA */}
             <div className="flex flex-col items-center justify-center mt-6 sm:mt-8 md:mt-10">
               <p className="text-xl sm:text-2xl md:text-3xl font-bold text-[#0C1844] text-center">
-                Cliquez ici pour découvrir tous les détails !
+                {t("cta-details")}
               </p>
               <button
                 onClick={toggleExpand}
@@ -579,26 +552,22 @@ export default function Home() {
           {/* Étapes Clés */}
           <section className="w-full px-4 py-10 mb-5 bg-[#0C1844] text-white flex flex-col items-center justify-start">
             <h1 className="text-[#C80036] text-2xl sm:text-3xl md:text-4xl font-bold text-center w-full mb-6">
-              Étapes Clés pour une Exportation Réussie
+              {t("exportation-titre")}
             </h1>
 
             <div className="flex flex-col items-center justify-center mt-4 max-w-screen-lg w-full px-2 sm:px-6">
               <ul className="list-disc list-inside space-y-4 sm:space-y-5 text-base sm:text-lg md:text-xl text-left w-full max-w-3xl">
                 <li className="p-2 rounded hover:bg-[#162456] transition-colors">
-                  Vérifier les certifications des fournisseurs
+                  {t("exportation-etape1")}
                 </li>
                 <li className="p-2 rounded hover:bg-[#162456] transition-colors">
-                  Obtenir tous les certificats nécessaires (sanitaires,
-                  phytosanitaires, d&apos;origine, etc.)
+                  {t("exportation-etape2")}
                 </li>
                 <li className="p-2 rounded hover:bg-[#162456] transition-colors">
-                  S&apos;assurer que l&apos;étiquetage est conforme aux normes
-                  européennes et préparer tous les documents commerciaux et
-                  logistiques
+                  {t("exportation-etape3")}
                 </li>
                 <li className="p-2 rounded hover:bg-[#162456] transition-colors">
-                  Vérifier la conformité avec les douanes et les réglementations
-                  européennes
+                  {t("exportation-etape4")}
                 </li>
               </ul>
             </div>
@@ -615,7 +584,7 @@ export default function Home() {
           >
             <div className="max-w-7xl mx-auto w-full">
               <h1 className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
-                EXPORTATION DE TECHNOLOGIES & SERVICES NUMERIQUES
+                {t("exportation-tech-services")}
               </h1>
               <div className="w-full flex justify-start pt-3 md:pt-5">
                 <Button
@@ -636,7 +605,7 @@ export default function Home() {
                   onClick={handleScrollDevDown}
                   className="px-4 sm:px-6 md:px-8 py-2 sm:py-2.5 md:py-3 bg-[#C80036] hover:bg-[#A80030] transition-colors duration-200 rounded-lg cursor-pointer text-white text-sm sm:text-base md:text-lg font-medium"
                 >
-                  EN SAVOIR PLUS
+                  {t("EN-SAVOIR-PLUS")}
                 </Button>
               </div>
             </div>
@@ -655,27 +624,13 @@ export default function Home() {
                   </h2>
                 </div>
 
-                <p className="text-lg">
-                  En plus du développement web, mobile et des solutions cloud,
-                  Kleernet Infini propose également :
-                </p>
+                <p className="text-lg">{t("description-kleernet")}</p>
 
                 <ul className="list-disc pl-6 text-lg space-y-2">
-                  <li>
-                    Des systèmes de sécurité avancés pour la protection des
-                    entreprises.
-                  </li>
-                  <li>
-                    Des solutions de cybersécurité pour sécuriser les données
-                    sensibles.
-                  </li>
-                  <li>
-                    Des systèmes de vidéo surveillance modernes et intégrés.
-                  </li>
-                  <li>
-                    Des dispositifs de contrôle d'accès performants pour les
-                    infrastructures.
-                  </li>
+                  <li>{t("security-systems")}</li>
+                  <li>{t("cybersecurity-solutions")}</li>
+                  <li>{t("video-surveillance")}</li>
+                  <li>{t("access-control")}</li>
                 </ul>
               </div>
 
@@ -726,8 +681,7 @@ export default function Home() {
                 />
               </div>
               <h3 className="text-white text-lg sm:text-xl font-medium">
-                Solutions digitales pour l'exportation & la présentation des
-                produits algériens
+                {t("digital-solutions-export")}
               </h3>
             </div>
           </section>
@@ -751,23 +705,17 @@ export default function Home() {
               {/* Contenu Web Dev */}
               <div className="w-full lg:w-3/5 text-left flex flex-col items-start justify-center order-1 lg:order-2">
                 <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-6 sm:mb-8 md:mb-10 text-[#C80036] w-full text-center lg:text-left">
-                  LE DÉVELOPPEMENT WEB
+                  {t("web-development")}
                 </h2>
                 <div className="text-base sm:text-lg leading-relaxed space-y-4 sm:space-y-6 md:space-y-8">
-                  <p>
-                    Le développement web consiste à créer des sites internet et
-                    applications web accessibles via un navigateur (Chrome,
-                    Firefox, etc.).
-                  </p>
-                  <p>Il se divise en deux parties principales :</p>
+                  <p>{t("web-development-description")}</p>
+                  <p>{t("web-development-main")}</p>
                   <ul className="list-disc list-inside pl-2 sm:pl-4 space-y-3 sm:space-y-4 md:space-y-6">
                     <li className="p-2 hover:bg-[#162456] rounded transition-colors">
-                      Front-end : Interface utilisateur (HTML, CSS, JavaScript,
-                      React, Angular).
+                      {t("web-development-front-end")}
                     </li>
                     <li className="p-2 hover:bg-[#162456] rounded transition-colors">
-                      Back-end : Logique métier, bases de données (Node.js, PHP,
-                      Python, SQL).
+                      {t("web-development-back-end")}
                     </li>
                   </ul>
                 </div>
@@ -779,23 +727,17 @@ export default function Home() {
               {/* Contenu Mobile Dev */}
               <div className="w-full lg:w-3/5 text-left flex flex-col items-start justify-center order-1 lg:order-1">
                 <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-6 sm:mb-8 md:mb-10 text-[#C80036] w-full text-center lg:text-left">
-                  LE DÉVELOPPEMENT MOBILE
+                  {t("mobile-development")}
                 </h2>
                 <div className="text-base sm:text-lg leading-relaxed space-y-4 sm:space-y-6 md:space-y-8">
-                  <p>
-                    Le développement mobile consiste à créer des applications
-                    pour smartphones (iOS, Android) disponibles sur des stores
-                    (App Store, Google Play).
-                  </p>
-                  <p>Deux approches existent :</p>
+                  <p>{t("mobile-development-description")}</p>
+                  <p>{t("mobile-development-approaches")}</p>
                   <ul className="list-disc list-inside pl-2 sm:pl-4 space-y-3 sm:space-y-4 md:space-y-6">
                     <li className="p-2 hover:bg-[#162456] rounded transition-colors">
-                      Natifs : Développés spécifiquement pour un OS (Swift pour
-                      iOS, Kotlin pour Android).
+                      {t("mobile-development-native")}
                     </li>
                     <li className="p-2 hover:bg-[#162456] rounded transition-colors">
-                      Cross-platform : Une seule base de code pour plusieurs OS
-                      (Flutter, React Native).
+                      {t("mobile-development-cross-platform")}
                     </li>
                   </ul>
                 </div>
@@ -822,7 +764,7 @@ export default function Home() {
               className="w-full max-w-3xl mx-auto flex flex-col px-4 sm:px-6 md:px-8 gap-4 sm:gap-5"
             >
               <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#C41E3A] mb-4 md:mb-6">
-                REQUETE DE SERVICE
+                {t("serviceRequest")}
               </h1>
 
               {/* Nom complet */}
@@ -831,14 +773,14 @@ export default function Home() {
                   htmlFor="nom"
                   className="block text-base sm:text-lg text-[#0C1844] font-medium mb-1 sm:mb-2 text-left"
                 >
-                  Nom complet
+                  {t("fullName")}
                 </Label>
                 <Input
                   type="text"
                   name="nom"
                   value={formData.nom}
                   onChange={handleChange}
-                  placeholder="Nom"
+                  placeholder={t("namePlaceholder")}
                   className="w-full p-2 sm:p-3 bg-[#D3D6DE] rounded text-base sm:text-lg text-[#0C1844] font-medium"
                   required
                 />
@@ -850,14 +792,14 @@ export default function Home() {
                   htmlFor="email"
                   className="block text-base sm:text-lg text-[#0C1844] font-medium mb-1 sm:mb-2 text-left"
                 >
-                  Adresse e-mail
+                  {t("emailAddress")}
                 </Label>
                 <Input
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  placeholder="Email"
+                  placeholder={t("emailPlaceholder")}
                   className="w-full p-2 sm:p-3 bg-[#D3D6DE] rounded text-base sm:text-lg text-[#0C1844] font-medium"
                   required
                 />
@@ -869,14 +811,14 @@ export default function Home() {
                   htmlFor="telephone"
                   className="block text-base sm:text-lg text-[#0C1844] font-medium mb-1 sm:mb-2 text-left"
                 >
-                  Numéro de téléphone
+                  {t("phoneNumber")}
                 </Label>
                 <PhoneInput
                   country="dz"
                   value={telephone}
                   required
                   onChange={setTelephone}
-                  placeholder="Entrez votre numéro de téléphone"
+                  placeholder={t("phonePlaceholder")}
                   inputStyle={{
                     width: "100%",
                     height: "40px",
@@ -890,7 +832,7 @@ export default function Home() {
               {/* Services */}
               <div className="flex flex-col gap-8 text-left mt-2">
                 <h2 className="text-base sm:text-lg text-[#0C1844] font-medium mb-2 sm:mb-4">
-                  Services sollicités
+                  {t("requestedServices")}
                 </h2>
 
                 <div className="flex flex-col gap-6 sm:gap-6 mb-4">
@@ -908,7 +850,7 @@ export default function Home() {
                       htmlFor="reseauSecurite"
                       className="text-left text-base sm:text-lg text-[#0C1844] cursor-pointer"
                     >
-                      Administration réseau & sécurité informatique
+                      {t("networkSecurity")}
                     </label>
                   </div>
 
@@ -926,7 +868,7 @@ export default function Home() {
                       htmlFor="cloudComputing"
                       className="text-left text-base sm:text-lg text-[#0C1844] cursor-pointer"
                     >
-                      Cloud computing & infrastructures digitales
+                      {t("cloudComputing")}
                     </label>
                   </div>
 
@@ -944,7 +886,7 @@ export default function Home() {
                       htmlFor="devOps"
                       className="text-left text-base sm:text-lg text-[#0C1844] cursor-pointer"
                     >
-                      DevOps & automatisation des systèmes
+                      {t("devOpsAutomation")}
                     </label>
                   </div>
 
@@ -962,7 +904,7 @@ export default function Home() {
                       htmlFor="developpementWeb"
                       className="text-left text-base sm:text-lg text-[#0C1844] cursor-pointer"
                     >
-                      Développement web & mobile
+                      {t("webMobileDevelopment")}
                     </label>
                   </div>
 
@@ -980,8 +922,7 @@ export default function Home() {
                       htmlFor="solutionsDigitales"
                       className="text-left text-base sm:text-lg text-[#0C1844] cursor-pointer"
                     >
-                      Solutions digitales pour l'exportation & la présentation
-                      des produits algériens
+                      {t("digitalSolutions")}
                     </label>
                   </div>
                 </div>
@@ -993,13 +934,13 @@ export default function Home() {
                   htmlFor="details"
                   className="block text-base sm:text-lg text-[#0C1844] font-medium mb-1 sm:mb-2 text-left"
                 >
-                  Détails pertinents
+                  {t("relevantDetails")}
                 </Label>
                 <textarea
                   name="details"
                   value={formData.details}
                   onChange={handleChange}
-                  placeholder="Détails"
+                  placeholder={t("detailsPlaceholder")}
                   className="w-full p-2 sm:p-3 bg-[#D3D6DE] rounded text-base sm:text-lg text-[#0C1844] font-medium min-h-[400px] sm:min-h-[350px] md:min-h-[300px] resize-y transition-all duration-300"
                 />
               </div>
@@ -1034,7 +975,7 @@ export default function Home() {
                     </svg>
                   ) : (
                     <span className="flex items-center">
-                      Envoyer la requête
+                      {t("sendRequest")}
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="h-5 w-5 ml-2"

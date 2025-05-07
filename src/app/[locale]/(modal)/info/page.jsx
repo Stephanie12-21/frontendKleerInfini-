@@ -1,7 +1,10 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 
 export function InfoModal({ isOpen, onClose, message }) {
+  const { t } = useTranslations();
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -9,7 +12,7 @@ export function InfoModal({ isOpen, onClose, message }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-[#1E3CAA3B]/80  flex items-center justify-center z-50"
+          className="fixed inset-0 bg-[#1E3CAA3B]/80 flex items-center justify-center z-50"
         >
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
@@ -40,13 +43,13 @@ export function InfoModal({ isOpen, onClose, message }) {
                 </svg>
               </motion.div>
               <h2 className="mt-6 text-2xl font-bold text-[#0C1844]">
-                {message}
+                {message || t("infoModal.defaultMessage")}
               </h2>
               <Button
                 onClick={onClose}
                 className="mt-6 w-full py-2 px-4 bg-[#0C1844] hover:bg-[#0C1844] text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-300 ease-in-out"
               >
-                Fermer
+                {t("infoModal.closeButton")}
               </Button>
             </div>
           </motion.div>

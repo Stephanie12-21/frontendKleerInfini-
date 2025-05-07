@@ -47,7 +47,7 @@ export default function Header() {
     { name: t("about"), link: `/${locale}` },
     { name: t("services"), link: `/${locale}/services` },
     { name: t("articles"), link: `/${locale}/blog` },
-    { name: t("sendMessage"), link: `/${locale}#contact` }, // ancre vers section contact
+    { name: t("sendMessage"), link: `/${locale}#contact` },
     { name: t("contact"), link: `/${locale}#contact` },
     { name: t("login"), link: `/${locale}/auth` },
   ];
