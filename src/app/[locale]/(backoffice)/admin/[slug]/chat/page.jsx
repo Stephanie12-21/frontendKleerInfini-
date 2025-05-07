@@ -1,12 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { use, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Paperclip, Mic, Send } from "lucide-react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 export default function ChatPage() {
+  const t = useTranslations();
   const [message, setMessage] = useState("");
 
   const handleSendMessage = (e) => {
@@ -38,11 +40,11 @@ export default function ChatPage() {
         <div className="flex-1 bg-white p-4 overflow-y-auto">
           {/*les messages envoyés s'affichent dans cette section */}
           <div className="bg-gray-200 p-3 rounded-lg max-w-[80%] mb-4">
-            Bonjour, comment puis-je vous aider aujourd'hui?
+            {t("chat-bonjour-comment-aider")}
           </div>
 
           <div className="bg-gray-100 p-3 rounded-lg max-w-[80%] ml-auto">
-            Je voudrais savoir comment fonctionne votre service.
+            {t("chat-comment-fonctionne-service")}
           </div>
         </div>
 
@@ -54,7 +56,7 @@ export default function ChatPage() {
           <Input
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            placeholder="Envoyer un message"
+            placeholder={t("placeholder-envoyer-message")}
             className="flex-1 bg-white"
           />
           <Mic className="text-gray-500 h-5 w-5" />

@@ -9,8 +9,10 @@ import { useRouter } from "next/navigation";
 import { SuccessModal } from "@/app/[locale]/(modal)/success/page";
 import { ErrorModal } from "@/app/[locale]/(modal)/erreurs/page";
 import RichTextEditor from "@/components/TextEditor/RichEditor";
+import { useTranslations } from "next-intl";
 
 const ArticleForm = () => {
+  const t = useTranslations();
   const [titre, setTitre] = useState("");
   const [contenu, setContenu] = useState({});
   const [categorieArticle, setCategorieArticle] = useState("");
@@ -77,7 +79,7 @@ const ArticleForm = () => {
   return (
     <div className="max-w-6xl container mx-auto px-4 py-8 bg-white shadow-md my-5 rounded-lg">
       <h1 className="text-4xl font-bold mb-8 text-center">
-        Ajouter une nouvelle annonce
+        {t("ajouter-nouvelle-annonce")}
       </h1>
       <div className="flex-col space-y-3">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -87,7 +89,7 @@ const ArticleForm = () => {
                 htmlFor="titre"
                 className="block text-sm font-medium text-gray-700"
               >
-                Titre
+                {t("label-titre")}
               </label>
               <Input
                 type="text"
@@ -95,6 +97,7 @@ const ArticleForm = () => {
                 value={titre}
                 onChange={(e) => setTitre(e.target.value)}
                 required
+                placeholder={t("placeholder-titre")}
                 className="mt-1"
               />
             </div>
@@ -104,7 +107,7 @@ const ArticleForm = () => {
                 htmlFor="categorieArticle"
                 className="block text-sm font-medium text-gray-700"
               >
-                Catégorie
+                {t("label-categorie")}
               </label>
               <select
                 id="categorieArticle"
@@ -113,11 +116,15 @@ const ArticleForm = () => {
                 required
                 className="mt-1 block w-full h-10 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
               >
-                <option value="">Sélectionnez une catégorie</option>
-                <option value="technologie">Technologie</option>
-                <option value="exportation">Exportation</option>
+                <option value="">{t("selectionner-categorie")}</option>
+                <option value="technologie">
+                  {t("categorie-technologie")}
+                </option>
+                <option value="exportation">
+                  {t("categorie-exportation")}
+                </option>
                 <option value="commerce-internationale">
-                  Commerce Internationale
+                  {t("categorie-commerce")}
                 </option>
               </select>
             </div>
@@ -127,11 +134,12 @@ const ArticleForm = () => {
                 htmlFor="contenu"
                 className="block text-sm font-medium text-gray-700"
               >
-                Contenu
+                {t("label-contenu")}
               </label>
               <RichTextEditor
                 content={contenu}
                 onChange={(json) => setContenu(json)}
+                placeholder={t("placeholder-contenu")}
               />
             </div>
           </div>
@@ -142,7 +150,7 @@ const ArticleForm = () => {
                 htmlFor="imageFiles"
                 className="block text-sm font-medium text-gray-700"
               >
-                Choisir des images
+                {t("label-images")}
               </label>
               <Input
                 type="file"
@@ -156,7 +164,7 @@ const ArticleForm = () => {
             {imageFiles.length > 0 && (
               <div className="mt-4">
                 <h3 className="text-lg font-medium text-gray-900 mb-2">
-                  Images sélectionnées :
+                  {t("images-selectionnees")}
                 </h3>
                 <div className="grid grid-cols-4 gap-4">
                   {imageFiles.map((file, index) => {
@@ -165,7 +173,7 @@ const ArticleForm = () => {
                       <div key={index} className="relative group">
                         <Image
                           src={fileURL}
-                          alt={`Image ${index + 1}`}
+                          alt={`${t("image")} ${index + 1}`}
                           width={100}
                           height={70}
                           className="w-28 h-20 object-cover rounded"
@@ -192,7 +200,7 @@ const ArticleForm = () => {
               className="text-white p-2 rounded w-full"
               onClick={handleSubmit}
             >
-              Ajouter le nouvel article
+              {t("add-article")}
             </Button>
           </div>
         </div>

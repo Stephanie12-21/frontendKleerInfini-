@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
@@ -13,8 +13,11 @@ import { Eye, Edit, Trash2, Search } from "lucide-react";
 import ConfirmDeleteModal from "@/app/[locale]/(modal)/delete/page";
 import { SuccessModal } from "@/app/[locale]/(modal)/success/page";
 import { ErrorModal } from "@/app/[locale]/(modal)/erreurs/page";
+import { useLocale, useTranslations } from "next-intl";
 
 const Annonces = () => {
+  const t = useTranslations();
+  const locale = useLocale();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedArticleId, setSelectedArticleId] = useState(null);
   const { data: status } = useSession();
@@ -27,18 +30,18 @@ const Annonces = () => {
   const { slug } = useParams();
 
   if (!slug) {
-    return <div>Chargement...</div>;
+    return <div>{t("LOADING")}</div>;
   }
 
   const [nom] = slug.split("-");
 
   if (!nom) {
-    return <div>Erreur : données du slug invalides</div>;
+    return <div>{t("INVALID_SLUG_ERROR")}</div>;
   }
 
   useEffect(() => {
     if (status === "unauthenticated") {
-      router.push("/login");
+      router.push(`${locale}/auth`);
     }
   }, [status, router]);
 
@@ -88,7 +91,7 @@ const Annonces = () => {
       setIsSuccessModalOpen(true);
 
       setTimeout(() => {
-        router.push(`/admin/${slug}/blog/`);
+        router.push(`/${locale}/admin/${slug}/blog/`);
       }, 2000);
     } catch (error) {
       console.error("Erreur lors de la suppression des données :", error);
@@ -116,7 +119,7 @@ const Annonces = () => {
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
             <Input
               type="text"
-              placeholder="Rechercher par titre ou catégorie"
+              placeholder={t("search-by-title-or-category")}
               value={searchFilter}
               onChange={(e) => setSearchFilter(e.target.value)}
               className="pl-10 pr-4 py-2 w-full border-2 border-primary/20 focus:border-primary transition-colors"
@@ -124,9 +127,9 @@ const Annonces = () => {
           </div>
         </div>
 
-        <Link href={`/admin/${slug}/blog/addBlog`}>
+        <Link href={`/${locale}/admin/${slug}/blog/addBlog`}>
           <Button className="w-full md:w-auto bg-[#0C1844] hover:bg-[#0C1844] text-white rounded-mb py-2  px-4">
-            Créer un nouvel article
+            {t("create-new-article")}
           </Button>
         </Link>
       </div>
@@ -136,7 +139,7 @@ const Annonces = () => {
           className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6"
           role="alert"
         >
-          <strong className="font-bold">Erreur!</strong>
+          <strong className="font-bold">{t("error")}</strong>
           <span className="block sm:inline"> {error}</span>
         </div>
       )}
@@ -144,7 +147,7 @@ const Annonces = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredArticles.length === 0 ? (
           <p className="text-center col-span-full text-gray-500">
-            Aucune article trouvée.
+            {t("no-article-found")}
           </p>
         ) : (
           filteredArticles.map((article) => (
@@ -169,7 +172,7 @@ const Annonces = () => {
                   </div>
                 ) : (
                   <div className="h-48 flex items-center justify-center text-white font-semibold">
-                    Aucune image
+                    {t("no-image")}
                   </div>
                 )}
               </CardContent>
@@ -196,14 +199,14 @@ const Annonces = () => {
 
                 <div className="flex justify-between items-center w-full pt-8 mt-auto">
                   <Link
-                    href={`/admin/${slug}/blog/${article.id}`}
+                    href={`/${locale}/admin/${slug}/blog/${article.id}`}
                     className="text-green-500 hover:text-green-700 transition-colors"
                     title="Voir"
                   >
                     <Eye className="h-6 w-6" />
                   </Link>
                   <Link
-                    href={`/admin/${slug}/blog/editBlog/${article.id}`}
+                    href={`/${locale}/admin/${slug}/blog/editBlog/${article.id}`}
                     className="text-yellow-500 hover:text-yellow-700 transition-colors"
                     title="Éditer"
                   >

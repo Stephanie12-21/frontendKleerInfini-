@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { useRouter } from "next/navigation";
@@ -10,9 +10,11 @@ import { getSession, signIn } from "next-auth/react";
 import { SuccessModal } from "@/app/[locale]/(modal)/success/page";
 import { InfoModal } from "@/app/[locale]/(modal)/info/page";
 import slugify from "slugify";
+import { useLocale, useTranslations } from "next-intl";
 
 const Connexion = () => {
   const router = useRouter();
+  const locale = useLocale();
   const [nom, setNom] = useState("");
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
@@ -26,6 +28,7 @@ const Connexion = () => {
   const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
   const [infoMessage, setInfoMessage] = useState("");
+  const t = useTranslations();
 
   const handleCreateAccount = async (e) => {
     e.preventDefault();
@@ -95,7 +98,7 @@ const Connexion = () => {
       const slug = `${slugify(firstName)}`;
 
       await new Promise((resolve) => setTimeout(resolve, 500));
-      router.push(`/admin/${slug}/profile/${updatedSession.user.id}`);
+      router.push(`/${locale}/admin/${slug}/profile/${updatedSession.user.id}`);
     } catch (error) {
       console.error("Login error:", error);
       setError("Une erreur s'est produite, veuillez réessayer.");
@@ -112,7 +115,7 @@ const Connexion = () => {
           backgroundImage: "url('/bg.svg')",
         }}
       >
-        CONNEXION
+        {t("CONNEXION")}
       </div>
 
       <div className="mx-auto px-4 sm:px-6 lg:px-8">
@@ -130,8 +133,8 @@ const Connexion = () => {
             </div>
 
             <div className="w-full md:w-1/2 flex flex-col items-center justify-center">
-              <h2 className="text-4xl font-extrabold   mb-8 text-[#C80036]">
-                Se connecter
+              <h2 className="text-4xl font-extrabold mb-8 text-[#C80036]">
+                {t("Login.title")}
               </h2>
               <form
                 onSubmit={handleLogIn}
@@ -139,11 +142,12 @@ const Connexion = () => {
               >
                 <div className="space-y-2 w-full">
                   <label className="text-lg text-[#0C1844]">
-                    Adresse e-mail
+                    {t("Login.emailLabel")}
                   </label>
                   <input
                     type="email"
                     name="email"
+                    placeholder={t("Login.emailPlaceholder")}
                     value={emailConnexion}
                     onChange={(e) => setEmailConnexion(e.target.value)}
                     className="w-full p-3 bg-[#D3D6DE] text-lg text-[#0C1844] font-medium rounded"
@@ -152,10 +156,13 @@ const Connexion = () => {
                 </div>
 
                 <div className="space-y-2 w-full">
-                  <label className="text-lg text-[#0C1844]">Mot de passe</label>
+                  <label className="text-lg text-[#0C1844]">
+                    {t("Login.passwordLabel")}
+                  </label>
                   <input
                     type="password"
                     name="password"
+                    placeholder={t("Login.passwordPlaceholder")}
                     value={passwordConnexion}
                     onChange={(e) => setPasswordConnexion(e.target.value)}
                     className="w-full p-3 bg-[#D3D6DE] text-lg text-[#0C1844] font-medium rounded"
@@ -168,7 +175,7 @@ const Connexion = () => {
                     type="submit"
                     className="bg-[#0C1844] text-white w-full text-lg py-2 px-4 rounded"
                   >
-                    Continuer
+                    {t("Login.submitButton")}
                   </button>
                 </div>
               </form>
@@ -178,19 +185,22 @@ const Connexion = () => {
           <div className="flex flex-col md:flex-row items-center mt-20 gap-10 md:gap-20">
             <div className="w-full md:w-1/2 text-left flex flex-col items-center justify-center">
               <h2 className="text-4xl font-extrabold mb-8 text-[#C80036]">
-                Créer un compte
+                {t("register-title")}
               </h2>
               <form
                 onSubmit={handleCreateAccount}
                 className="w-full flex flex-col items-center gap-4 px-6 sm:px-16 lg:px-28"
               >
                 <div className="space-y-2 w-full">
-                  <label className="text-lg text-[#0C1844]">Nom</label>
+                  <label className="text-lg text-[#0C1844]">
+                    {t("register-name-label")}
+                  </label>
                   <input
                     type="text"
                     name="nom"
                     value={nom}
                     onChange={(e) => setNom(e.target.value)}
+                    placeholder={t("register-name-placeholder")}
                     className="w-full p-3 bg-[#D3D6DE] text-lg text-[#0C1844] font-medium rounded"
                     required
                   />
@@ -198,26 +208,29 @@ const Connexion = () => {
 
                 <div className="space-y-2 w-full">
                   <label className="text-lg text-[#0C1844]">
-                    Adresse e-mail
+                    {t("register-email-label")}
                   </label>
                   <input
                     type="email"
                     name="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    placeholder={t("register-email-placeholder")}
                     className="w-full p-3 bg-[#D3D6DE] text-lg text-[#0C1844] font-medium rounded"
                     required
                   />
                 </div>
 
                 <div className="space-y-2 w-full">
-                  <label className="text-lg text-[#0C1844]">Téléphone</label>
+                  <label className="text-lg text-[#0C1844]">
+                    {t("register-phone-label")}
+                  </label>
                   <PhoneInput
                     country="dz"
                     value={Phone}
-                    required
                     onChange={setPhone}
-                    placeholder="Entrez votre numéro de téléphone"
+                    placeholder={t("register-phone-placeholder")}
+                    required
                     inputStyle={{
                       width: "100%",
                       height: "50px",
@@ -230,12 +243,15 @@ const Connexion = () => {
                 </div>
 
                 <div className="space-y-2 w-full">
-                  <label className="text-lg text-[#0C1844]">Mot de passe</label>
+                  <label className="text-lg text-[#0C1844]">
+                    {t("register-password-label")}
+                  </label>
                   <input
                     type="password"
                     name="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    placeholder={t("register-password-placeholder")}
                     className="w-full p-3 bg-[#D3D6DE] text-lg text-[#0C1844] font-medium rounded"
                     required
                   />
@@ -243,13 +259,14 @@ const Connexion = () => {
 
                 <div className="space-y-2 w-full">
                   <label className="text-lg text-[#0C1844]">
-                    Confirmer le mot de passe
+                    {t("register-confirm-password-label")}
                   </label>
                   <input
                     type="password"
                     name="confirmPassword"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
+                    placeholder={t("register-confirm-password-placeholder")}
                     className="w-full p-3 bg-[#D3D6DE] text-lg text-[#0C1844] font-medium rounded"
                     required
                   />
@@ -260,7 +277,7 @@ const Connexion = () => {
                     type="submit"
                     className="bg-[#0C1844] text-white text-lg py-2 px-4 rounded w-full"
                   >
-                    Créer
+                    {t("register-submit-button")}
                   </button>
                 </div>
               </form>

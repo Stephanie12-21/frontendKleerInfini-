@@ -40,16 +40,14 @@ export function ErrorModal({ isOpen, onClose }) {
                 </svg>
               </motion.div>
               <h2 className="mt-6 text-2xl font-bold text-gray-900">
-                Oups, erreur
+                {t("error-modal-title")}
               </h2>
-              <p className="mt-2 text-gray-600">
-                Désolé, une erreur s&apos;est produite. Veuillez réessayer.
-              </p>
+              <p className="mt-2 text-gray-600">{t("error-modal-message")}</p>
               <Button
                 onClick={onClose}
                 className="mt-6 w-full py-2 px-4 bg-gradient-to-r from-red-500 to-red-800 hover:from-red-600 hover:to-red-600 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-300 ease-in-out"
               >
-                Fermer
+                {t("error-modal-close")}
               </Button>
             </div>
           </motion.div>

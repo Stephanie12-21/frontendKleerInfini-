@@ -10,8 +10,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import RichTextEditor from "@/components/TextEditor/RichEditor";
 import { SuccessModal } from "@/app/[locale]/(modal)/success/page";
 import { ErrorModal } from "@/app/[locale]/(modal)/erreurs/page";
+import { useTranslations } from "next-intl";
 
 const ArticleDetailPageModif = ({ params }) => {
+  const t = useTranslations();
   const { id } = use(params);
   const [article, setArticle] = useState(null);
   const [error, setError] = useState(null);
@@ -131,10 +133,10 @@ const ArticleDetailPageModif = ({ params }) => {
         <CardContent className="flex flex-col items-center justify-center p-6">
           <Loader2 className="h-10 w-10 text-primary animate-spin mb-4" />
           <p className="text-lg font-medium text-center">
-            Chargement de l&apos;article en cours...
+            {t("loading-article")}
           </p>
           <p className="text-sm text-muted-foreground text-center mt-2">
-            Veuillez patienter quelques instants.
+            {t("please-wait")}
           </p>
         </CardContent>
       </Card>
@@ -144,7 +146,7 @@ const ArticleDetailPageModif = ({ params }) => {
   return (
     <div className="max-w-6xl container  mx-auto px-4 py-8 bg-white shadow-md my-5 rounded-lg">
       <h1 className="text-4xl font-bold mb-8 text-center">
-        Modifier l&apos;article
+        {t("edit-article")}
       </h1>
       <div className="flex-col space-y-3">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -154,7 +156,7 @@ const ArticleDetailPageModif = ({ params }) => {
                 htmlFor="titre"
                 className="block text-lg font-medium text-gray-700"
               >
-                Titre de l&apos;article
+                {t("label-titre")}
               </label>
               <input
                 type="text"
@@ -171,16 +173,27 @@ const ArticleDetailPageModif = ({ params }) => {
                 htmlFor="categorieArticle"
                 className="block text-lg font-medium text-gray-700"
               >
-                Catégorie de l&apos;article
+                {t("label-categorie")}
               </label>
-              <input
-                type="text"
+
+              <select
                 id="categorieArticle"
-                name="categorieArticle"
                 value={formData.categorieArticle}
                 onChange={handleChange}
-                className="mt-1 p-2 w-full border border-gray-300 rounded-md"
-              />
+                required
+                className="mt-1 block w-full h-10 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+              >
+                <option value="">{t("selectionner-categorie")}</option>
+                <option value="technologie">
+                  {t("categorie-technologie")}
+                </option>
+                <option value="exportation">
+                  {t("categorie-exportation")}
+                </option>
+                <option value="commerce-internationale">
+                  {t("categorie-commerce")}
+                </option>
+              </select>
             </div>
 
             <div>
@@ -188,7 +201,7 @@ const ArticleDetailPageModif = ({ params }) => {
                 htmlFor="contenu"
                 className="block text-sm font-medium text-gray-700"
               >
-                Contenu
+                {t("label-contenu")}
               </label>
               <RichTextEditor
                 content={contenu}
@@ -203,7 +216,7 @@ const ArticleDetailPageModif = ({ params }) => {
                 htmlFor="files"
                 className="block text-lg font-medium text-gray-700"
               >
-                Images de l&apos;article
+                {t("label-images")}
               </label>
               <Input
                 type="file"
@@ -217,7 +230,7 @@ const ArticleDetailPageModif = ({ params }) => {
             {formData.files.length > 0 && (
               <div className="mt-4">
                 <h3 className="text-lg font-medium text-gray-900 mb-2">
-                  Images sélectionnées :
+                  {t("images-selectionnees")}:
                 </h3>
                 <div className="grid grid-cols-4 gap-4">
                   {formData.files.map((file, index) => {
@@ -254,7 +267,7 @@ const ArticleDetailPageModif = ({ params }) => {
               className=" text-white p-2 rounded w-full"
               onClick={handleSubmit}
             >
-              Enregistrer les modifications
+              {t("edit-article")}
             </Button>
           </div>
         </div>

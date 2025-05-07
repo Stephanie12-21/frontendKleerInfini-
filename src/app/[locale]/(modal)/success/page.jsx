@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 
 export function SuccessModal({ isOpen, onClose }) {
-  const { t } = useTranslations();
+  const t  = useTranslations();
 
   return (
     <AnimatePresence>

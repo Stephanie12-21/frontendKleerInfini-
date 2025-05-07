@@ -1,9 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, use } from "react";
 import { Search } from "lucide-react";
 import Link from "next/link";
+import { useLocale, useTranslations } from "next-intl";
 
 // Fonction pour formater les dates
 function formatDate(date) {
@@ -16,6 +17,8 @@ function formatDate(date) {
 
 // Composant ArticleCard
 function ArticleCard({ article }) {
+  const locale = useLocale();
+  const t = useTranslations();
   const removeQuotes = (content) => {
     return content.replace(/^"|"$/g, "");
   };
@@ -57,10 +60,10 @@ function ArticleCard({ article }) {
             {formatDate(article.createdAt)}
           </span>
           <Link
-            href={`/blog/${article.id}`}
+            href={`/${locale}/blog/${article.id}`}
             className="rounded-full bg-[#0C1844] px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-[#0C1844]/90"
           >
-            Lire plus
+            {t("read-more")}
           </Link>
         </div>
       </div>
@@ -68,9 +71,10 @@ function ArticleCard({ article }) {
   );
 }
 const Blog = () => {
+  const t = useTranslations();
   const [articles, setArticles] = useState([]);
   const [filteredArticles, setFilteredArticles] = useState([]);
-  const [activeTab, setActiveTab] = useState("Tous");
+  const [activeTab, setActiveTab] = useState(t("all"));
   const [searchQuery, setSearchQuery] = useState("");
   const [visibleArticles, setVisibleArticles] = useState(9);
   const kleerSectionRef = useRef();
@@ -96,7 +100,7 @@ const Blog = () => {
 
   useEffect(() => {
     let filtered = [...articles];
-    if (activeTab !== "Tous") {
+    if (activeTab !== t("all")) {
       filtered = filtered.filter((a) => a.categorieArticle === activeTab);
     }
     if (searchQuery.trim()) {
@@ -122,7 +126,7 @@ const Blog = () => {
   }, []);
 
   const categories = [
-    "Tous",
+    t("all"),
     ...new Set(articles.map((a) => a.categorieArticle)),
   ];
   const articlesToShow = filteredArticles.slice(0, visibleArticles);
@@ -140,7 +144,7 @@ const Blog = () => {
       >
         <div className="max-w-7xl mx-auto w-full">
           <h1 className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
-            Tous les articles de Kleer Infini
+            {t("all-articles-title")}
           </h1>
 
           <div className="w-full flex justify-center pt-3 md:pt-5">
@@ -148,7 +152,7 @@ const Blog = () => {
               onClick={handleScrollDown}
               className="px-4 sm:px-6 md:px-8 py-2 sm:py-2.5 md:py-3 bg-[#C80036] hover:bg-[#A80030] transition-colors duration-200 rounded-lg cursor-pointer text-white text-sm sm:text-base md:text-lg font-medium"
             >
-              EN SAVOIR PLUS
+              {t("EN-SAVOIR-PLUS")}
             </button>
           </div>
         </div>
@@ -163,7 +167,7 @@ const Blog = () => {
           <div className="relative">
             <input
               type="text"
-              placeholder="Rechercher un article"
+              placeholder={t("search-article-placeholder")}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full py-2 sm:py-3 pl-10 sm:pl-14 pr-4 border-2 border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#0C1844] text-base sm:text-lg"
@@ -221,8 +225,8 @@ const Blog = () => {
                   onClick={handleLoadMore}
                   className="px-6 py-3 bg-white border-2 border-[#0C1844] text-[#0C1844] hover:bg-gray-50 transition-colors duration-200 rounded-full font-medium"
                 >
-                  Voir plus d'articles (
-                  {filteredArticles.length - visibleArticles} restants)
+                  {t("see-more-articles")} (
+                  {filteredArticles.length - visibleArticles} {t("restants")})
                 </button>
               </div>
             )}
@@ -230,11 +234,9 @@ const Blog = () => {
         ) : (
           <div className="text-center py-12">
             <h3 className="text-xl font-medium text-gray-600">
-              Aucun article trouvé
+              {t("no-articles-title")}
             </h3>
-            <p className="mt-2 text-gray-500">
-              Essayez une autre recherche ou catégorie
-            </p>
+            <p className="mt-2 text-gray-500">{t("no-articles-description")}</p>
           </div>
         )}
       </section>

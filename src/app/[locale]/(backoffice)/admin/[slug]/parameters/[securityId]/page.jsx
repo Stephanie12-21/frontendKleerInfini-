@@ -15,9 +15,10 @@ import { Eye, EyeOff, Lock } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 const PasswordChangeForm = () => {
+  const t = useTranslations();
   const [formData, setFormData] = useState({
     currentPassword: "",
     newPassword: "",
@@ -151,14 +152,14 @@ const PasswordChangeForm = () => {
         <CardHeader>
           <CardTitle>
             <h1 className="text-3xl font-bold mb-8 text-center">
-              Modifier le mot de passe
+              {t("change-password-title")}
             </h1>
           </CardTitle>
           <CardDescription>
             {error && (
               <Alert variant="destructive" className="mb-4">
                 <AlertCircle className="h-4 w-4" />
-                <AlertTitle>Erreur</AlertTitle>
+                <AlertTitle>{t("error")}</AlertTitle>
                 <AlertDescription>{error}</AlertDescription>
               </Alert>
             )}
@@ -166,21 +167,26 @@ const PasswordChangeForm = () => {
             {success && (
               <Alert className="mb-4 bg-green-50 text-green-700 border-green-200">
                 <CheckCircle2 className="h-4 w-4" />
-                <AlertTitle>Succès</AlertTitle>
+                <AlertTitle>
+                  {t("successModal-congratulationsMessage")}
+                </AlertTitle>
                 <AlertDescription>
-                  Votre mot de passe a été modifié avec succès.
+                  {t("password-changed-success")}
                 </AlertDescription>
               </Alert>
             )}
             {step === 1
-              ? "Entrez votre mot de passe actuel"
-              : "Créez un nouveau mot de passe sécurisé"}
+              ? t("current-password-placeholder")
+              : t("new-password-placeholder")}
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit}>
           <CardContent className="space-y-4">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-lg font-medium">Étape {step} sur 2</span>
+              <span className="text-lg font-medium">
+                {t("etape")} {step} {t("sur")} 2
+              </span>
+
               <div className="flex">
                 <div
                   className={`h-2 w-4 rounded-full ${
@@ -198,7 +204,7 @@ const PasswordChangeForm = () => {
             {step === 1 && (
               <div className="space-y-2">
                 <Label htmlFor="currentPassword" className="text-lg">
-                  Mot de passe actuel
+                  {t("current-password-label")}
                 </Label>
                 <div className="relative">
                   <Input
@@ -230,7 +236,7 @@ const PasswordChangeForm = () => {
               <>
                 <div className="space-y-2">
                   <Label htmlFor="newPassword" className="text-lg">
-                    Nouveau mot de passe
+                    {t("new-password-label")}
                   </Label>
                   <div className="relative">
                     <Input
@@ -259,7 +265,7 @@ const PasswordChangeForm = () => {
 
                 <div className="space-y-2">
                   <Label htmlFor="confirmPassword" className="text-lg">
-                    Confirmer le nouveau mot de passe
+                    {t("confirm-password-label")}
                   </Label>
                   <div className="relative">
                     <Input
@@ -295,8 +301,8 @@ const PasswordChangeForm = () => {
               className="bg-[#0C1844] text-white w-full text-lg py-2  px-4 rounded "
             >
               {step === 1
-                ? "Vérifier mot de passe"
-                : "Modifier le mot de passe"}
+                ? t("check-password-text")
+                : t("change-password-text")}
             </button>
 
             {step === 2 && (
@@ -306,7 +312,7 @@ const PasswordChangeForm = () => {
                 onClick={handleCancel}
                 className="w-full"
               >
-                Annuler l&apos;opération
+                {t("cancel-operation")}
               </Button>
             )}
           </CardFooter>

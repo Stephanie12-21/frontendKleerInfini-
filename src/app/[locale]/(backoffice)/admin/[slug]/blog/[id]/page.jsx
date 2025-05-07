@@ -8,8 +8,10 @@ import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 import { useParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 const ArticleDetailPage = () => {
+  const t = useTranslations();
   const params = useParams();
   const id = params?.id;
   const [article, setArticle] = useState(null);
@@ -60,10 +62,10 @@ const ArticleDetailPage = () => {
         <CardContent className="flex flex-col items-center justify-center p-6">
           <Loader2 className="h-10 w-10 text-primary animate-spin mb-4" />
           <p className="text-lg font-medium text-center">
-            Chargement de l&apos;article en cours...
+            {t("loading-article")}
           </p>
           <p className="text-sm text-muted-foreground text-center mt-2">
-            Veuillez patienter quelques instants.
+            {t("please-wait")}
           </p>
         </CardContent>
       </Card>
@@ -99,7 +101,7 @@ const ArticleDetailPage = () => {
               <div className="flex items-center space-x-3">
                 <TagIcon className="text-blue-500 h-6 w-6" />
                 <p className="font-semibold text-gray-700">
-                  <strong>Catégorie:</strong> {category}
+                  <strong> {t("label-categorie")}:</strong> {category}
                 </p>
               </div>
 
@@ -120,7 +122,7 @@ const ArticleDetailPage = () => {
             <div>
               <div className="flex items-center space-x-2 mb-4">
                 <ImageIcon className="text-purple-500 h-6 w-6" />
-                <h3 className="text-xl font-semibold">Images</h3>
+                <h3 className="text-xl font-semibold"> {t("label-images")}</h3>
               </div>
               {article.images.length > 0 ? (
                 <div className="grid grid-cols-2 gap-4">
@@ -155,7 +157,7 @@ const ArticleDetailPage = () => {
                   )}
                 </div>
               ) : (
-                <p className="text-gray-500">Aucune image disponible</p>
+                <p className="text-gray-500">{t("no-image")}</p>
               )}
             </div>
 

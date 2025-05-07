@@ -8,6 +8,7 @@ import { useParams } from "next/navigation";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 import { X } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
 
 // Fonction pour formater les dates
 function formatDate(date) {
@@ -19,6 +20,8 @@ function formatDate(date) {
 }
 
 export default function ArticlePage() {
+  const locale = useLocale();
+  const t = useTranslations();
   const { id } = useParams();
   const [article, setArticle] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -95,17 +98,18 @@ export default function ArticlePage() {
     return (
       <div className="container mx-auto py-12 px-4 text-center">
         <h1 className="text-2xl font-bold text-gray-800 mb-4">
-          Article non trouvé
+          {t("article_not_found")}
         </h1>
         <p className="text-gray-600 mb-8">
-          L'article que vous recherchez n'existe pas ou a été supprimé.
+          {t("article_not_found_description")}
         </p>
+
         <Link
-          href="/blog"
+          href={`/${locale}/blog`}
           className="inline-flex items-center gap-2 rounded-full bg-[#0C1844] px-6 py-3 text-white hover:bg-[#0C1844]/90 transition-colors"
         >
           <ArrowLeft size={16} />
-          Retour à l'accueil
+          {t("back_to_home")}
         </Link>
       </div>
     );
@@ -119,7 +123,7 @@ export default function ArticlePage() {
           className="inline-flex items-center gap-2 text-[#0C1844] hover:underline mb-8"
         >
           <ArrowLeft size={16} />
-          Retour aux articles
+          {t("back_to_home")}
         </Link>
 
         <article>
@@ -128,7 +132,9 @@ export default function ArticlePage() {
               {article.titre}
             </h1>
             <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600">
-              <span>Publié le {formatDate(article.createdAt)}</span>
+              <span>
+                {t("published_on")} {formatDate(article.createdAt)}
+              </span>
               <span className="inline-block rounded-full bg-[#C80036] px-3 py-1 text-xs font-medium text-white">
                 {article.categorieArticle}
               </span>
@@ -160,7 +166,7 @@ export default function ArticlePage() {
           {article.images?.length > 0 && (
             <div className="mt-12">
               <h3 className="text-xl font-bold text-[#0C1844] mb-4">
-                Galerie d'images
+                {t("image_gallery")}
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {article.images[1]?.path && (

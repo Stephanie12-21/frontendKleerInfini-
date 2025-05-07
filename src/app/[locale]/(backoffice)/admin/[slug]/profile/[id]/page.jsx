@@ -6,8 +6,11 @@ import { Input } from "@/components/ui/input";
 import { useSession } from "next-auth/react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import { useTranslations } from "next-intl";
+import { Save, Edit3, X } from "lucide-react";
 
 export default function ProfilePage() {
+  const t = useTranslations();
   const { data: session, status } = useSession();
   const [phone, setPhone] = useState("");
   const [name, setName] = useState("");
@@ -71,15 +74,14 @@ export default function ProfilePage() {
       setIsErrorModalOpen(true);
     }
   };
-
   if (status === "loading") {
-    return <p className="p-10 text-center">Chargement...</p>;
+    return <p className="p-10 text-center">{t("LOADING")}</p>;
   }
 
   if (status === "unauthenticated") {
     return (
       <p className="p-10 text-center text-red-600">
-        Veuillez vous connecter pour accéder à cette page.
+        {t("UNAUTHENTICATED_MESSAGE")}
       </p>
     );
   }
@@ -88,7 +90,7 @@ export default function ProfilePage() {
     <>
       <Head>
         <meta name="robots" content="noindex, nofollow" />
-        <title>Admin - Paramètres du Compte</title>
+        <title>{t("ACCOUNT_SETTINGS_TITLE")}</title>
       </Head>
 
       <div className="mx-auto p-6 rounded-lg">
@@ -96,23 +98,34 @@ export default function ProfilePage() {
           {editMode && (
             <button
               onClick={handleSave}
-              className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition"
+              className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition"
             >
-              Enregistrer les modifications
+              <Save className="w-5 h-5" />
+              {t("SAVE_CHANGES")}
             </button>
           )}
           <button
             onClick={() => setEditMode(!editMode)}
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
           >
-            {editMode ? "Annuler" : "Modifier le profil"}
+            {editMode ? (
+              <>
+                <X className="w-5 h-5" />
+                {t("CANCEL")}
+              </>
+            ) : (
+              <>
+                <Edit3 className="w-5 h-5" />
+                {t("EDIT_PROFILE")}
+              </>
+            )}
           </button>
         </div>
 
         <div className="space-y-6">
           <div className="space-y-2">
             <label htmlFor="name" className="block text-[#0C1844] font-medium">
-              Nom
+              {t("NAME")}
             </label>
             <Input
               id="name"
@@ -125,14 +138,14 @@ export default function ProfilePage() {
 
           <div className="space-y-2">
             <label htmlFor="phone" className="block text-[#0C1844] font-medium">
-              Téléphone
+              {t("PHONE")}
             </label>
             <PhoneInput
               country="dz"
               value={phone}
               disabled={!editMode}
               onChange={setPhone}
-              placeholder="Entrez votre numéro de téléphone"
+              placeholder={t("PHONE_PLACEHOLDER")}
               inputStyle={{
                 width: "100%",
                 height: "40px",
@@ -146,7 +159,7 @@ export default function ProfilePage() {
 
           <div className="space-y-2">
             <label htmlFor="email" className="block text-[#0C1844] font-medium">
-              Email
+              {t("EMAIL")}
             </label>
             <Input
               id="email"
@@ -160,12 +173,12 @@ export default function ProfilePage() {
 
         {isSuccessModalOpen && (
           <div className="mt-4 text-green-600 font-semibold">
-            Profil mis à jour avec succès.
+            {t("PROFILE_UPDATED_SUCCESS")}
           </div>
         )}
         {isErrorModalOpen && (
           <div className="mt-4 text-red-600 font-semibold">
-            Une erreur est survenue lors de la mise à jour.
+            {t("PROFILE_UPDATE_ERROR")}
           </div>
         )}
       </div>
