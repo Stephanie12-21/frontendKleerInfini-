@@ -236,12 +236,12 @@ export default function Home() {
       title: t("Fret-Routier"),
     },
     {
-      image: "/image3.jfif",
+      image: "/image3.jpg",
       alt: "Fret Maritime",
       title: t("Fret-Maritime"),
     },
     {
-      image: "/image4.jfif",
+      image: "/image4.jpg",
       alt: "Fret Aérien",
       title: t("Fret-Aérien"),
     },
@@ -260,7 +260,7 @@ export default function Home() {
           <section
             className="relative flex flex-col items-center justify-center min-h-[400px] md:min-h-[500px] lg:min-h-[600px] text-center px-4 sm:px-6 md:px-10 bg-cover bg-center w-full py-8 md:py-10 lg:py-12"
             style={{
-              backgroundImage: "url('/serviceImage.jfif')",
+              backgroundImage: "url('/serviceImage.png')",
             }}
           >
             <div className="max-w-7xl mx-auto w-full">
@@ -310,7 +310,7 @@ export default function Home() {
               <div className="hidden md:block w-full md:w-2/5">
                 <div className="w-full h-full relative min-h-[300px]">
                   <Image
-                    src="/serviceImage.jfif"
+                    src="/serviceImage.png"
                     alt="imageservice"
                     fill
                     className="object-cover rounded-lg"
@@ -436,7 +436,7 @@ export default function Home() {
 
                     <div className="absolute top-4 sm:top-5 right-2 sm:right-3 w-full h-full shadow-md z-10">
                       <Image
-                        src="/image7.jfif"
+                        src="/image7.png"
                         alt="Fret Aérien"
                         fill
                         className="w-full h-full object-cover"
@@ -579,7 +579,7 @@ export default function Home() {
           <section
             className="relative flex flex-col items-center justify-center min-h-[400px] md:min-h-[500px] lg:min-h-[600px] text-center px-4 sm:px-6 md:px-10 bg-cover bg-center w-full py-8 md:py-10 lg:py-12"
             style={{
-              backgroundImage: "url('/image6.jfif')",
+              backgroundImage: "url('/image6.png')",
             }}
           >
             <div className="max-w-7xl mx-auto w-full">
@@ -637,7 +637,7 @@ export default function Home() {
               <div className="hidden md:block w-full md:w-2/5">
                 <div className="w-full h-full relative min-h-[400px]">
                   <Image
-                    src="/serviceImage.jfif"
+                    src="/serviceImage.png"
                     alt="imageservice"
                     fill
                     className="object-cover rounded-lg"

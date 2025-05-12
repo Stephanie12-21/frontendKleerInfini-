@@ -112,7 +112,7 @@ export default function Home() {
             >
               {/* Image remplacée par un placeholder pour l'exemple */}
               <div className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 relative">
-                <img src="icone.png" alt="play" className="w-full h-full" />
+                <img src="/icone.png" alt="play" className="w-full h-full" />
               </div>
             </button>
           </div>
@@ -218,7 +218,7 @@ export default function Home() {
               <div className="w-full hidden md:block  md:w-3/6 relative">
                 <div className="w-full h-full relative min-h-[500px]">
                   <Image
-                    src="/missionImage.jfif"
+                    src="/missionImage.png"
                     alt="Mission"
                     fill
                     className="object-cover rounded-lg"
@@ -262,7 +262,7 @@ export default function Home() {
               <div className="w-full hidden md:block  md:w-3/6 relative">
                 <div className="w-full h-full relative min-h-[500px]">
                   <Image
-                    src="/missionImage2.jfif"
+                    src="/missionImage2.png"
                     alt="Mission"
                     fill
                     className="object-cover rounded-lg"
@@ -365,7 +365,7 @@ export default function Home() {
               <div className="w-full hidden md:block  md:w-3/6 relative">
                 <div className="w-full h-full relative min-h-[500px]">
                   <Image
-                    src="/missionImage.jfif"
+                    src="/missionImage.png"
                     alt="Mission"
                     fill
                     className="object-cover rounded-lg"
@@ -409,7 +409,7 @@ export default function Home() {
               <div className="w-full hidden md:block  md:w-3/6 relative">
                 <div className="w-full h-full relative min-h-[500px]">
                   <Image
-                    src="/missionImage2.jfif"
+                    src="/missionImage2.png"
                     alt="Mission"
                     fill
                     className="object-cover rounded-lg"
@@ -424,7 +424,7 @@ export default function Home() {
       <section
         className="w-full flex items-center justify-center h-screen text-center px-4 md:px-10 bg-cover bg-center relative"
         style={{
-          backgroundImage: "url('/temImage.jfif')",
+          backgroundImage: "url('/temImage.png')",
         }}
       >
         <div className="flex flex-col md:flex-row w-full max-w-7xl items-center justify-between rounded-xl p-4 md:p-6 relative z-20 space-y-6 md:space-y-0">
